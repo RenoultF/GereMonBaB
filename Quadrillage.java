@@ -1,7 +1,7 @@
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
+import java.awt.event.*;
 
 class Cst {
 	// Dimension de la grille
@@ -9,12 +9,29 @@ class Cst {
 	public static final int NB_COL = 100;
 }
 
-public class Quadrillage {
+public class Quadrillage extends AbstractAction implements ActionListener{
+	private String type;
 	static LinkedList<JButton> listBut = new LinkedList<>();
+	private static JButton btnTypeStand;
+	private static JButton btnTypeBuvette;
+	private static JButton btnTypeBoulangerie;
+	private JFrame frame;
+	private JPanel panFenetre;
+	private JPanel panGrille;
+	private JPanel panBtnType;
 
-	public static void main(String [] args) {
-		JFrame frame = new JFrame("Quadrillage");
-		JPanel pan = new JPanel(new GridLayout(Cst.NB_LIGNE, Cst.NB_COL));
+	public Quadrillage(){
+		frame = new JFrame("Quadrillage");
+		panFenetre = new JPanel(new GridLayout(2,2));
+		panGrille = new JPanel(new GridLayout(Cst.NB_LIGNE, Cst.NB_COL));
+		panBtnType = new JPanel(new GridLayout(1,3));
+		btnTypeStand = new JButton("Faire Stand");
+		btnTypeStand.addActionListener(this);
+		btnTypeBuvette = new JButton("Faire Buvette");
+		btnTypeBuvette.addActionListener(this);
+		btnTypeBoulangerie = new JButton("Faire Boulangerie");
+		btnTypeBoulangerie.addActionListener(this);
+		type = "STAND";
 		int ind = 0; // Indice du bouton dans la liste
  
 		for(int i = 0; i < Cst.NB_LIGNE; i++)
@@ -22,45 +39,45 @@ public class Quadrillage {
 				JButton but = new JButton(new ActionBtn(i, j, ind));
 				ind += 1;
 				listBut.add(but);
-				pan.add(but);
+				panGrille.add(but);
 			}
- 
+		
+	
+		panBtnType.add(btnTypeStand);
+		panBtnType.add(btnTypeBuvette);
+		panBtnType.add(btnTypeBoulangerie);
+		
 		// ***** Fenêtre *****
-	    frame.getContentPane().add(pan);
+		panFenetre.add(panGrille);
+		panFenetre.add(panBtnType);
+		frame.getContentPane().add(panFenetre);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(1000, 500);
 	}
-}
-
-class ActionBtn extends AbstractAction  {
-	private int coord_x;
-	private int coord_y;
-	private int ind;
-	private boolean clic = false;
-
-	public ActionBtn(int x, int y, int i) {
-		coord_x = x;
-		coord_y = y;
-		ind = i;
-	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton but = Quadrillage.listBut.get(ind);
-
-		// ***** Pas sélectionné *****
-		if(clic == false) {
-			clic = true;
-			but.setBackground(Color.BLACK);
+		if(e.getSource() == btnTypeStand){
+			this.type = "STAND";
+			System.out.println("on passe au type :" + this.type);
 		}
-
-		// ***** Deja sélectionné *****
-		else {
-			clic = false;
-			but.setBackground(Color.GRAY); // Couleur par défaut
+		else if(e.getSource() == btnTypeBuvette){
+			this.type = "Buvette";
+			System.out.println("on passe au type :" + this.type);
 		}
-
-		System.out.println(ind + "=" + coord_x + ":" + coord_y + "(" + clic + ")"); // Pour dev....
+		else if(e.getSource() == btnTypeBoulangerie){
+			this.type = "Boulangerie";
+			System.out.println("on passe au type :" + this.type);
+		}
 	}
+
+	
+	public static void main(String [] args) {
+		
+		Quadrillage fenete = new Quadrillage();
+		
+	}
+
 }
+
