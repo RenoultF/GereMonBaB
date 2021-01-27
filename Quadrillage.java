@@ -10,7 +10,7 @@ class Cst {
 }
 
 public class Quadrillage extends AbstractAction implements ActionListener{
-	private String type;
+	static String type;
 	static LinkedList<JButton> listBut = new LinkedList<>();
 	private static JButton btnTypeStand;
 	private static JButton btnTypeBuvette;
@@ -19,6 +19,7 @@ public class Quadrillage extends AbstractAction implements ActionListener{
 	private JPanel panFenetre;
 	private JPanel panGrille;
 	private JPanel panBtnType;
+	static Emplacements emplacements;
 
 	public Quadrillage(){
 		frame = new JFrame("Quadrillage");
@@ -31,6 +32,7 @@ public class Quadrillage extends AbstractAction implements ActionListener{
 		btnTypeBuvette.addActionListener(this);
 		btnTypeBoulangerie = new JButton("Faire Boulangerie");
 		btnTypeBoulangerie.addActionListener(this);
+		emplacements = new Emplacements();
 		type = "STAND";
 		int ind = 0; // Indice du bouton dans la liste
  

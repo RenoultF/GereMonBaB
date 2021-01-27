@@ -26,6 +26,7 @@ public class Emplacements{
             empCourant = new Emplacement(longueur,largeur,type,x,y,this.nbDeco);       
             decorations.add(empCourant);
         }
+        empCourant.afficheToi();
         return empCourant;
     }
 
@@ -62,7 +63,7 @@ public class Emplacements{
         }
     }
 
-
+    /* // test des listes
     public static void main(String[] args) {
         Emplacements tabEmplacement = new Emplacements();
         
@@ -82,5 +83,5 @@ public class Emplacements{
         tabEmplacement.supprimerEmplacement(emp6);
 
         tabEmplacement.toutAfficher();
-    }
+    }*/
 }
