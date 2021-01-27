@@ -104,7 +104,7 @@ public class Emplacement{
     }
 
     public void afficheToi(){
-        System.out.println("Je suis de type :"+this.type+" mon num est " + this.numEmplacement + " et mon statut est  " + this.statut);
+        System.out.println("Je suis de s type :"+this.type+" mon num est " + this.numEmplacement + " et mon statut est  " + this.statut);
     }
 
     public Emplacement getEmpl(){
