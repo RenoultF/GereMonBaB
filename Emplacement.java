@@ -1,5 +1,9 @@
 import java.util.*;
 
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+
 
 public class Emplacement{
 
@@ -16,7 +20,11 @@ public class Emplacement{
     private int coordX;
     private int coordY;
 
+    private JButton btnSuppr;
+
     public Emplacement(int longueur, int largeur, String type, int x, int y, int numEmplacement){
+        Icon icon = new ImageIcon("./img_btn_suppr.jpg");
+        btnSuppr = new JButton(icon);
         this.longueur = longueur;
         this.largeur = largeur;
         this.statut = "LIBRE";

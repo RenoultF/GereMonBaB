@@ -10,6 +10,7 @@ class ActionBtn extends AbstractAction  {
 	private int ind;
     private boolean clic = false;
     private String type;
+    private Emplacement empAjoute;
 
 	public ActionBtn(int x, int y, int i) {
 		coord_x = x;
@@ -27,7 +28,7 @@ class ActionBtn extends AbstractAction  {
             but.setBackground(Color.BLACK);
             but.setEnabled(false);
             type = Quadrillage.type;
-            Quadrillage.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temp
+            empAjoute = Quadrillage.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temp
 		}
 
         // ***** Deja sélectionné *****
