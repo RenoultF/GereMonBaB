@@ -10,12 +10,16 @@ class ActionBtn extends AbstractAction  {
 	private int ind;
     private boolean clic = false;
     private String type;
-    private Emplacement empAjoute;
+	private Emplacement empAjoute;
+	//private TabQuadrillage tabStands;
+	//private TabQuadrillage tabDecos;
 
 	public ActionBtn(int x, int y, int i) {
 		coord_x = x;
 		coord_y = y;
 		ind = i;
+		//this.tabStands = tStand;
+		//this.tabDecos = tDecos;
 	}
 
 	@Override
@@ -28,7 +32,15 @@ class ActionBtn extends AbstractAction  {
             but.setBackground(Color.BLACK);
             but.setEnabled(false);
             type = Quadrillage.type;
-            empAjoute = Quadrillage.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temp
+			empAjoute = Quadrillage.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temporaire
+			if(empAjoute.estStand()){
+				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getLargeur(),empAjoute.getLongueur(),empAjoute.getBtn()};
+				Quadrillage.tabStands.addRow(newData);
+			}
+			else{
+				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getType(),empAjoute.getBtn()};
+				Quadrillage.tabDecos.addRow(newData);
+			}
 		}
 
         // ***** Deja sélectionné *****

@@ -1,11 +1,9 @@
+import java.awt.event.ActionEvent;
 import java.util.*;
 
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.*;
 
-
-public class Emplacement{
+public class Emplacement extends AbstractAction {
 
     private int numEmplacement;
     private int longueur;
@@ -22,9 +20,10 @@ public class Emplacement{
 
     private JButton btnSuppr;
 
-    public Emplacement(int longueur, int largeur, String type, int x, int y, int numEmplacement){
+    public Emplacement(int longueur, int largeur, String type, int x, int y, int numEmplacement) {
         Icon icon = new ImageIcon("./img_btn_suppr.jpg");
         btnSuppr = new JButton(icon);
+        btnSuppr.addActionListener(this);
         this.longueur = longueur;
         this.largeur = largeur;
         this.statut = "LIBRE";
@@ -35,87 +34,99 @@ public class Emplacement{
         this.numEmplacement = numEmplacement;
     }
 
-    public void attribuerProPrietaire(String prop){
+    public void attribuerProPrietaire(String prop) {
         this.proprietaire = prop;
     }
 
-    public void attribuerNumEmplacement(int num){
+    public void attribuerNumEmplacement(int num) {
         this.numEmplacement = num;
     }
 
-    public void statutLibre(){
+    public void statutLibre() {
         this.statut = "LIBRE";
     }
 
-    public void statutEnCours(){
+    public void statutEnCours() {
         this.statut = "EN COURS";
     }
 
-    public void statutReserve(){
+    public void statutReserve() {
         this.statut = "RESERVE";
     }
 
-    public boolean estReverse(){
+    public boolean estReverse() {
         return (this.statut == "RESERVE");
     }
 
-    public boolean estLibre(){
+    public boolean estLibre() {
         return (this.statut == "LIBRE");
     }
 
-    public boolean estEnCours(){
+    public boolean estEnCours() {
         return (this.statut == "EN COURS");
     }
 
-    public void modifierEmplacement(int nb){
+    public void modifierEmplacement(int nb) {
         this.numEmplacement += nb;
     }
 
-    public boolean estStand(){
+    public boolean estStand() {
         return (this.type == "STAND");
     }
 
-    public boolean estDecoration(){
+    public boolean estDecoration() {
         return (this.type != "STAND");
     }
 
-    public int getNumEmplacement(){
+    public int getNumEmplacement() {
         return this.numEmplacement;
     }
 
-    public int getLongueur(){
+    public int getLongueur() {
         return this.longueur;
     }
 
-    public int getLargeur(){
+    public int getLargeur() {
         return this.largeur;
     }
 
-    public String getStatut(){
+    public String getStatut() {
         return this.statut;
     }
 
-    public String getProp(){
+    public String getProp() {
         return this.proprietaire;
     }
 
-    public String getType(){
+    public String getType() {
         return this.type;
     }
 
-    public int getX(){
+    public int getX() {
         return coordX;
     }
 
-    public int getY(){
+    public int getY() {
         return coordY;
     }
 
-    public void afficheToi(){
-        System.out.println("Je suis de type :"+this.type+" mon num est " + this.numEmplacement + " et mon statut est  " + this.statut);
+    public void afficheToi() {
+        System.out.println("Je suis de type :" + this.type + " mon num est " + this.numEmplacement
+                + " et mon statut est  " + this.statut);
     }
 
-    public Emplacement getEmpl(){
+    public Emplacement getEmpl() {
         return this;
+    }
+
+    public JButton getBtn() {
+        return this.btnSuppr;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        if(e.getSource() == btnSuppr){
+            Quadrillage.emplacements.supprimerEmplacement(this);
+        }
     }
 }

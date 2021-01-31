@@ -9,7 +9,7 @@ class Cst {
 	public static final int NB_COL = 100;
 }
 
-public class Quadrillage extends AbstractAction implements ActionListener{
+public class Quadrillage extends AbstractAction{
 	static String type;
 	static LinkedList<JButton> listBut = new LinkedList<>();
 	private JButton btnTypeStand;
@@ -22,10 +22,15 @@ public class Quadrillage extends AbstractAction implements ActionListener{
 	private JPanel panGrille;
 	private JPanel panBtnType;
 	static Emplacements emplacements;
-	//private TabQuadrillage tabStands;
-	//private TabQuadrillage tabDecos;
-	//private String[] nomColStands;
-	//private String[] nomColDecos;
+	static TabQuadrillage tabStands;
+	static TabQuadrillage tabDecos;
+	private String[] nomColStands = {"Numero","Longueur","Largeur","Supprimer"};
+	private String[] nomColDecos  = {"Numero","Nom_deco","Supprimer"};
+	private JTable tableStands;
+	private JTable tableDecos;
+	private JScrollPane scrollStands;
+	private JScrollPane scrollDecos;
+	
 
 
 	public Quadrillage(){
@@ -43,10 +48,13 @@ public class Quadrillage extends AbstractAction implements ActionListener{
 		btnTypeBoulangerie.addActionListener(this);
 		emplacements = new Emplacements();
 		type = "STAND";
-		//nomColStands = {"Numero","Longueur","Largeur","Supprimer"};
-		//nomColDecos = {"Numero","Nom deco","Supprimer"};
-		//tabStands = new TabQuadrillage({}, nomColStands);
-		//tabDecos = new TabQuadrillage({}, nomColDecos);
+		tabStands = new TabQuadrillage(null, nomColStands);
+		tabDecos = new TabQuadrillage(null, nomColDecos);
+		tableStands = new JTable(tabStands);
+		tableDecos = new JTable(tabDecos);
+		scrollStands = new JScrollPane(tableStands);
+		scrollDecos = new JScrollPane(tableDecos);
+		
 		
 		int ind = 0; // Indice du bouton dans la liste
  
@@ -66,8 +74,8 @@ public class Quadrillage extends AbstractAction implements ActionListener{
 		// ***** Fenêtre *****
 		panFenetre.add(panGrille);
 		panFenetre.add(panBtnType);
-		panFenetre.add(btnTest);
-		panFenetre.add(btnTest2);
+		panFenetre.add(tableStands);
+		panFenetre.add(tableDecos);
 		frame.getContentPane().add(panFenetre);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -80,7 +88,7 @@ public class Quadrillage extends AbstractAction implements ActionListener{
 		if(e.getSource() == btnTypeStand){
 			this.type = "STAND";
 			System.out.println("on passe au type :" + this.type);
-			//temp = emplacements.ajouterEmplacement(this.type, 1, 2, 1,2);
+		
 		}
 		else if(e.getSource() == btnTypeBuvette){
 			this.type = "Buvette";

@@ -1,7 +1,8 @@
 import javax.swing.AbstractAction;
 import javax.swing.table.AbstractTableModel;
+import javax.swing.table.DefaultTableModel;
 
-public class TabQuadrillage extends AbstractTableModel{
+public class TabQuadrillage extends DefaultTableModel{
     Object donnees[][];
     String titres[];
     public TabQuadrillage(Object donnees[][], String titres[]) { 
@@ -9,18 +10,6 @@ public class TabQuadrillage extends AbstractTableModel{
         this.titres = titres; 
     }
     
-    public int getColumnCount() { 
-        return donnees[0].length; 
-    }
-    public Object getValueAt(int parm1, int parm2) { 
-        return donnees[parm1][parm2]; 
-    }
-    public int getRowCount() { 
-    return donnees.length; 
-    }
-    public String getColumnName(int col){ 
-        return titres[col]; 
-    } 
 }
 
     
