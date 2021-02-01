@@ -1,6 +1,8 @@
 import java.util.*;
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.event.*;
 
 class Cst {
@@ -23,12 +25,12 @@ public class FenetreUI extends AbstractAction{
 	private JPanel panGrille;
 	private JPanel panBtnType;
 	static Emplacements emplacements;
-	static TabQuadrillage tabStands;
-	static TabQuadrillage tabDecos;
 	private String[] nomColStands = {"Numero","Longueur","Largeur","Supprimer"};
 	private String[] nomColDecos  = {"Numero","Nom_deco","Supprimer"};
-	private JTable tableStands;
-	private JTable tableDecos;
+	public static DefaultTableModel tabStands;
+	public static DefaultTableModel tabDecos;
+	public static JTable tableStands;
+	public static JTable tableDecos;
 	private JScrollPane scrollStands;
 	private JScrollPane scrollDecos;
 	
@@ -47,8 +49,8 @@ public class FenetreUI extends AbstractAction{
 		btnTypeBoulangerie.addActionListener(this);
 		emplacements = new Emplacements();
 		type = "STAND";
-		tabStands = new TabQuadrillage(null, nomColStands);
-		tabDecos = new TabQuadrillage(null, nomColDecos);
+		tabStands = new DefaultTableModel(nomColStands,0);
+		tabDecos = new DefaultTableModel(nomColDecos,0);
 		tableStands = new JTable(tabStands);
 		tableDecos = new JTable(tabDecos);
 		scrollStands = new JScrollPane(tableStands);

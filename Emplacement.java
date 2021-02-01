@@ -20,9 +20,8 @@ public class Emplacement extends AbstractAction {
 
     private JButton btnSuppr;
 
-    public Emplacement(int longueur, int largeur, String type, int x, int y, int numEmplacement) {
-        Icon icon = new ImageIcon("./img_btn_suppr.jpg");
-        btnSuppr = new JButton(icon);
+    public Emplacement(int longueur, int largeur, String type, int x, int y, int numEmplacement) { 
+        btnSuppr = new JButton("Supprimer");
         btnSuppr.addActionListener(this);
         this.longueur = longueur;
         this.largeur = largeur;

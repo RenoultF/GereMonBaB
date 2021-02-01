@@ -30,9 +30,11 @@ class ActionBtn extends AbstractAction  {
 		if(clic == false) {
 			clic = true;
             but.setBackground(Color.GREEN);
-            but.setEnabled(false);
+			but.setEnabled(false);
+			
             type = FenetreUI.type;
 			empAjoute = FenetreUI.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temporaire
+			but.setText(Integer.toString(empAjoute.getNumEmplacement()));
 			if(empAjoute.estStand()){
 				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getLargeur(),empAjoute.getLongueur(),empAjoute.getBtn()};
 				FenetreUI.tabStands.addRow(newData);
