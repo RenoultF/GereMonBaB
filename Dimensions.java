@@ -15,7 +15,7 @@ public class Dimensions extends JFrame {
     private JTextField txtLong;
     private JButton butOk;
 
-    private Semaphore sem;
+    private Semaphore sem; // Mutex
 
     public Dimensions(Double largDefaut, Double longDefaut) {
         // ***** Valeurs par défaut *****
@@ -64,7 +64,7 @@ public class Dimensions extends JFrame {
     }
 
     // ********** Getters **********
-    // ATTENTION : Penser à la synchronisation (attendre fin de la saisie)
+    // Synchronisation (attendre fin de la saisie) par mutex
     public Double getLargeur() {
         sem.P(); sem.V();
         return largeur;
