@@ -9,7 +9,7 @@ class Cst {
 	public static final int NB_COL = 100;
 }
 
-public class Quadrillage extends AbstractAction{
+public class FenetreUI extends AbstractAction{
 	static String type;
 	static LinkedList<JButton> listBut = new LinkedList<>();
 	private JButton btnTypeStand;
@@ -33,7 +33,7 @@ public class Quadrillage extends AbstractAction{
 	
 
 
-	public Quadrillage(){
+	public FenetreUI(){
 		frame = new JFrame("Quadrillage");
 		panFenetre = new JPanel(new GridLayout(2,2));
 		panGrille = new JPanel(new GridLayout(Cst.NB_LIGNE, Cst.NB_COL));
@@ -103,7 +103,7 @@ public class Quadrillage extends AbstractAction{
 	
 	public static void main(String [] args) {
 		
-		Quadrillage fenete = new Quadrillage();
+		FenetreUI fenete = new FenetreUI();
 		
 	}
 

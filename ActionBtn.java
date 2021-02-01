@@ -24,22 +24,22 @@ class ActionBtn extends AbstractAction  {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton but = Quadrillage.listBut.get(ind);
+		JButton but = FenetreUI.listBut.get(ind);
 
 		// ***** Pas sélectionné *****
 		if(clic == false) {
 			clic = true;
             but.setBackground(Color.BLACK);
             but.setEnabled(false);
-            type = Quadrillage.type;
-			empAjoute = Quadrillage.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temporaire
+            type = FenetreUI.type;
+			empAjoute = FenetreUI.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temporaire
 			if(empAjoute.estStand()){
 				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getLargeur(),empAjoute.getLongueur(),empAjoute.getBtn()};
-				Quadrillage.tabStands.addRow(newData);
+				FenetreUI.tabStands.addRow(newData);
 			}
 			else{
 				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getType(),empAjoute.getBtn()};
-				Quadrillage.tabDecos.addRow(newData);
+				FenetreUI.tabDecos.addRow(newData);
 			}
 		}
 

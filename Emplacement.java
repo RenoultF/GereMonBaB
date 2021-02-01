@@ -126,7 +126,7 @@ public class Emplacement extends AbstractAction {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnSuppr){
-            Quadrillage.emplacements.supprimerEmplacement(this);
+            FenetreUI.emplacements.supprimerEmplacement(this);
         }
     }
 }
