@@ -40,6 +40,7 @@ class ActionBtn extends AbstractAction  {
 				FenetreUI.tabStands.addRow(newData);
 			}
 			else{
+				but.setBackground(Color.BLACK);
 				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getType(),empAjoute.getBtn()};
 				FenetreUI.tabDecos.addRow(newData);
 			}
