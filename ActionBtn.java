@@ -29,7 +29,7 @@ class ActionBtn extends AbstractAction  {
 		// ***** Pas sélectionné *****
 		if(clic == false) {
 			clic = true;
-            but.setBackground(Color.BLACK);
+            but.setBackground(Color.GREEN);
             but.setEnabled(false);
             type = FenetreUI.type;
 			empAjoute = FenetreUI.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temporaire
