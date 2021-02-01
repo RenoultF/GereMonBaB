@@ -100,12 +100,5 @@ public class FenetreUI extends AbstractAction{
 		}
 	}
 
-	
-	public static void main(String [] args) {
-		
-		FenetreUI fenete = new FenetreUI();
-		
-	}
-
 }
 
