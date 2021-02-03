@@ -7,8 +7,8 @@ import java.awt.event.*;
 
 class Cst {
 	// Dimension de la grille
-	public static final int NB_LIGNE = 30;
-	public static final int NB_COL = 100;
+	public static final int NB_LIGNE = 5;
+	public static final int NB_COL = 10;
 }
 
 public class FenetreUI extends AbstractAction{

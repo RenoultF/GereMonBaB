@@ -36,13 +36,17 @@ class ActionBtn extends AbstractAction  {
 			empAjoute = FenetreUI.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temporaire
 			but.setText(Integer.toString(empAjoute.getNumEmplacement()));
 			if(empAjoute.estStand()){
-				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getLargeur(),empAjoute.getLongueur(),empAjoute.getBtn()};
+				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getLargeur(),empAjoute.getLongueur()};
 				FenetreUI.tabStands.addRow(newData);
+				FenetreUI.tableStands.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableStands,empAjoute));
+				FenetreUI.tableStands.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableStands,empAjoute));
 			}
 			else{
 				but.setBackground(Color.BLACK);
-				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getType(),empAjoute.getBtn()};
+				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getType()};
 				FenetreUI.tabDecos.addRow(newData);
+				FenetreUI.tableDecos.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableDecos,empAjoute));
+				FenetreUI.tableDecos.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableDecos,empAjoute));
 			}
 		}
 
