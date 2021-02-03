@@ -102,5 +102,24 @@ public class FenetreUI extends AbstractAction{
 		}
 	}
 
+	public static void actualiserTab(String type){
+		int i;
+		if(type!="STAND"){
+			System.out.println("taille emplacement :" +emplacements.getDecos().size());
+			for(i = 0;i<emplacements.getDecos().size();i++){
+				System.out.println("i = "+ i);
+				tableDecos.setValueAt(emplacements.getDecos().get(i).getNumEmplacement(), i, 0);
+			}
+		}
+		else{
+			System.out.println("taille emplacement :" +emplacements.getStands().size());
+			for(i = 0;i<emplacements.getStands().size();i++){
+				System.out.println("i = "+ i);
+				tableStands.setValueAt(emplacements.getStands().get(i).getNumEmplacement(), i, 0);
+			}
+		}
+		
+	}
+
 }
 

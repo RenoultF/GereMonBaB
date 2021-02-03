@@ -17,7 +17,7 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
     btn = new JButton("Supprimer");
     btn.addActionListener(this);
     this.table = table;
-    empCourant = emp;
+    this.empCourant = emp;
   }
   
   @Override
@@ -51,9 +51,21 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
   @Override
   public void actionPerformed(ActionEvent e) {
     if(e.getSource() == btn){
-      DefaultTableModel model = (DefaultTableModel) table.getModel();
-      model.removeRow(row);
+      if(empCourant.getType() != "STAND"){
+        System.out.println("avant remove deco");
+        FenetreUI.tabDecos.removeRow(row);
+        System.out.println("apres remove deco");
+      }
+      else{
+        System.out.println("avant remove Stand");
+        FenetreUI.tabStands.removeRow(row);
+        System.out.println("apres remove stand");
+      }
+      System.out.println("Ici 1");
       FenetreUI.emplacements.supprimerEmplacement(empCourant);
+      System.out.println("Ici 2");
+      FenetreUI.actualiserTab(empCourant.getType());
+      System.out.println("Ici 3");
     }
   }
 }

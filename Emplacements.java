@@ -1,8 +1,8 @@
 import java.util.*;
 
 public class Emplacements{
-    LinkedList<Emplacement> stands ;
-    LinkedList<Emplacement> decorations;
+    private LinkedList<Emplacement> stands ;
+    private LinkedList<Emplacement> decorations;
     private int nbStand;
     private int nbDeco;
 
@@ -33,20 +33,22 @@ public class Emplacements{
     public void supprimerEmplacement(Emplacement emp){
         if(emp.estStand()){
             if(stands.size()>0){
-                for(int i = (stands.indexOf(emp));i<stands.size();i++){
-                   stands.get(i).modifierEmplacement(-1);
-                }
-                this.nbStand--;
                 stands.remove(emp);
+                this.nbStand--;
+                for(int i = 0;i<this.nbStand;i++){
+                   stands.get(i).attribuerNumEmplacement(i+1);
+                } 
             }
-       }
+        }
         else{
             if(decorations.size()>0){
-                for(int i = (decorations.indexOf(emp));i<decorations.size();i++){
-                    decorations.get(i).modifierEmplacement(-1);
-                }
-                this.nbDeco--;
                 decorations.remove(emp);
+                this.nbDeco--;
+                for(int i = 0;i<this.nbDeco;i++){
+                    decorations.get(i).attribuerNumEmplacement(i+1);
+                }
+                
+                
             }
         }
     }
@@ -61,6 +63,14 @@ public class Emplacements{
         for(int i = 0;i < decorations.size();i++){
             decorations.get(i).afficheToi();
         }
+    }
+
+    public LinkedList<Emplacement> getStands(){
+        return this.stands;
+    }
+
+    public LinkedList<Emplacement> getDecos(){
+        return this.decorations;
     }
 
     /* // test des listes
