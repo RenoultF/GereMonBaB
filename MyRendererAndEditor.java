@@ -4,6 +4,7 @@ import javax.swing.event.CellEditorListener;
 import java.awt.Component;
 import java.awt.event.*;
 import java.util.EventObject;
+import java.awt.*;
 
 
 class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, TableCellEditor 
@@ -52,20 +53,22 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
   public void actionPerformed(ActionEvent e) {
     if(e.getSource() == btn){
       if(empCourant.getType() != "STAND"){
-        System.out.println("avant remove deco");
         FenetreUI.tabDecos.removeRow(row);
-        System.out.println("apres remove deco");
       }
       else{
-        System.out.println("avant remove Stand");
         FenetreUI.tabStands.removeRow(row);
-        System.out.println("apres remove stand");
       }
-      System.out.println("Ici 1");
+      this.empCourant.afficheToi();
+      this.actualiserBtn(FenetreUI.listBut.get(this.empCourant.getX()*Cst.NB_COL + this.empCourant.getY()));
       FenetreUI.emplacements.supprimerEmplacement(empCourant);
-      System.out.println("Ici 2");
       FenetreUI.actualiserTab(empCourant.getType());
-      System.out.println("Ici 3");
+    
     }
+  }
+
+  public void actualiserBtn(JButton but){
+    but.setEnabled(true);
+    but.setBackground(Color.WHITE);
+    but.setText("");
   }
 }

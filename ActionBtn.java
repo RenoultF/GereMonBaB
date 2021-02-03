@@ -11,6 +11,7 @@ class ActionBtn extends AbstractAction  {
     private boolean clic = false;
     private String type;
 	private Emplacement empAjoute;
+	private JButton but;
 	//private TabQuadrillage tabStands;
 	//private TabQuadrillage tabDecos;
 
@@ -24,7 +25,7 @@ class ActionBtn extends AbstractAction  {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		JButton but = FenetreUI.listBut.get(ind);
+		but = FenetreUI.listBut.get(ind);
 
 		// ***** Pas sélectionné *****
 		if(clic == false) {
@@ -38,6 +39,7 @@ class ActionBtn extends AbstractAction  {
 			if(empAjoute.estStand()){
 				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getLargeur(),empAjoute.getLongueur()};
 				FenetreUI.tabStands.addRow(newData);
+				empAjoute.afficheToi();
 				FenetreUI.tableStands.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableStands,empAjoute));
 				FenetreUI.tableStands.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableStands,empAjoute));
 			}
