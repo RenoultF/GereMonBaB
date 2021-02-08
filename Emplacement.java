@@ -6,8 +6,8 @@ import javax.swing.*;
 public class Emplacement extends AbstractAction {
 
     private int numEmplacement;
-    private int longueur;
-    private int largeur;
+    private Double longueur;
+    private Double largeur;
 
     private String type;
 
@@ -20,7 +20,7 @@ public class Emplacement extends AbstractAction {
 
     private JButton btnSuppr;
 
-    public Emplacement(int longueur, int largeur, String type, int x, int y, int numEmplacement) { 
+    public Emplacement(Double longueur, Double largeur, String type, int x, int y, int numEmplacement) { 
         btnSuppr = new JButton("Supprimer");
         btnSuppr.addActionListener(this);
         this.longueur = longueur;
@@ -81,11 +81,11 @@ public class Emplacement extends AbstractAction {
         return this.numEmplacement;
     }
 
-    public int getLongueur() {
+    public Double getLongueur() {
         return this.longueur;
     }
 
-    public int getLargeur() {
+    public Double getLargeur() {
         return this.largeur;
     }
 

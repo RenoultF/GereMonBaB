@@ -5,25 +5,29 @@ public class Emplacements{
     private LinkedList<Emplacement> decorations;
     private int nbStand;
     private int nbDeco;
+    private double longueur;
+    private double largueur;
 
-    public Emplacements(){
+    public Emplacements(Double larg, Double longue){
         stands = new LinkedList<>();
         decorations = new LinkedList<> ();
         nbStand = 0;
         nbDeco = 0;
+        this.longueur = longue;
+        this.largueur = larg;
     }
 
 
-    public Emplacement ajouterEmplacement(String type, int x, int y, int longueur, int largeur){
+    public Emplacement ajouterEmplacement(String type, int x, int y){
         Emplacement empCourant = null;
         if(type == "STAND"){
             this.nbStand++;
-            empCourant = new Emplacement(longueur,largeur,type,x,y,this.nbStand);
+            empCourant = new Emplacement(this.longueur,this.largueur,type,x,y,this.nbStand);
             stands.add(empCourant);
         }
         else{
             this.nbDeco++;
-            empCourant = new Emplacement(longueur,largeur,type,x,y,this.nbDeco);       
+            empCourant = new Emplacement(this.longueur,this.largueur,type,x,y,this.nbDeco);       
             decorations.add(empCourant);
         }
         empCourant.afficheToi();

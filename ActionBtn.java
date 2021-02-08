@@ -34,7 +34,7 @@ class ActionBtn extends AbstractAction  {
 			but.setEnabled(false);
 			
             type = FenetreUI.type;
-			empAjoute = FenetreUI.emplacements.ajouterEmplacement(type, coord_x, coord_y, 1, 1); //longueur et largueur temporaire
+			empAjoute = FenetreUI.emplacements.ajouterEmplacement(type, coord_x, coord_y); //longueur et largueur temporaire
 			but.setText(Integer.toString(empAjoute.getNumEmplacement()));
 			if(empAjoute.estStand()){
 				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getLargeur(),empAjoute.getLongueur()};

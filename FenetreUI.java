@@ -33,10 +33,12 @@ public class FenetreUI extends AbstractAction{
 	public static JTable tableDecos;
 	private JScrollPane scrollStands;
 	private JScrollPane scrollDecos;
+	private Dimensions dim;
 	
 
 
-	public FenetreUI(){
+	public FenetreUI(Dimensions dim){
+		this.dim = dim;
 		frame = new JFrame("Quadrillage");
 		panFenetre = new JPanel(new GridLayout(2,2));
 		panGrille = new JPanel(new GridLayout(Cst.NB_LIGNE, Cst.NB_COL));
@@ -47,7 +49,7 @@ public class FenetreUI extends AbstractAction{
 		btnTypeBuvette.addActionListener(this);
 		btnTypeBoulangerie = new JButton("Faire Boulangerie");
 		btnTypeBoulangerie.addActionListener(this);
-		emplacements = new Emplacements();
+		emplacements = new Emplacements(dim.getLargeur(),dim.getLongueur());
 		type = "STAND";
 		tabStands = new DefaultTableModel(nomColStands,0);
 		tabDecos = new DefaultTableModel(nomColDecos,0);
