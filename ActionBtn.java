@@ -12,6 +12,8 @@ class ActionBtn extends AbstractAction  {
     private String type;
 	private Emplacement empAjoute;
 	private JButton but;
+	private JButton boutonCourant;
+	private LinkedList<JButton> caseEmplacement;
 	//private TabQuadrillage tabStands;
 	//private TabQuadrillage tabDecos;
 
@@ -30,11 +32,25 @@ class ActionBtn extends AbstractAction  {
 		// ***** Pas sélectionné *****
 		if(clic == false) {
 			clic = true;
-            but.setBackground(Color.GREEN);
-			but.setEnabled(false);
+			
 			
             type = FenetreUI.type;
 			empAjoute = FenetreUI.emplacements.ajouterEmplacement(type, coord_x, coord_y); //longueur et largueur temporaire
+			
+			caseEmplacement = FenetreUI.listBut;
+			
+			for(int i = 0; i < 3; i++) {
+				for(int j = 0; j < 3; j++) {
+					int nb = ind+j+10*i;
+					System.out.println(empAjoute.getLongueur());
+					System.out.println(nb);
+					boutonCourant = FenetreUI.listBut.get(nb);
+					
+				    boutonCourant.setBackground(Color.GREEN);
+					boutonCourant.setEnabled(false);
+				}
+			}
+			
 			but.setText(Integer.toString(empAjoute.getNumEmplacement()));
 			if(empAjoute.estStand()){
 				Object[] newData = {empAjoute.getNumEmplacement(),empAjoute.getLargeur(),empAjoute.getLongueur()};
@@ -61,4 +77,9 @@ class ActionBtn extends AbstractAction  {
 
 		System.out.println(ind + "=" + coord_x + ":" + coord_y + "(" + clic + ")"); // Pour dev....
 	}
+	
+	public boolean getClic() {
+		return clic;
+	}
+	
 }
