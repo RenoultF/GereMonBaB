@@ -5,65 +5,84 @@ import javax.swing.table.DefaultTableModel;
 
 import java.awt.event.*;
 
-class Cst {
-	// Dimension de la grille
-	public static final int NB_LIGNE = 5;
-	public static final int NB_COL = 10;
-}
 
 public class FenetreUI extends AbstractAction{
 	
+	/** Déclaration des variables du système **/
+	private static BaB system;
+	private Quadrillage carte;
+	private int dimX;
+	private int dimY;
+	
+	private static LinkedList<Emplacement> listeStand = new LinkedList<Emplacement>();
+	private static LinkedList<Emplacement> listeAutre = new LinkedList<Emplacement>();
+	
+	/** Déclaration des variables de la fenêtre **/
 	static String type;
+	
 	static LinkedList<JButton> listBut = new LinkedList<>();
 	private JButton btnTypeStand;
-	private JButton btnTypeBuvette;
-	private JButton btnTypeBoulangerie;
+	private JButton btnTypeAutre;
+	
 	private JFrame frame;
 	private JFrame fenInfo;
-	private int tailleStand;
+	
 	private JPanel panFenetre;
 	private JPanel panGrille;
 	private JPanel panBtnType;
-	static Emplacements emplacements;
-	private String[] nomColStands = {"Numero","Longueur","Largeur","Supprimer"};
-	private String[] nomColDecos  = {"Numero","Nom_deco","Supprimer"};
-	public static DefaultTableModel tabStands;
-	public static DefaultTableModel tabDecos;
-	public static JTable tableStands;
-	public static JTable tableDecos;
-	private JScrollPane scrollStands;
-	private JScrollPane scrollDecos;
-	private Dimensions dim;
 	
+	private String[] nomColStands = {"Numero","Longueur","Largeur","Supprimer"};
+	private String[] nomColAutres = {"Numero","Nom_deco","Supprimer"};
+	
+	public static DefaultTableModel tabStands;
+	public static DefaultTableModel tabAutres;
+	public static JTable tableStands;
+	public static JTable tableAutres;
+	
+	private JScrollPane scrollStands;
+	private JScrollPane scrollAutres;
 
 
-	public FenetreUI(Dimensions dim){
-		this.dim = dim;
+	public FenetreUI(BaB system){
+		
+		/** Variables du système **/
+		this.system = system;
+		carte = system.getCarte();
+		dimX = carte.getDimensionX();
+		dimY = carte.getDimensionY();
+		
+		listeStand = system.getListeStand();
+		listeAutre = system.getListeAutre();
+		
+		
+		/** Variables de la fenêtre **/
 		frame = new JFrame("Quadrillage");
 		panFenetre = new JPanel(new GridLayout(2,2));
-		panGrille = new JPanel(new GridLayout(Cst.NB_LIGNE, Cst.NB_COL));
+		panGrille = new JPanel(new GridLayout(dimX, dimY));
 		panBtnType = new JPanel(new GridLayout(1,3));
-		btnTypeStand = new JButton("Faire Stand");
+		
+		btnTypeStand = new JButton("Stand");
 		btnTypeStand.addActionListener(this);
-		btnTypeBuvette = new JButton("Faire Buvette");
-		btnTypeBuvette.addActionListener(this);
-		btnTypeBoulangerie = new JButton("Faire Boulangerie");
-		btnTypeBoulangerie.addActionListener(this);
-		emplacements = new Emplacements(dim.getLargeur(),dim.getLongueur());
-		type = "STAND";
+		btnTypeAutre = new JButton("Autre");
+		btnTypeAutre.addActionListener(this);
+		
 		tabStands = new DefaultTableModel(nomColStands,0);
-		tabDecos = new DefaultTableModel(nomColDecos,0);
+		tabAutres = new DefaultTableModel(nomColAutres,0);
 		tableStands = new JTable(tabStands);
-		tableDecos = new JTable(tabDecos);
+		tableAutres = new JTable(tabAutres);
 		scrollStands = new JScrollPane(tableStands);
-		scrollDecos = new JScrollPane(tableDecos);
+		scrollAutres = new JScrollPane(tableAutres);
 		
 		
+		
+		/**
+		 ** Creation des boutons pour la carte
+		 **/
 		int ind = 0; // Indice du bouton dans la liste
  
-		for(int i = 0; i < Cst.NB_LIGNE; i++)
-			for(int j = 0; j < Cst.NB_COL; j++) {
-				JButton but = new JButton(new ActionBtn(i, j, ind));
+		for(int i = 0; i < dimX; i++)
+			for(int j = 0; j < dimY; j++) {
+				JButton but = new JButton(new ActionBtn(ind, i, j));
 				but.setBackground(Color.WHITE);
 				ind += 1;
 				listBut.add(but);
@@ -72,14 +91,13 @@ public class FenetreUI extends AbstractAction{
 		
 	
 		panBtnType.add(btnTypeStand);
-		panBtnType.add(btnTypeBuvette);
-		panBtnType.add(btnTypeBoulangerie);
+		panBtnType.add(btnTypeAutre);
 		
 		// ***** Fenêtre *****
 		panFenetre.add(panGrille);
 		panFenetre.add(panBtnType);
 		panFenetre.add(scrollStands);
-		panFenetre.add(scrollDecos);
+		panFenetre.add(scrollAutres);
 		frame.getContentPane().add(panFenetre);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -90,37 +108,37 @@ public class FenetreUI extends AbstractAction{
 	public void actionPerformed(ActionEvent e) {
 		Emplacement temp;
 		if(e.getSource() == btnTypeStand){
-			this.type = "STAND";
+			this.type = "Stand";
 			System.out.println("on passe au type :" + this.type);
 		
 		}
-		else if(e.getSource() == btnTypeBuvette){
-			this.type = "Buvette";
-			System.out.println("on passe au type :" + this.type);
-		}
-		else if(e.getSource() == btnTypeBoulangerie){
-			this.type = "Boulangerie";
+		else if(e.getSource() == btnTypeAutre){
+			this.type = "Autre";
 			System.out.println("on passe au type :" + this.type);
 		}
 	}
 
 	public static void actualiserTab(String type){
 		int i;
-		if(type!="STAND"){
-			System.out.println("taille emplacement :" +emplacements.getDecos().size());
-			for(i = 0;i<emplacements.getDecos().size();i++){
+		if(type!="stand"){
+			System.out.println("taille emplacement :" + listeStand.size());
+			for(i = 0; i < listeStand.size(); i++){
 				System.out.println("i = "+ i);
-				tableDecos.setValueAt(emplacements.getDecos().get(i).getNumEmplacement(), i, 0);
+				tableAutres.setValueAt(listeStand.get(i).getIdType(), i, 0);
 			}
 		}
 		else{
-			System.out.println("taille emplacement :" +emplacements.getStands().size());
-			for(i = 0;i<emplacements.getStands().size();i++){
+			System.out.println("taille emplacement :" + listeAutre.size());
+			for(i = 0; i < listeAutre.size(); i++){
 				System.out.println("i = "+ i);
-				tableStands.setValueAt(emplacements.getStands().get(i).getNumEmplacement(), i, 0);
+				tableStands.setValueAt(listeAutre.get(i).getIdType(), i, 0);
 			}
 		}
 		
+	}
+	
+	public static BaB getSystem() {
+		return system;
 	}
 
 }

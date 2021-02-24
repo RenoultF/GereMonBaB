@@ -1,10 +1,10 @@
-import javax.swing.*;
+//package GereMonBaB;
 
 public class GereMonBaB {
-    public static void main(String [] args) {
-		Dimensions dim =  new Dimensions(1.5, 1.5);
-		dim.saisir();
-    	FenetreUI f = new FenetreUI(dim);
+		
+	public static void main(String [] args) {
+		BaB bab = new BaB();
+		FenetreUI fen = new FenetreUI(bab);
 	}
 }
 

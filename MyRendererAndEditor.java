@@ -53,14 +53,14 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
   public void actionPerformed(ActionEvent e) {
     if(e.getSource() == btn){
       if(empCourant.getType() != "STAND"){
-        FenetreUI.tabDecos.removeRow(row);
+        FenetreUI.tabAutres.removeRow(row);
       }
       else{
         FenetreUI.tabStands.removeRow(row);
       }
-      this.empCourant.afficheToi();
-      this.actualiserBtn(FenetreUI.listBut.get(this.empCourant.getX()*Cst.NB_COL + this.empCourant.getY()));
-      FenetreUI.emplacements.supprimerEmplacement(empCourant);
+      //this.empCourant.afficheToi();
+      this.actualiserBtn(FenetreUI.listBut.get(this.empCourant.getTailleX() + this.empCourant.getTailleY()));
+      FenetreUI.getSystem().supprimerStand(empCourant.getIdType());
       FenetreUI.actualiserTab(empCourant.getType());
     
     }
