@@ -7,7 +7,7 @@ public class BaB {
 
 	//Variables
 	
-	//nombre de cases d'un stand
+	//nombre de cases d'un Stand
 	private int tailleStandX;
 	private int tailleStandY;
 	
@@ -15,8 +15,11 @@ public class BaB {
 	private Quadrillage carte; 
 	
 	//liste des emplacements dans le bab
-	private LinkedList<Emplacement> stands;
+	private LinkedList<Emplacement> Stands;
 	private LinkedList<Emplacement> autres;
+
+	//type de l'emplacement selectionné
+	private String type;
 	
 	//liste des exposants dans le bab
 	//private LinkedList<Exposant> exposants;
@@ -28,8 +31,9 @@ public class BaB {
 		
 		//Initialisation des listes
 		carte = new Quadrillage(dimensionX, dimensionY);
-		stands = new LinkedList<Emplacement>();
+		Stands = new LinkedList<Emplacement>();
 		autres = new LinkedList<Emplacement>();
+		type = new String("Stand");
 	
 	
 	}
@@ -39,15 +43,15 @@ public class BaB {
 	public boolean ajouterStand(int coordX, int coordY) {
 		int idType;
 		Case caseCourante = carte.getCaseXY(coordX, coordY);
-		if(caseCourante.estLibre() == true) {
+		if(caseCourante.estLibre()) {
 			
-			if(stands.size() == 0)
+			if(Stands.size() == 0)
 				idType = 0;
 			else
-				idType = stands.getLast().getIdType() + 1;
+				idType = Stands.getLast().getIdType() + 1;
 				
 			Emplacement nouveauStand = new Stand(idType, coordX, coordY);
-			stands.addLast(nouveauStand);
+			Stands.addLast(nouveauStand);
 			caseCourante.occuper();
 			
 			return true;
@@ -60,25 +64,25 @@ public class BaB {
 	
 	public void supprimerStand(int id) {
 	
-		int coordX = stands.get(id).getCoordonneeX();
-		int coordY = stands.get(id).getCoordonneeY();
+		int coordX = Stands.get(id).getCoordonneeX();
+		int coordY = Stands.get(id).getCoordonneeY();
 		carte.getCaseXY(coordX, coordY).liberer();
 		
-		stands.remove(id);
+		Stands.remove(id);
 		
 	}
 	
 	public boolean ajouterAutre(int coordX, int coordY) {
 		int idType;
 		Case caseCourante = carte.getCaseXY(coordX, coordY);
-		if(caseCourante.estLibre() == true) {
+		if(caseCourante.estLibre()) {
 			
-			if(stands.size() == 0)
+			if(autres.size() == 0)
 				idType = 0;
 			else
-				idType = stands.getLast().getIdType() + 1;
+				idType = autres.getLast().getIdType() + 1;
 				
-			Emplacement nouveauAutre = new Autre(idType, coordX, coordY);
+			Emplacement nouveauAutre = new Autre(idType,this.type, coordX, coordY);
 			autres.addLast(nouveauAutre);
 			caseCourante.occuper();
 			
@@ -88,6 +92,13 @@ public class BaB {
 			System.out.println("Case occupée");	
 			return false;
 		}
+	}
+
+	public boolean ajouterEmplacement(int coordX, int coordY){
+		if(!this.type.equals("Stand")){
+			return ajouterAutre(coordX,coordY);
+		}
+		return ajouterStand(coordX,coordY);
 	}
 	
 	public void supprimerAutre(int id) {
@@ -112,43 +123,59 @@ public class BaB {
 	}
 	
 	/**
-	 ** méthode permettant de récupérer la taille X des stands
-	 ** @return tailleStandX la taille X d'un stand
+	 ** méthode permettant de récupérer la taille X des Stands
+	 ** @return tailleStandX la taille X d'un Stand
 	 **/
 	public int getTailleStandX() {
 		return this.tailleStandX;
 	}
 	
 	/**
-	 ** méthode permettant de récupérer la taille Y des stands
-	 ** @return tailleStandX la taille Y d'un stand
+	 ** méthode permettant de récupérer la taille Y des Stands
+	 ** @return tailleStandX la taille Y d'un Stand
 	 **/
 	public int getTailleStandY() {
 		return this.tailleStandY;
 	}
 	
 	/**
-	 ** méthode permettant de modifier la taille X des stands
-	 ** @param nouveauX la nouvelle taille X d'un stand
+	 ** méthode permettant de modifier la taille X des Stands
+	 ** @param nouveauX la nouvelle taille X d'un Stand
 	 **/
 	public void setTailleStandX(int nouveauX) {
 		this.tailleStandX = nouveauX;
 	}
 	
 	/**
-	 ** méthode permettant de modifier la taille Y des stands
-	 ** @param nouveauY la nouvelle taille Y d'un stand
+	 ** méthode permettant de modifier la taille Y des Stands
+	 ** @param nouveauY la nouvelle taille Y d'un Stand
 	 **/
 	public void setTailleStandY(int nouveauY) {
 		this.tailleStandY = nouveauY;
 	}
+
+	/**
+	 ** méthode permettant de modifier le type des emplacements
+	 ** @param nvType la nouvelle taille Y d'un Stand
+	 **/
+	public void setType(String type) {
+		this.type = type;
+	}
+
+	/**
+	 ** méthode permettant de retourner le type
+	 ** @return type la nouvelle taille Y d'un Stand
+	 **/
+	public String getType() {
+		return this.type;
+	}
 	
 	/**
-	 ** méthode permettant de récupérer la liste des stands
-	 ** @return stands la liste des stands
+	 ** méthode permettant de récupérer la liste des Stands
+	 ** @return Stands la liste des Stands
 	 **/
 	public LinkedList<Emplacement> getListeStand() {
-		return this.stands;
+		return this.Stands;
 	}
 	
 	/**
@@ -163,8 +190,8 @@ public class BaB {
 	
 	public void afficherStands() {
 		System.out.println("Stands : ");
-		for(int i = 0; i < stands.size(); i++) {
-			System.out.println(stands.get(i).afficher());
+		for(int i = 0; i < Stands.size(); i++) {
+			System.out.println(Stands.get(i).afficher());
 		}
 	}
 	

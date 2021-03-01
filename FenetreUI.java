@@ -31,7 +31,7 @@ public class FenetreUI extends AbstractAction{
 	private JPanel panGrille;
 	private JPanel panBtnType;
 	
-	private String[] nomColStands = {"Numero","Longueur","Largeur","Supprimer"};
+	private String[] nomColStands = {"Numero","Longueur","Largeur",""};
 	private String[] nomColAutres = {"Numero","Nom_deco","Supprimer"};
 	
 	public static DefaultTableModel tabStands;
@@ -108,19 +108,19 @@ public class FenetreUI extends AbstractAction{
 	public void actionPerformed(ActionEvent e) {
 		Emplacement temp;
 		if(e.getSource() == btnTypeStand){
-			this.type = "Stand";
-			System.out.println("on passe au type :" + this.type);
+			system.setType("Stand");
+			System.out.println("on passe au type :" + system.getType());
 		
 		}
 		else if(e.getSource() == btnTypeAutre){
-			this.type = "Autre";
-			System.out.println("on passe au type :" + this.type);
+			system.setType("autre");
+			System.out.println("on passe au type :" + system.getType());
 		}
 	}
 
 	public static void actualiserTab(String type){
 		int i;
-		if(type!="stand"){
+		if(type!="Stand"){
 			System.out.println("taille emplacement :" + listeStand.size());
 			for(i = 0; i < listeStand.size(); i++){
 				System.out.println("i = "+ i);

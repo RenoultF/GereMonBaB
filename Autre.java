@@ -5,8 +5,8 @@ import java.util.*;
 
 public class Autre extends Emplacement {
 
-	public Autre(int idType, int coordX, int coordY) {
-		super(idType, "autre", coordX, coordY);
+	public Autre(int idType, String type, int coordX, int coordY) {
+		super(idType, type, coordX, coordY);
 	}
 }
 	

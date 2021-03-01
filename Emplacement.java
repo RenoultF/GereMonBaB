@@ -85,6 +85,14 @@ public class Emplacement {
 		return this.coordonneeY;
 	}
 	
+	/**
+	 ** méthode permettant de savoir si c'est un stand ou non
+	 ** @return false
+	 **/
+	public boolean estStand() {
+		return false;
+	}
+
 	/** DEBUGGAGE
 	 ** méthode d'affichage des informations dans le terminal
 	 **/
