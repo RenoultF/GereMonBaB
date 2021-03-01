@@ -52,7 +52,7 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
   @Override
   public void actionPerformed(ActionEvent e) {
     if(e.getSource() == btn){
-      if(empCourant.getType() != "STAND"){
+      if(!empCourant.getType().equals("Stand")){
         FenetreUI.tabAutres.removeRow(row);
       }
       else{
