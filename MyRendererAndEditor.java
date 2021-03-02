@@ -59,10 +59,14 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
         FenetreUI.tabStands.removeRow(row);
       }
       //this.empCourant.afficheToi();
-      this.actualiserBtn(FenetreUI.listBut.get(this.empCourant.getTailleX() + this.empCourant.getTailleY()));
+      System.out.println("Probleme ici 1");
+      this.actualiserBtn(FenetreUI.listBut.get((this.empCourant.getTailleX() + this.empCourant.getTailleY())+1));
+      System.out.println("Probleme ici 2");
+      empCourant.afficher();
       FenetreUI.getSystem().supprimerStand(empCourant.getIdType());
+      System.out.println("Probleme ici 3");
       FenetreUI.actualiserTab(empCourant.getType());
-    
+      System.out.println("Probleme ici 4");
     }
   }
 

@@ -31,8 +31,8 @@ public class FenetreUI extends AbstractAction{
 	private JPanel panGrille;
 	private JPanel panBtnType;
 	
-	private String[] nomColStands = {"Numero","Longueur","Largeur",""};
-	private String[] nomColAutres = {"Numero","Nom_deco","Supprimer"};
+	private String[] nomColStands = {"Numero","X","Y",""};
+	private String[] nomColAutres = {"Numero","Nom_deco","X","Y","Supprimer"};
 	
 	public static DefaultTableModel tabStands;
 	public static DefaultTableModel tabAutres;

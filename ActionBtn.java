@@ -47,7 +47,7 @@ class ActionBtn extends AbstractAction  {
 			
 				boutonCourant.setText(Integer.toString(emplacementAjoute.getIdType()));
 				if(emplacementAjoute.getType().equals("Stand")){
-					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getTailleX(),emplacementAjoute.getTailleY()};
+					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getCoordonneeX(),emplacementAjoute.getCoordonneeY()};
 					FenetreUI.tabStands.addRow(newData);
 					//emplacementAjoute.afficheToi();
 					FenetreUI.tableStands.getColumn("").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableStands,emplacementAjoute));
@@ -55,7 +55,7 @@ class ActionBtn extends AbstractAction  {
 				}
 				else{
 					boutonCourant.setBackground(Color.BLACK);
-					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getType()};
+					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getType(),emplacementAjoute.getCoordonneeX(),emplacementAjoute.getCoordonneeY()};
 					FenetreUI.tabAutres.addRow(newData);
 					FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,emplacementAjoute));
 					FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,emplacementAjoute));
