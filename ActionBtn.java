@@ -15,6 +15,7 @@ class ActionBtn extends AbstractAction  {
 	private JButton boutonCourant;
 	
 	private Emplacement emplacementAjoute;
+
 	
 
 	public ActionBtn(int i, int x, int y) {
@@ -33,7 +34,7 @@ class ActionBtn extends AbstractAction  {
             //type = FenetreUI.type;
 			if(FenetreUI.getSystem().ajouterEmplacement(coord_x, coord_y)) {
 				clic = true;
-				
+				FenetreUI.getSystem().afficherStands();
 				if(FenetreUI.getSystem().getType().equals("Stand")){
 					emplacementAjoute = FenetreUI.getSystem().getListeStand().getLast();
 				}
@@ -50,15 +51,15 @@ class ActionBtn extends AbstractAction  {
 					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getCoordonneeX(),emplacementAjoute.getCoordonneeY()};
 					FenetreUI.tabStands.addRow(newData);
 					//emplacementAjoute.afficheToi();
-					FenetreUI.tableStands.getColumn("").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableStands,emplacementAjoute));
-					FenetreUI.tableStands.getColumn("").setCellEditor(new MyRendererAndEditor(FenetreUI.tableStands,emplacementAjoute));
+					FenetreUI.tableStands.getColumn("").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableStands,"Stand"));
+					FenetreUI.tableStands.getColumn("").setCellEditor(new MyRendererAndEditor(FenetreUI.tableStands,"Stand"));
 				}
 				else{
 					boutonCourant.setBackground(Color.BLACK);
 					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getType(),emplacementAjoute.getCoordonneeX(),emplacementAjoute.getCoordonneeY()};
 					FenetreUI.tabAutres.addRow(newData);
-					FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,emplacementAjoute));
-					FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,emplacementAjoute));
+					FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
+					FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
 				}
 			}
 		}

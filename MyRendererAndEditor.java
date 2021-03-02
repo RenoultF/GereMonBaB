@@ -12,15 +12,13 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
   private JButton btn;
   private int row;
   private JTable table;
-  private Emplacement empCourant;
+  private String type;
 
-  MyRendererAndEditor(JTable table, Emplacement emp) {
+  MyRendererAndEditor(JTable table, String type) {
     btn = new JButton("Supprimer");
     btn.addActionListener(this);
     this.table = table;
-    
-    this.empCourant = emp;
-    this.empCourant.afficher();
+    this.type = type;
   }
   
   @Override
@@ -29,6 +27,7 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
   {
     return btn;
   }
+
   @Override
   public Component getTableCellEditorComponent(JTable table, Object 
   value, boolean isSelected, int row, int column) 
@@ -53,24 +52,33 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
 
   @Override
   public void actionPerformed(ActionEvent e) {
-    if(e.getSource() == btn){
-      if(!empCourant.getType().equals("Stand")){
-        FenetreUI.tabAutres.removeRow(row);
+    if(e.getSource() == this.btn){
+      int index;
+      Emplacement empCourant;
+      if(type.equals("Stand")){
+        //On recupere l'idType qui est dans le tableau
+        index = (int)FenetreUI.tabStands.getValueAt(row, 0);
+        //On va chercher l'emplacement qui correspond à l'index
+        empCourant = FenetreUI.getSystem().getListeStand().get(index);
+        //on supprime la ligne dans le tableau
+        FenetreUI.tabStands.removeRow(row);
+        //on suprrime le stand de la liste
+        FenetreUI.getSystem().supprimerStand(empCourant.getIdType());
       }
       else{
-        FenetreUI.tabStands.removeRow(row);
+        //On recupere l'idType qui est dans le tableau
+        index = (int)FenetreUI.tabAutres.getValueAt(row, 0);
+        //On va chercher l'emplacement qui correspond à l'index
+        empCourant = FenetreUI.getSystem().getListeAutre().get(index);
+        //on supprime la ligne dans le tableau
+        FenetreUI.tabAutres.removeRow(row);
+        //on suprrime le stand de la liste
+        FenetreUI.getSystem().supprimerAutre(empCourant.getIdType());
       }
-      //this.empCourant.afficheToi();
-      System.out.println("Probleme ici 1");
-      this.empCourant.afficher();
-      System.out.println("indice ="+(this.empCourant.getCoordonneeX()*FenetreUI.dimX + this.empCourant.getCoordonneeY()));
-      this.actualiserBtn(FenetreUI.listBut.get(this.empCourant.getCoordonneeX()*FenetreUI.dimX + this.empCourant.getCoordonneeY()));
-      System.out.println("Probleme ici 2");
-      empCourant.afficher();
-      FenetreUI.getSystem().supprimerStand(empCourant.getIdType());
-      System.out.println("Probleme ici 3");
-      FenetreUI.actualiserTab(empCourant.getType());
-      System.out.println("Probleme ici 4");
+      //Permet d'actualiseer le bouton qui correspond à l'emplacement
+      this.actualiserBtn(FenetreUI.listBut.get(empCourant.getCoordonneeX()*FenetreUI.dimX + empCourant.getCoordonneeY()));
+      //on actualise les données dans le tableaux
+      FenetreUI.actualiserTab(empCourant.getType(),index);
     }
   }
 

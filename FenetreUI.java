@@ -121,20 +121,22 @@ public class FenetreUI extends AbstractAction{
 		}
 	}
 
-	public static void actualiserTab(String type){
+	public static void actualiserTab(String type, int index){
 		int i;
-		if(type!="Stand"){
-			System.out.println("taille emplacement :" + listeStand.size());
-			for(i = 0; i < listeStand.size(); i++){
-				System.out.println("i = "+ i);
-				tableAutres.setValueAt(listeStand.get(i).getIdType(), i, 0);
+		if(type.equals("Stand")){
+			for(i = index; i < listeStand.size(); i++){
+				//on met a jour l'id de tous les autres stands
+				listeStand.get(i).setIdType(-1);
+				//on change la valeur dans le tableau
+				tableStands.setValueAt(listeStand.get(i).getIdType(), i, 0);
 			}
 		}
 		else{
-			System.out.println("taille emplacement :" + listeAutre.size());
-			for(i = 0; i < listeAutre.size(); i++){
-				System.out.println("i = "+ i);
-				tableStands.setValueAt(listeAutre.get(i).getIdType(), i, 0);
+			for(i = index; i < listeAutre.size(); i++){
+				//on met a jour l'id de tous les autres stands
+				listeAutre.get(i).setIdType(-1);
+				//on change la valeur dans le tableau
+				tableAutres.setValueAt(listeAutre.get(i).getIdType(), i, 0);
 			}
 		}
 		

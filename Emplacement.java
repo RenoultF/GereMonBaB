@@ -36,6 +36,13 @@ public class Emplacement {
 	public int getIdType() {
 		return this.idType;
 	}
+
+	/**
+	 ** méthode mettant a jour l'idType
+	 **/
+	public void setIdType(int nvId) {
+		this.idType = this.idType + nvId;
+	}
 	
 	/**
 	 ** méthode retournant le type de l'emplacement
