@@ -41,7 +41,7 @@ public class Emplacement {
 	 ** méthode mettant a jour l'idType
 	 **/
 	public void setIdType(int nvId) {
-		this.idType = this.idType + nvId;
+		this.idType = nvId;
 	}
 	
 	/**

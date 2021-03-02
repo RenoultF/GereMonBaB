@@ -126,7 +126,7 @@ public class FenetreUI extends AbstractAction{
 		if(type.equals("Stand")){
 			for(i = index; i < listeStand.size(); i++){
 				//on met a jour l'id de tous les autres stands
-				listeStand.get(i).setIdType(-1);
+				listeStand.get(i).setIdType(listeStand.get(i).getIdType()-1);
 				//on change la valeur dans le tableau
 				tableStands.setValueAt(listeStand.get(i).getIdType(), i, 0);
 			}
