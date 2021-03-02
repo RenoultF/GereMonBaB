@@ -42,6 +42,8 @@ public class FenetreUI extends AbstractAction{
 	private JScrollPane scrollStands;
 	private JScrollPane scrollAutres;
 
+	private Semaphore sem;
+
 
 	public FenetreUI(BaB system){
 		
@@ -53,7 +55,7 @@ public class FenetreUI extends AbstractAction{
 		
 		listeStand = system.getListeStand();
 		listeAutre = system.getListeAutre();
-		
+		sem = new Semaphore(1);
 		
 		/** Variables de la fenêtre **/
 		frame = new JFrame("Quadrillage");
@@ -65,6 +67,7 @@ public class FenetreUI extends AbstractAction{
 		btnTypeStand.addActionListener(this);
 		btnTypeAutre = new JButton("Autre");
 		btnTypeAutre.addActionListener(this);
+		
 		
 		tabStands = new DefaultTableModel(nomColStands,0);
 		tabAutres = new DefaultTableModel(nomColAutres,0);
@@ -113,8 +116,8 @@ public class FenetreUI extends AbstractAction{
 		
 		}
 		else if(e.getSource() == btnTypeAutre){
-			system.setType("autre");
-			System.out.println("on passe au type :" + system.getType());
+			FenetreAutre fenAutre = new FenetreAutre(1.5,1.5,"Autre",system);
+			fenAutre.saisir();
 		}
 	}
 
