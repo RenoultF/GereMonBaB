@@ -191,7 +191,7 @@ public class BaB {
 	public void afficherStands() {
 		System.out.println("Stands : ");
 		for(int i = 0; i < Stands.size(); i++) {
-			System.out.println(Stands.get(i).afficher());
+			Stands.get(i).afficher();
 		}
 	}
 	

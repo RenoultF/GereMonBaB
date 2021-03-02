@@ -96,12 +96,13 @@ public class Emplacement {
 	/** DEBUGGAGE
 	 ** méthode d'affichage des informations dans le terminal
 	 **/
-	 public String afficher() {
-	 	String affichage;
+	 public void afficher() {
+	 	/*String affichage;
 	 	affichage  = "\t" + nom +"\n";
 	 	affichage += "\t" + idType +"\n";
 	 	affichage += "\t" + type +"\n";
 	 	affichage += "\tCoordonnées : " + coordonneeX + "," + coordonneeY +"\n";
-	 	return affichage;
+	 	return affichage;*/
+		System.out.println("nom :"+ nom +" idType : " + idType + " type : " + type + " Coordonnées :" + " ("+coordonneeX +","+ coordonneeY+")");
 	 }
 }

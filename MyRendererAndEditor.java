@@ -18,7 +18,9 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
     btn = new JButton("Supprimer");
     btn.addActionListener(this);
     this.table = table;
+    
     this.empCourant = emp;
+    this.empCourant.afficher();
   }
   
   @Override
@@ -60,7 +62,9 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
       }
       //this.empCourant.afficheToi();
       System.out.println("Probleme ici 1");
-      this.actualiserBtn(FenetreUI.listBut.get((this.empCourant.getTailleX() + this.empCourant.getTailleY())+1));
+      this.empCourant.afficher();
+      System.out.println("indice ="+(this.empCourant.getCoordonneeX()*FenetreUI.dimX + this.empCourant.getCoordonneeY()));
+      this.actualiserBtn(FenetreUI.listBut.get(this.empCourant.getCoordonneeX()*FenetreUI.dimX + this.empCourant.getCoordonneeY()));
       System.out.println("Probleme ici 2");
       empCourant.afficher();
       FenetreUI.getSystem().supprimerStand(empCourant.getIdType());

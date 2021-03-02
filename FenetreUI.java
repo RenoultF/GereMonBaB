@@ -11,7 +11,7 @@ public class FenetreUI extends AbstractAction{
 	/** Déclaration des variables du système **/
 	private static BaB system;
 	private Quadrillage carte;
-	private int dimX;
+	public static int dimX;
 	private int dimY;
 	
 	private static LinkedList<Emplacement> listeStand = new LinkedList<Emplacement>();
@@ -20,7 +20,7 @@ public class FenetreUI extends AbstractAction{
 	/** Déclaration des variables de la fenêtre **/
 	static String type;
 	
-	static LinkedList<JButton> listBut = new LinkedList<>();
+	public static LinkedList<JButton> listBut = new LinkedList<>();
 	private JButton btnTypeStand;
 	private JButton btnTypeAutre;
 	
