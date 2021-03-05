@@ -26,10 +26,16 @@ public class FenetreUI extends AbstractAction{
 	
 	private JFrame frame;
 	private JFrame fenInfo;
+
+	private JTabbedPane ongletBab;
 	
 	private JPanel panFenetre;
 	private JPanel panGrille;
+
 	private JPanel panBtnType;
+	private JPanel panInfoBaB;
+	private JPanel panListeReservation;
+
 	
 	private String[] nomColStands = {"Numero","X","Y",""};
 	private String[] nomColAutres = {"Numero","Nom_deco","X","Y","Supprimer"};
@@ -61,7 +67,13 @@ public class FenetreUI extends AbstractAction{
 		frame = new JFrame("Quadrillage");
 		panFenetre = new JPanel(new GridLayout(2,2));
 		panGrille = new JPanel(new GridLayout(dimX, dimY));
+
+		ongletBab = new JTabbedPane();
 		panBtnType = new JPanel(new GridLayout(1,3));
+		panInfoBaB = new JPanel();
+		panListeReservation = new JPanel();
+
+
 		
 		btnTypeStand = new JButton("Stand");
 		btnTypeStand.addActionListener(this);
@@ -98,7 +110,10 @@ public class FenetreUI extends AbstractAction{
 		
 		// ***** Fenêtre *****
 		panFenetre.add(panGrille);
-		panFenetre.add(panBtnType);
+		ongletBab.add("Creation emplacement",panBtnType);
+		ongletBab.add("Infomation BaB",panInfoBaB);
+		ongletBab.add("Liste Reservation",panListeReservation);
+		panFenetre.add(ongletBab);
 		panFenetre.add(scrollStands);
 		panFenetre.add(scrollAutres);
 		frame.getContentPane().add(panFenetre);
@@ -134,7 +149,7 @@ public class FenetreUI extends AbstractAction{
 		else{
 			for(i = index; i < listeAutre.size(); i++){
 				//on met a jour l'id de tous les autres stands
-				listeAutre.get(i).setIdType(-1);
+				listeAutre.get(i).setIdType(listeAutre.get(i).getIdType()-1);
 				//on change la valeur dans le tableau
 				tableAutres.setValueAt(listeAutre.get(i).getIdType(), i, 0);
 			}

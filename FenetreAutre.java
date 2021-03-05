@@ -36,8 +36,8 @@ public class FenetreAutre extends JFrame {
 
         System.out.println("avant NEW");
         labTitre = new JLabel("Dimension d'un stand");
-        labLarg = new JLabel("Largeur (en m) :");
-        labLong = new JLabel("Longeur (en m) :");
+        labLarg = new JLabel("Largeur :");
+        labLong = new JLabel("Longeur :");
         labType = new JLabel("Type :");
         txtLarg = new JTextField(5);
         txtLong = new JTextField(5);

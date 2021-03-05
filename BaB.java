@@ -6,10 +6,16 @@ import java.awt.*;
 public class BaB {
 
 	//Variables
+
+	private String nomBaB;
+	private String dateBaB;
+	private int prixStand;
+	private String adresseBaB;
+
 	
 	//nombre de cases d'un Stand
-	private int tailleStandX;
-	private int tailleStandY;
+	private int tailleStandLongueur;
+	private int tailleStandLargeur;
 	
 	//Quadrillage de la carte
 	private Quadrillage carte; 
@@ -24,10 +30,15 @@ public class BaB {
 	//liste des exposants dans le bab
 	//private LinkedList<Exposant> exposants;
 	
-	public BaB() {
+	public BaB(String nomBaB, String dateBaB, int prixStand, String adresse, int dimX, int dimY) {
 	
-		int dimensionX = 10; //Valeur par défaut
-		int dimensionY = 10;
+		int dimensionX = dimX; //Valeur par défaut
+		int dimensionY = dimY;
+
+		this.nomBaB = nomBaB;
+		this.dateBaB = dateBaB;
+		this.prixStand = prixStand;
+		this.adresseBaB = adresse;
 		
 		//Initialisation des listes
 		carte = new Quadrillage(dimensionX, dimensionY);
@@ -124,35 +135,69 @@ public class BaB {
 	
 	/**
 	 ** méthode permettant de récupérer la taille X des Stands
-	 ** @return tailleStandX la taille X d'un Stand
+	 ** @return tailleStandLongueur la taille X d'un Stand
 	 **/
-	public int getTailleStandX() {
-		return this.tailleStandX;
+	public int getTailleStandLongueur() {
+		return this.tailleStandLongueur;
 	}
 	
 	/**
 	 ** méthode permettant de récupérer la taille Y des Stands
-	 ** @return tailleStandX la taille Y d'un Stand
+	 ** @return tailleStandLongueur la taille Y d'un Stand
 	 **/
-	public int getTailleStandY() {
-		return this.tailleStandY;
+	public int getTailleStandLargeur() {
+		return this.tailleStandLargeur;
 	}
 	
 	/**
 	 ** méthode permettant de modifier la taille X des Stands
 	 ** @param nouveauX la nouvelle taille X d'un Stand
 	 **/
-	public void setTailleStandX(int nouveauX) {
-		this.tailleStandX = nouveauX;
+	public void setTailleStandLongueur(int nouveauX) {
+		this.tailleStandLongueur = nouveauX;
 	}
 	
 	/**
 	 ** méthode permettant de modifier la taille Y des Stands
 	 ** @param nouveauY la nouvelle taille Y d'un Stand
 	 **/
-	public void setTailleStandY(int nouveauY) {
-		this.tailleStandY = nouveauY;
+	public void setTailleStandLargeur(int nouveauY) {
+		this.tailleStandLargeur = nouveauY;
 	}
+
+	/**
+	 ** méthode permettant de modifier le Nom du BaB
+	 ** @param nvNomBaB le nouveau nom du bab
+	 **/
+	public void setNomBaB(String nvNomBaB) {
+		this.nomBaB = nvNomBaB;
+	}
+
+	/**
+	 ** méthode permettant de modifier le Nom du BaB
+	 ** @param nvDateBaB la nouvelle date du bab
+	 **/
+	public void setDateBaB(String nvDateBaB) {
+		this.dateBaB = nvDateBaB;
+	}
+
+
+	/**
+	 ** méthode permettant de modifier l'adresse du BaB
+	 ** @param nvPrixStand la nouvelle adresse du bab
+	 **/
+	public void setPrixStand(int nvPrixStand) {
+		this.prixStand = nvPrixStand;
+	}
+	
+	/**
+	 ** méthode permettant de modifier l'adresse du BaB
+	 ** @param nvAdresseBaB la nouvelle adresse du bab
+	 **/
+	public void setAdresseBaB(String nvAdresseBaB) {
+		this.adresseBaB = nvAdresseBaB;
+	}
+
 
 	/**
 	 ** méthode permettant de modifier le type des emplacements
@@ -169,7 +214,40 @@ public class BaB {
 	public String getType() {
 		return this.type;
 	}
+
+
+	/**
+	 ** méthode permettant de retourner le nom du BaB
+	 ** @return le nom du bab
+	 **/
+	public String getNomBaB() {
+		return this.nomBaB;
+	}
+
+	/**
+	 ** méthode permettant de retourner la date du BaB
+	 ** @return la date du BaB
+	 **/
+	public String getDateBaB() {
+		return this.dateBaB;
+	}
+
+	/**
+	 ** méthode permettant de retourner le prix d'un stand
+	 ** @return le prix du stand
+	 **/
+	public int getPrixStand() {
+		return this.prixStand;
+	}
 	
+	/**
+	 ** méthode permettant de retourner l'adresse du BaB
+	 ** @return l'adresse du BaB
+	 **/
+	public String getAdresseBaB() {
+		return this.adresseBaB;
+	}
+
 	/**
 	 ** méthode permettant de récupérer la liste des Stands
 	 ** @return Stands la liste des Stands
