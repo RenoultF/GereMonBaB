@@ -36,9 +36,33 @@ public class FenetreUI extends AbstractAction{
 	private JPanel panInfoBaB;
 	private JPanel panListeReservation;
 
-	
+	/*variable onglet information BaB*/
+	private JLabel labNomBaB;
+    private JLabel labDateBaB;
+    private JLabel labPrixStand;
+    private JLabel labAdresse;
+    private JLabel labDimX;
+    private JLabel labDimY;
+
+	private JTextField txtNomBaB;
+    private JTextField txtDateBaB;
+    private JTextField txtPrixStand;
+    private JTextField txtAdresse;
+    private JTextField txtDimX;
+    private JTextField txtDimY;
+
+	private JButton btnSaveBaB;
+	private JButton btnSupprimerBaB;
+
+
+	/*variable des tableaux*/
 	private String[] nomColStands = {"Numero","X","Y",""};
 	private String[] nomColAutres = {"Numero","Nom_deco","X","Y","Supprimer"};
+
+	private String[] nomColReservation = {"Nom","Prenom","ID Stand","Coordonnees","Accepter","Refuser"};
+	public static DefaultTableModel tabReservation;
+	public static JTable tableReservation;
+	private JScrollPane scrollReservation;
 	
 	public static DefaultTableModel tabStands;
 	public static DefaultTableModel tabAutres;
@@ -70,9 +94,36 @@ public class FenetreUI extends AbstractAction{
 
 		ongletBab = new JTabbedPane();
 		panBtnType = new JPanel(new GridLayout(1,3));
-		panInfoBaB = new JPanel();
+		panInfoBaB = new JPanel(new GridLayout(7,2));
 		panListeReservation = new JPanel();
 
+		/*variable onglet info BaB*/
+		labNomBaB = new JLabel("Nom du BaB :");
+        labDateBaB = new JLabel("Date du BaB (JJ/MM/AAAA):");
+        labAdresse = new JLabel("Adresse du BaB :");
+        labDimX = new JLabel("Dimension X :");
+        labDimY = new JLabel("Dimension Y :");
+        labPrixStand = new JLabel("Prix d'un Stand :");
+
+		txtNomBaB = new JTextField(15);
+        txtDateBaB = new JTextField(10);
+        txtAdresse = new JTextField(30);
+        txtDimX = new JTextField(5);
+        txtDimY = new JTextField(5);
+        txtPrixStand = new JTextField(5);
+
+
+		// ***** Valeurs par défaut *****
+        txtNomBaB.setText(system.getNomBaB());
+        txtDateBaB.setText(system.getDateBaB());
+        txtAdresse.setText(system.getAdresseBaB());
+        txtDimX.setText(Integer.toString(system.getDimX()));
+        txtDimY.setText(Integer.toString(system.getDimY()));
+        txtPrixStand.setText(Integer.toString(system.getPrixStand()));
+		btnSaveBaB = new JButton("Sauvegarder BaB");
+		btnSaveBaB.addActionListener(this);
+		btnSupprimerBaB = new JButton("Supprimer BaB");
+		btnSupprimerBaB.addActionListener(this);
 
 		
 		btnTypeStand = new JButton("Stand");
@@ -80,6 +131,9 @@ public class FenetreUI extends AbstractAction{
 		btnTypeAutre = new JButton("Autre");
 		btnTypeAutre.addActionListener(this);
 		
+		tabReservation = new DefaultTableModel(nomColReservation,0);
+		tableReservation = new JTable(tabReservation);
+		scrollReservation = new JScrollPane(tableReservation);
 		
 		tabStands = new DefaultTableModel(nomColStands,0);
 		tabAutres = new DefaultTableModel(nomColAutres,0);
@@ -107,6 +161,30 @@ public class FenetreUI extends AbstractAction{
 	
 		panBtnType.add(btnTypeStand);
 		panBtnType.add(btnTypeAutre);
+
+		
+		panInfoBaB.add(labNomBaB);
+        panInfoBaB.add(txtNomBaB);
+
+        panInfoBaB.add(labDateBaB);
+        panInfoBaB.add(txtDateBaB);
+
+        panInfoBaB.add(labAdresse);
+        panInfoBaB.add(txtAdresse);
+
+        panInfoBaB.add(labDimX);
+        panInfoBaB.add(txtDimX);
+
+        panInfoBaB.add(labDimY);
+        panInfoBaB.add(txtDimY);
+
+        panInfoBaB.add(labPrixStand);
+        panInfoBaB.add(txtPrixStand);
+
+		panInfoBaB.add(btnSupprimerBaB);
+		panInfoBaB.add(btnSaveBaB);
+
+		panListeReservation.add(scrollReservation);
 		
 		// ***** Fenêtre *****
 		panFenetre.add(panGrille);
@@ -118,7 +196,7 @@ public class FenetreUI extends AbstractAction{
 		panFenetre.add(scrollAutres);
 		frame.getContentPane().add(panFenetre);
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //frame.dispose(); si on veux juste quitter la fenetre et non aps l'appli.
 		frame.setSize(1000, 500);
 	}
 
@@ -133,6 +211,13 @@ public class FenetreUI extends AbstractAction{
 		else if(e.getSource() == btnTypeAutre){
 			FenetreAutre fenAutre = new FenetreAutre(1.5,1.5,"Autre",system);
 			fenAutre.saisir();
+		}
+		else if(e.getSource() == btnSaveBaB){
+			//TODO sauvegarder dans BDD
+
+		}
+		else if(e.getSource() == btnSupprimerBaB){
+			frame.dispose();
 		}
 	}
 

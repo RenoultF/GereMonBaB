@@ -34,7 +34,6 @@ public class FenetreAutre extends JFrame {
     public void saisir() {
         sem.P(); // Prise du semaphore
 
-        System.out.println("avant NEW");
         labTitre = new JLabel("Dimension d'un stand");
         labLarg = new JLabel("Largeur :");
         labLong = new JLabel("Longeur :");
@@ -44,7 +43,6 @@ public class FenetreAutre extends JFrame {
         txtType = new JTextField(15);
         butOk = new JButton(new ActionBtnOk("OK"));
 
-        System.out.println("avant Bounds");
         // ***** Absolute Positioning *****
         labTitre.setBounds(5, 5, 160, 25);
         labLarg.setBounds(30, 35, 120, 25);
@@ -55,13 +53,11 @@ public class FenetreAutre extends JFrame {
         txtType.setBounds(155, 95, 100, 25);
         butOk.setBounds(265, 35, 65, 55);
 
-        System.out.println("avant setText");
         // ***** Valeurs par défaut *****
         txtLarg.setText(Double.toString(largeur));
         txtLong.setText(Double.toString(longueur));
         txtType.setText(type);
 
-        System.out.println("avant add");
         add(labTitre);
         add(labLarg);
         add(labLong);
@@ -71,12 +67,10 @@ public class FenetreAutre extends JFrame {
         add(txtType);
         add(butOk);
 
-        System.out.println("avant Fenetre");
         // ***** Fenêtre *****
         this.setLayout(null);
-        this.setTitle("Dimensions Autres");
         this.setSize(350, 200);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(this.dispose());
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 

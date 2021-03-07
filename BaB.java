@@ -11,7 +11,8 @@ public class BaB {
 	private String dateBaB;
 	private int prixStand;
 	private String adresseBaB;
-
+	private int dimX;
+	private int dimY;
 	
 	//nombre de cases d'un Stand
 	private int tailleStandLongueur;
@@ -32,8 +33,8 @@ public class BaB {
 	
 	public BaB(String nomBaB, String dateBaB, int prixStand, String adresse, int dimX, int dimY) {
 	
-		int dimensionX = dimX; //Valeur par défaut
-		int dimensionY = dimY;
+		this.dimX = dimX; //Valeur par défaut
+		this.dimY = dimY;
 
 		this.nomBaB = nomBaB;
 		this.dateBaB = dateBaB;
@@ -41,7 +42,7 @@ public class BaB {
 		this.adresseBaB = adresse;
 		
 		//Initialisation des listes
-		carte = new Quadrillage(dimensionX, dimensionY);
+		carte = new Quadrillage(this.dimX, this.dimY);
 		Stands = new LinkedList<Emplacement>();
 		autres = new LinkedList<Emplacement>();
 		type = new String("Stand");
@@ -239,6 +240,23 @@ public class BaB {
 	public int getPrixStand() {
 		return this.prixStand;
 	}
+
+	/**
+	 ** méthode permettant de retourner la taille X du BaB
+	 ** @return la taille X du BaB
+	 **/
+	public int getDimX() {
+		return this.dimX;
+	}
+
+	/**
+	 ** méthode permettant de retourner la taille Y du BaB
+	 ** @return la taille Y du BaB
+	 **/
+	public int getDimY() {
+		return this.dimY;
+	}
+	
 	
 	/**
 	 ** méthode permettant de retourner l'adresse du BaB
