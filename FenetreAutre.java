@@ -79,17 +79,17 @@ public class FenetreAutre extends JFrame {
     // ********** Getters **********
     // Synchronisation (attendre fin de la saisie) par mutex
     public Double getLargeur() {
-        sem.P(); sem.V();
+        sem.V(); sem.P();
         return largeur;
     }
 
     public Double getLongueur() {
-        sem.P(); sem.V();
+        sem.V(); sem.P();
         return longueur;
     }
 
     public String getTypeTString() {
-        sem.P(); sem.V();
+        sem.V(); sem.P();
         return type;
     }
 
@@ -109,8 +109,9 @@ public class FenetreAutre extends JFrame {
             largeur = Double.valueOf(txtLarg.getText());
             longueur = Double.valueOf(txtLong.getText());
             type = txtType.getText();
+			system.setTailleAutreLargeur(largeur);
+			system.setTailleAutreLongueur(longueur);
             system.setType(type);
-            System.out.println(system.getType());
             fermerFenetre();
         }
     }

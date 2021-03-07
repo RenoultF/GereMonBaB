@@ -6,7 +6,6 @@ import java.awt.*;
 public class BaB {
 
 	//Variables
-
 	private String nomBaB;
 	private String dateBaB;
 	private int prixStand;
@@ -15,8 +14,8 @@ public class BaB {
 	private int dimY;
 	
 	//nombre de cases d'un Stand
-	private int tailleStandLongueur;
-	private int tailleStandLargeur;
+	private Double tailleAutreLongueur;
+	private Double tailleAutreLargeur;
 	
 	//Quadrillage de la carte
 	private Quadrillage carte; 
@@ -136,34 +135,34 @@ public class BaB {
 	
 	/**
 	 ** méthode permettant de récupérer la taille X des Stands
-	 ** @return tailleStandLongueur la taille X d'un Stand
+	 ** @return tailleAutreLongueur la taille X d'un Stand
 	 **/
-	public int getTailleStandLongueur() {
-		return this.tailleStandLongueur;
+	public Double getTailleAutreLongueur() {
+		return this.tailleAutreLongueur;
 	}
 	
 	/**
 	 ** méthode permettant de récupérer la taille Y des Stands
-	 ** @return tailleStandLongueur la taille Y d'un Stand
+	 ** @return tailleAutreLongueur la taille Y d'un Stand
 	 **/
-	public int getTailleStandLargeur() {
-		return this.tailleStandLargeur;
+	public Double getTailleAutreLargeur() {
+		return this.tailleAutreLargeur;
 	}
 	
 	/**
 	 ** méthode permettant de modifier la taille X des Stands
 	 ** @param nouveauX la nouvelle taille X d'un Stand
 	 **/
-	public void setTailleStandLongueur(int nouveauX) {
-		this.tailleStandLongueur = nouveauX;
+	public void setTailleAutreLongueur(Double nouveauX) {
+		this.tailleAutreLongueur = nouveauX;
 	}
 	
 	/**
 	 ** méthode permettant de modifier la taille Y des Stands
 	 ** @param nouveauY la nouvelle taille Y d'un Stand
 	 **/
-	public void setTailleStandLargeur(int nouveauY) {
-		this.tailleStandLargeur = nouveauY;
+	public void setTailleAutreLargeur(Double nouveauY) {
+		this.tailleAutreLargeur = nouveauY;
 	}
 
 	/**
@@ -199,6 +198,21 @@ public class BaB {
 		this.adresseBaB = nvAdresseBaB;
 	}
 
+	/**
+	 ** méthode permettant de modifier la taille X du BaB
+	 ** @param nvDimX la nouvelle taille X du BaB
+	 **/
+	public void setDimX(int nvDimX) {
+		this.dimX = nvDimX;
+	}
+
+	/**
+	 ** méthode permettant de modifier la taille Y du BaB
+	 ** @param nvDimY la nouvelle taille Y du BaB
+	 **/
+	public void setDimY(int nvDimY) {
+		this.dimY = nvDimY;
+	}
 
 	/**
 	 ** méthode permettant de modifier le type des emplacements

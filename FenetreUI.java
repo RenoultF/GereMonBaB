@@ -54,6 +54,7 @@ public class FenetreUI extends AbstractAction{
 	private JButton btnSaveBaB;
 	private JButton btnSupprimerBaB;
 
+	private JButton btnVal;
 
 	/*variable des tableaux*/
 	private String[] nomColStands = {"Numero","X","Y",""};
@@ -76,7 +77,7 @@ public class FenetreUI extends AbstractAction{
 
 
 	public FenetreUI(BaB system){
-		
+	
 		/** Variables du système **/
 		this.system = system;
 		carte = system.getCarte();
@@ -94,7 +95,7 @@ public class FenetreUI extends AbstractAction{
 
 		ongletBab = new JTabbedPane();
 		panBtnType = new JPanel(new GridLayout(1,3));
-		panInfoBaB = new JPanel(new GridLayout(7,2));
+		panInfoBaB = new JPanel(new GridLayout(8,2));
 		panListeReservation = new JPanel();
 
 		/*variable onglet info BaB*/
@@ -124,6 +125,8 @@ public class FenetreUI extends AbstractAction{
 		btnSaveBaB.addActionListener(this);
 		btnSupprimerBaB = new JButton("Supprimer BaB");
 		btnSupprimerBaB.addActionListener(this);
+		btnVal = new JButton("Valider informations");
+		btnVal.addActionListener(this);
 
 		
 		btnTypeStand = new JButton("Stand");
@@ -181,6 +184,7 @@ public class FenetreUI extends AbstractAction{
         panInfoBaB.add(labPrixStand);
         panInfoBaB.add(txtPrixStand);
 
+		panInfoBaB.add(btnVal);
 		panInfoBaB.add(btnSupprimerBaB);
 		panInfoBaB.add(btnSaveBaB);
 
@@ -218,6 +222,15 @@ public class FenetreUI extends AbstractAction{
 		}
 		else if(e.getSource() == btnSupprimerBaB){
 			frame.dispose();
+		}
+		else if(e.getSource() == btnVal){
+			//MAJ des variable du system
+			system.setAdresseBaB(txtAdresse.getText());
+			system.setNomBaB(txtNomBaB.getText());
+			system.setDateBaB(txtDateBaB.getText());
+			system.setPrixStand(Integer.valueOf(txtPrixStand.getText()));
+			system.setDimX(Integer.valueOf(txtDimX.getText()));
+			system.setDimY(Integer.valueOf(txtDimY.getText()));
 		}
 	}
 
