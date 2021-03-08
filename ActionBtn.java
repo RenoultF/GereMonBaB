@@ -27,10 +27,10 @@ class ActionBtn extends AbstractAction  {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		boutonCourant = FenetreUI.listBut.get(ind);
-
+		System.out.println("Entre");
 		// ***** Pas sélectionné *****
-		if(clic == false) {
-			
+		//if(clic == false) {
+			System.out.println("Pas la");
             //type = FenetreUI.type;
 			if(FenetreUI.getSystem().ajouterEmplacement(coord_x, coord_y)) {
 				clic = true;
@@ -62,7 +62,7 @@ class ActionBtn extends AbstractAction  {
 					FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
 				}
 			}
-		}
+		//}
 
 		System.out.println(ind + "=" + coord_x + ":" + coord_y + "(" + clic + ")"); // Pour dev....
 	}
