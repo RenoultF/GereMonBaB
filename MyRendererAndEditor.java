@@ -55,6 +55,7 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
     if(e.getSource() == this.btn){
       int index;
       Emplacement empCourant;
+      
       if(type.equals("Stand")){
         //On recupere l'idType qui est dans le tableau
         index = (int)FenetreUI.tabStands.getValueAt(row, 0);
@@ -66,23 +67,31 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
         FenetreUI.getSystem().supprimerStand(empCourant.getIdType());
         //suppression du boutons de la liste stands
         FenetreUI.listButStands.remove(FenetreUI.listButStands.get(empCourant.getIdType()));
+        //Permet d'actualiseer le bouton qui correspond à l'emplacement
+        this.actualiserBtn(FenetreUI.listBut.get(empCourant.getCoordonneeX()*FenetreUI.dimX + empCourant.getCoordonneeY()));
       }
       else{
         //On recupere l'idType qui est dans le tableau
         index = (int)FenetreUI.tabAutres.getValueAt(row, 0);
+        
         //On va chercher l'emplacement qui correspond à l'index
         empCourant = FenetreUI.getSystem().getListeAutre().get(index);
+        int indBase = empCourant.getCoordonneeX()*FenetreUI.dimX + empCourant.getCoordonneeY();
+        Autre empCourantAutre = (Autre) empCourant;
         //on supprime la ligne dans le tableau
         FenetreUI.tabAutres.removeRow(row);
         //on suprrime le stand de la liste
-        FenetreUI.getSystem().supprimerAutre(empCourant.getIdType());
+        FenetreUI.getSystem().supprimerAutre(empCourantAutre.getIdType());
         //suppression du boutons de la liste autres
-        FenetreUI.listButAutres.remove(FenetreUI.listButAutres.get(empCourant.getIdType()));
-      }
-      //Permet d'actualiseer le bouton qui correspond à l'emplacement
-      this.actualiserBtn(FenetreUI.listBut.get(empCourant.getCoordonneeX()*FenetreUI.dimX + empCourant.getCoordonneeY()));
+        FenetreUI.listButAutres.remove(FenetreUI.listButAutres.get(empCourantAutre.getIdType()));
+        for(int i = 0;i<empCourantAutre.getLargeur();i++){
+          for(int j = indBase;j<indBase+empCourantAutre.getLongueur();j++){
+            actualiserBtn(FenetreUI.listBut.get(i * FenetreUI.getSystem().getDimX() + j));
+          }
+        }
       //on actualise les données dans le tableaux
       FenetreUI.actualiserTab(empCourant.getType(),index);
+      }
     }
   }
 

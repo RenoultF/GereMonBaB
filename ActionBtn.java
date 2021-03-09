@@ -27,38 +27,51 @@ class ActionBtn extends AbstractAction  {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		boutonCourant = FenetreUI.listBut.get(ind);
-		System.out.println("Entre");
-		// ***** Pas sélectionné *****
-		//if(clic == false) {
-			System.out.println("Pas la");
-            //type = FenetreUI.type;
 			if(FenetreUI.getSystem().ajouterEmplacement(coord_x, coord_y)) {
-				clic = true;
 				FenetreUI.getSystem().afficherStands();
 				if(FenetreUI.getSystem().getType().equals("Stand")){
+					//on recupere l'emplacement
 					emplacementAjoute = FenetreUI.getSystem().getListeStand().getLast();
+					
 				}
 				else{
+					//on recupere l'emplacement
 					emplacementAjoute = FenetreUI.getSystem().getListeAutre().getLast();
 				}
 						
 			
-				boutonCourant.setBackground(Color.GREEN);
-				boutonCourant.setEnabled(false);
+				
 			
-				boutonCourant.setText(Integer.toString(emplacementAjoute.getIdType()));
+				
 				if(emplacementAjoute.getType().equals("Stand")){
+					//on met à jour le bouton
+					boutonCourant.setBackground(Color.GREEN);
+					boutonCourant.setEnabled(false);
+					boutonCourant.setText(Integer.toString(emplacementAjoute.getIdType()));
+					//ajoute le bouton a la liste
 					FenetreUI.listButStands.add(boutonCourant);
+					//on remplit le tableau
 					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getCoordonneeX(),emplacementAjoute.getCoordonneeY()};
 					FenetreUI.tabStands.addRow(newData);
-					//emplacementAjoute.afficheToi();
+					//ajoute le bouton supprimer
 					FenetreUI.tableStands.getColumn("").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableStands,"Stand"));
 					FenetreUI.tableStands.getColumn("").setCellEditor(new MyRendererAndEditor(FenetreUI.tableStands,"Stand"));
 				}
 				else{
-					boutonCourant.setBackground(Color.BLACK);
+					Autre emplacementAjouteAutre = (Autre) emplacementAjoute;
+					//on met à jour le/les boutons
+					for(int i = 0;i<emplacementAjouteAutre.getLargeur();i++){
+						for(int j = ind;j<ind+emplacementAjouteAutre.getLongueur();j++){
+							boutonCourant = FenetreUI.listBut.get(i * FenetreUI.getSystem().getDimX() + j);
+							boutonCourant.setBackground(Color.BLACK);
+							boutonCourant.setEnabled(false);
+							boutonCourant.setText(Integer.toString(emplacementAjouteAutre.getIdType()));
+						}
+					}
+					
+					
 					FenetreUI.listButAutres.add(boutonCourant);
-					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getType(),emplacementAjoute.getCoordonneeX(),emplacementAjoute.getCoordonneeY()};
+					Object[] newData = {emplacementAjouteAutre.getIdType(),emplacementAjouteAutre.getType(),emplacementAjouteAutre.getCoordonneeX(),emplacementAjouteAutre.getCoordonneeY(),emplacementAjouteAutre.getLargeur(),emplacementAjouteAutre.getLongueur()};
 					FenetreUI.tabAutres.addRow(newData);
 					FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
 					FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));

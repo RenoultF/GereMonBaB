@@ -93,7 +93,7 @@ public class BaB {
 			else
 				idType = autres.getLast().getIdType() + 1;
 				
-			Emplacement nouveauAutre = new Autre(idType,this.type, coordX, coordY);
+			Emplacement nouveauAutre = new Autre(idType,this.type, coordX, coordY,tailleAutreLargeur,tailleAutreLongueur);
 			autres.addLast(nouveauAutre);
 			caseCourante.occuper();
 			

@@ -60,7 +60,7 @@ public class FenetreUI extends AbstractAction{
 
 	/*variable des tableaux*/
 	private String[] nomColStands = {"Numero","X","Y",""};
-	private String[] nomColAutres = {"Numero","Nom_deco","X","Y","Supprimer"};
+	private String[] nomColAutres = {"Numero","Nom_deco","X","Y","Largeur","Longueur","Supprimer"};
 
 	private String[] nomColReservation = {"Nom","Prenom","ID Stand","Coordonnees","Accepter","Refuser"};
 	public static DefaultTableModel tabReservation;
@@ -215,7 +215,7 @@ public class FenetreUI extends AbstractAction{
 		
 		}
 		else if(e.getSource() == btnTypeAutre){
-			FenetreAutre fenAutre = new FenetreAutre(1.5,1.5,"Autre",system);
+			FenetreAutre fenAutre = new FenetreAutre(1.0,1.0,"Autre",system);
 			fenAutre.saisir();
 		}
 		else if(e.getSource() == btnSaveBaB){
@@ -250,10 +250,17 @@ public class FenetreUI extends AbstractAction{
 		}
 		else{
 			for(i = index; i < listeAutre.size(); i++){
+				Emplacement empCourant = listeAutre.get(i);
+				Autre emplacementAutre = (Autre) empCourant;
+				int indBase = empCourant.getCoordonneeX()*dimX + empCourant.getCoordonneeY();
 				//on met a jour l'id de tous les autres stands
-				listeAutre.get(i).setIdType(listeAutre.get(i).getIdType()-1);
+				emplacementAutre.setIdType(listeAutre.get(i).getIdType()-1);
 				//mis a jour des valeur des boutons
-				listButAutres.get(i).setText(String.valueOf(listeAutre.get(i).getIdType()));
+				for(int iTmp = 0;iTmp<emplacementAutre.getLargeur();iTmp++){
+					for(int jTmp = indBase;jTmp<indBase+emplacementAutre.getLongueur();jTmp++){
+					  listBut.get(iTmp * FenetreUI.getSystem().getDimX() + jTmp).setText(String.valueOf(listeAutre.get(i).getIdType()));
+					}
+				}
 				//on change la valeur dans le tableau
 				tableAutres.setValueAt(listeAutre.get(i).getIdType(), i, 0);
 			}
