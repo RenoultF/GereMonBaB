@@ -48,6 +48,7 @@ class ActionBtn extends AbstractAction  {
 			
 				boutonCourant.setText(Integer.toString(emplacementAjoute.getIdType()));
 				if(emplacementAjoute.getType().equals("Stand")){
+					FenetreUI.listButStands.add(boutonCourant);
 					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getCoordonneeX(),emplacementAjoute.getCoordonneeY()};
 					FenetreUI.tabStands.addRow(newData);
 					//emplacementAjoute.afficheToi();
@@ -56,6 +57,7 @@ class ActionBtn extends AbstractAction  {
 				}
 				else{
 					boutonCourant.setBackground(Color.BLACK);
+					FenetreUI.listButAutres.add(boutonCourant);
 					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getType(),emplacementAjoute.getCoordonneeX(),emplacementAjoute.getCoordonneeY()};
 					FenetreUI.tabAutres.addRow(newData);
 					FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));

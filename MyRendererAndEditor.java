@@ -64,6 +64,8 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
         FenetreUI.tabStands.removeRow(row);
         //on suprrime le stand de la liste
         FenetreUI.getSystem().supprimerStand(empCourant.getIdType());
+        //suppression du boutons de la liste stands
+        FenetreUI.listButStands.remove(FenetreUI.listButStands.get(empCourant.getIdType()));
       }
       else{
         //On recupere l'idType qui est dans le tableau
@@ -74,6 +76,8 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
         FenetreUI.tabAutres.removeRow(row);
         //on suprrime le stand de la liste
         FenetreUI.getSystem().supprimerAutre(empCourant.getIdType());
+        //suppression du boutons de la liste autres
+        FenetreUI.listButAutres.remove(FenetreUI.listButAutres.get(empCourant.getIdType()));
       }
       //Permet d'actualiseer le bouton qui correspond à l'emplacement
       this.actualiserBtn(FenetreUI.listBut.get(empCourant.getCoordonneeX()*FenetreUI.dimX + empCourant.getCoordonneeY()));

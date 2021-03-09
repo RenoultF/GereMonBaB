@@ -21,6 +21,8 @@ public class FenetreUI extends AbstractAction{
 	static String type;
 	
 	public static LinkedList<JButton> listBut = new LinkedList<>();
+	public static LinkedList<JButton> listButStands = new LinkedList<>();
+	public static LinkedList<JButton> listButAutres = new LinkedList<>();
 	private JButton btnTypeStand;
 	private JButton btnTypeAutre;
 	
@@ -240,6 +242,8 @@ public class FenetreUI extends AbstractAction{
 			for(i = index; i < listeStand.size(); i++){
 				//on met a jour l'id de tous les autres stands
 				listeStand.get(i).setIdType(listeStand.get(i).getIdType()-1);
+				//mis a jour des valeur des boutons
+				listButStands.get(i).setText(String.valueOf(listeStand.get(i).getIdType()));
 				//on change la valeur dans le tableau
 				tableStands.setValueAt(listeStand.get(i).getIdType(), i, 0);
 			}
@@ -248,6 +252,8 @@ public class FenetreUI extends AbstractAction{
 			for(i = index; i < listeAutre.size(); i++){
 				//on met a jour l'id de tous les autres stands
 				listeAutre.get(i).setIdType(listeAutre.get(i).getIdType()-1);
+				//mis a jour des valeur des boutons
+				listButAutres.get(i).setText(String.valueOf(listeAutre.get(i).getIdType()));
 				//on change la valeur dans le tableau
 				tableAutres.setValueAt(listeAutre.get(i).getIdType(), i, 0);
 			}
