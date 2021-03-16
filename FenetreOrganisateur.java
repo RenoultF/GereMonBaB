@@ -10,14 +10,18 @@ public class FenetreOrganisateur extends AbstractAction {
 	private JTabbedPane onglets;
 	
 	// ***** Panels correspondant aux onglets *****
-	private JPanel panAccueil;
 	private JPanel panCreerBaB;
 	private JPanel panMesBaB;
-	private JPanel panListe;
 	private JPanel panContact;
 
-	// ***** Variables permettant l'édition d'un BaB *****
+	// ***** Variables pour onglet CreerBaB *****
 	private JButton butCreerBaB; // Permet de confirmer la création
+
+	// ***** Variables pour onglet MesBaB *****
+	// todo
+
+	// ***** Variables pour onglet Contact *****
+	private JLabel labContact;
 
 	public FenetreOrganisateur() {
 		frame = new JFrame("GereMonBaB - Organisateur");
@@ -25,10 +29,6 @@ public class FenetreOrganisateur extends AbstractAction {
 		onglets = new JTabbedPane();
 
 		// ===========================================================================
-		// ********** Onglet : Accueil **********
-		panAccueil = new JPanel(); 
-		onglets.add("Accueil", panAccueil);
-
 		// ********** Onglet : Creer son BaB **********
 		panCreerBaB = new JPanel(); 
 		onglets.add("Créer son BaB", panCreerBaB);
@@ -40,13 +40,11 @@ public class FenetreOrganisateur extends AbstractAction {
 		panMesBaB = new JPanel();
 		onglets.add("Mes BaB", panMesBaB);
 
-		// ********** Onglet : Liste **********
-		panListe = new JPanel();
-		onglets.add("Liste", panListe);
-
 		// ********** Onglet : Contact **********
 		panContact = new JPanel();
 		onglets.add("Contact", panContact);
+		labContact = new JLabel("Coordonnées du support technique : support@bab.com");
+		panContact.add(labContact);
 		// ===========================================================================
 
 		global_panel.add(onglets);
