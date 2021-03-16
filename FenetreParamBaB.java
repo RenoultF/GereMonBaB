@@ -14,7 +14,6 @@ public class FenetreParamBaB extends JFrame {
     // Composants graphiques
     private JLabel labTitre;
 
-
     private JLabel labNomBaB;
     private JLabel labDateBaB;
     private JLabel labPrixStand;
@@ -30,7 +29,6 @@ public class FenetreParamBaB extends JFrame {
     private JTextField txtDimY;
 
     private JButton butOk;
-
 
     private Semaphore sem; // Mutex
 
@@ -49,6 +47,7 @@ public class FenetreParamBaB extends JFrame {
 
     public void saisir() {
         sem.P(); // Prise du semaphore
+        System.out.println("Semaphore pris");
 
         labTitre = new JLabel("Parametre du BaB :");
 
@@ -58,7 +57,6 @@ public class FenetreParamBaB extends JFrame {
         labDimX = new JLabel("Dimension X du BaB :");
         labDimY = new JLabel("Dimension Y du BaB :");
         labPrixStand = new JLabel("Prix d'un Stand :");
-        
 
         txtNomBaB = new JTextField(15);
         txtDateBaB = new JTextField(10);
@@ -130,7 +128,6 @@ public class FenetreParamBaB extends JFrame {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
-
     }
 
     // ********** Getters **********
@@ -141,7 +138,6 @@ public class FenetreParamBaB extends JFrame {
 	 ** @return le nom du bab
 	 **/
 	public String getNomBaB() {
-        sem.P(); sem.V();
 		return this.nomBaB;
 	}
 
@@ -150,7 +146,6 @@ public class FenetreParamBaB extends JFrame {
 	 ** @return la date du BaB
 	 **/
 	public String getDateBaB() {
-        sem.P(); sem.V();
 		return this.dateBaB;
 	}
 
@@ -159,7 +154,6 @@ public class FenetreParamBaB extends JFrame {
 	 ** @return le prix du stand
 	 **/
 	public int getPrixStand() {
-        sem.P(); sem.V();
 		return this.prixStand;
 	}
 
@@ -168,7 +162,6 @@ public class FenetreParamBaB extends JFrame {
 	 ** @return la dimension X
 	 **/
 	public int getDimensionX() {
-        sem.P(); sem.V();
 		return this.dimX;
 	}
 
@@ -177,7 +170,6 @@ public class FenetreParamBaB extends JFrame {
 	 ** @return la dimension Y
 	 **/
 	public int getDimensionY() {
-        sem.P(); sem.V();
 		return this.dimY;
 	}
 	
@@ -186,13 +178,13 @@ public class FenetreParamBaB extends JFrame {
 	 ** @return l'adresse du BaB
 	 **/
 	public String getAdresseBaB() {
-        sem.P(); sem.V();
 		return this.adresse;
 	}
 
     public void fermerFenetre() {
         sem.V(); // Relachement du semaphore
         this.dispose();
+	    new FenetreUI(new BaB(this.getNomBaB(), this.getDateBaB(), this.getPrixStand(), this.getAdresseBaB(), this.getDimensionX(), this.getDimensionY()));
     }
 
     // Classe interne permettant de gérer le bouton OK
