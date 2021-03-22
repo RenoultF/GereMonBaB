@@ -37,12 +37,9 @@ class ActionBtn extends AbstractAction  {
 				else{
 					//on recupere l'emplacement
 					emplacementAjoute = FenetreUI.getSystem().getListeAutre().getLast();
-				}
-						
-			
-				
-			
-				
+				}		
+
+				//Pour creer les emplacements stands
 				if(emplacementAjoute.getType().equals("Stand")){
 					//on met à jour le bouton
 					boutonCourant.setBackground(Color.GREEN);
@@ -57,24 +54,63 @@ class ActionBtn extends AbstractAction  {
 					FenetreUI.tableStands.getColumn("").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableStands,"Stand"));
 					FenetreUI.tableStands.getColumn("").setCellEditor(new MyRendererAndEditor(FenetreUI.tableStands,"Stand"));
 				}
+
+				//Pour créer les emplacements autres
 				else{
 					Autre emplacementAjouteAutre = (Autre) emplacementAjoute;
-					//on met à jour le/les boutons
-					for(int i = 0;i<emplacementAjouteAutre.getLargeur();i++){
-						for(int j = ind;j<ind+emplacementAjouteAutre.getLongueur();j++){
-							boutonCourant = FenetreUI.listBut.get(i * FenetreUI.getSystem().getDimX() + j);
-							boutonCourant.setBackground(Color.BLACK);
-							boutonCourant.setEnabled(false);
-							boutonCourant.setText(Integer.toString(emplacementAjouteAutre.getIdType()));
+					//On vérifie si on peut mettre l'emplacement
+					int erreurEmplacement;
+					erreurEmplacement = FenetreUI.getSystem().emplacementPossible(emplacementAjouteAutre);
+					System.out.print("\n erreur = " + erreurEmplacement + "\n");
+					//l'emplacement peut être créé
+					if(erreurEmplacement == 0){
+						//on met à jour le/les boutons
+						for(int i = 0;i<emplacementAjouteAutre.getLargeur();i++){
+							for(int j = ind;j<ind+emplacementAjouteAutre.getLongueur();j++){
+								boutonCourant = FenetreUI.listBut.get(i * FenetreUI.getSystem().getDimX() + j);
+								boutonCourant.setBackground(Color.BLACK);
+								boutonCourant.setEnabled(false);
+								boutonCourant.setText(Integer.toString(emplacementAjouteAutre.getIdType()));
+							}
 						}
+						FenetreUI.listButAutres.add(boutonCourant);
+						//on met a jour le tableau
+						Object[] newData = {emplacementAjouteAutre.getIdType(),emplacementAjouteAutre.getType(),emplacementAjouteAutre.getCoordonneeX(),emplacementAjouteAutre.getCoordonneeY(),emplacementAjouteAutre.getLargeur(),emplacementAjouteAutre.getLongueur()};
+						FenetreUI.tabAutres.addRow(newData);
+						FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
+						FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
 					}
-					
-					
-					FenetreUI.listButAutres.add(boutonCourant);
-					Object[] newData = {emplacementAjouteAutre.getIdType(),emplacementAjouteAutre.getType(),emplacementAjouteAutre.getCoordonneeX(),emplacementAjouteAutre.getCoordonneeY(),emplacementAjouteAutre.getLargeur(),emplacementAjouteAutre.getLongueur()};
-					FenetreUI.tabAutres.addRow(newData);
-					FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
-					FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
+					else if(erreurEmplacement == 1){
+						int retour = JOptionPane.showConfirmDialog(FenetreUI.getJFrame(), "Vous allez recouvrir un Stand existant, vous-vous continuer ?","Avertissement Creation Autre",JOptionPane.OK_CANCEL_OPTION);
+						//on veut quand meme créer l'emplacement Autre
+						if(retour!=2){
+							for(int i = 0;i<emplacementAjouteAutre.getLargeur();i++){
+								for(int j = ind;j<ind+emplacementAjouteAutre.getLongueur();j++){
+									boutonCourant = FenetreUI.listBut.get(i * FenetreUI.getSystem().getDimX() + j);
+									boutonCourant.setBackground(Color.BLACK);
+									boutonCourant.setEnabled(false);
+									boutonCourant.setText(Integer.toString(emplacementAjouteAutre.getIdType()));
+								}
+							}
+							FenetreUI.listButAutres.add(boutonCourant);
+							//on met a jour le tableau
+							Object[] newData = {emplacementAjouteAutre.getIdType(),emplacementAjouteAutre.getType(),emplacementAjouteAutre.getCoordonneeX(),emplacementAjouteAutre.getCoordonneeY(),emplacementAjouteAutre.getLargeur(),emplacementAjouteAutre.getLongueur()};
+							FenetreUI.tabAutres.addRow(newData);
+							FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
+							FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
+						}
+						else{
+							FenetreUI.getSystem().supprimerAutre(emplacementAjoute.getIdType());
+						}		
+					}
+					else if(erreurEmplacement == 2){
+						JOptionPane.showMessageDialog(FenetreUI.getJFrame(), "Vous depassez les limitations du BaB", "Probleme Depassement",JOptionPane.WARNING_MESSAGE);
+						FenetreUI.getSystem().supprimerAutre(emplacementAjoute.getIdType());
+						System.out.println("\nErreur dépassement !!\n");
+					}
+					else{
+						System.out.println("\nProbleme Erreur emplacement Possible !!\n");
+					}		
 				}
 			}
 		//}

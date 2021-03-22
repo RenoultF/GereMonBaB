@@ -26,7 +26,7 @@ public class FenetreUI extends AbstractAction{
 	private JButton btnTypeStand;
 	private JButton btnTypeAutre;
 	
-	private JFrame frame;
+	private static JFrame frame;
 	private JFrame fenInfo;
 
 	private JTabbedPane ongletBab;
@@ -258,6 +258,7 @@ public class FenetreUI extends AbstractAction{
 				//mis a jour des valeur des boutons
 				for(int iTmp = 0;iTmp<emplacementAutre.getLargeur();iTmp++){
 					for(int jTmp = indBase;jTmp<indBase+emplacementAutre.getLongueur();jTmp++){
+						//on va cherche les boutons voulu pour les mettre à jour
 					  listBut.get(iTmp * FenetreUI.getSystem().getDimX() + jTmp).setText(String.valueOf(listeAutre.get(i).getIdType()));
 					}
 				}
@@ -268,6 +269,10 @@ public class FenetreUI extends AbstractAction{
 		
 	}
 	
+	public static JFrame getJFrame(){
+		return frame;
+	}
+
 	public static BaB getSystem() {
 		return system;
 	}

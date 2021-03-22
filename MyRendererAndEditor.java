@@ -68,12 +68,11 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
         //suppression du boutons de la liste stands
         FenetreUI.listButStands.remove(FenetreUI.listButStands.get(empCourant.getIdType()));
         //Permet d'actualiseer le bouton qui correspond à l'emplacement
-        this.actualiserBtn(FenetreUI.listBut.get(empCourant.getCoordonneeX()*FenetreUI.dimX + empCourant.getCoordonneeY()));
+        this.actualiserBtn(FenetreUI.listBut.get(empCourant.getCoordonneeX()*FenetreUI.dimX + empCourant.getCoordonneeY()),empCourant.getType());
       }
       else{
         //On recupere l'idType qui est dans le tableau
         index = (int)FenetreUI.tabAutres.getValueAt(row, 0);
-        
         //On va chercher l'emplacement qui correspond à l'index
         empCourant = FenetreUI.getSystem().getListeAutre().get(index);
         int indBase = empCourant.getCoordonneeX()*FenetreUI.dimX + empCourant.getCoordonneeY();
@@ -86,18 +85,48 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
         FenetreUI.listButAutres.remove(FenetreUI.listButAutres.get(empCourantAutre.getIdType()));
         for(int i = 0;i<empCourantAutre.getLargeur();i++){
           for(int j = indBase;j<indBase+empCourantAutre.getLongueur();j++){
-            actualiserBtn(FenetreUI.listBut.get(i * FenetreUI.getSystem().getDimX() + j));
+            actualiserBtn(FenetreUI.listBut.get(i * FenetreUI.getSystem().getDimX() + j),empCourant.getType());
           }
         }
+      }
       //on actualise les données dans le tableaux
       FenetreUI.actualiserTab(empCourant.getType(),index);
-      }
     }
   }
 
-  public void actualiserBtn(JButton but){
+  public void actualiserBtn(JButton but, String typeString){
+    //On récupère les indices voulues
+    int indBase;
+    int indexBut = FenetreUI.listBut.indexOf(but);
+    //on le met de base à vide
     but.setEnabled(true);
     but.setBackground(Color.WHITE);
     but.setText("");
-  }
+    if(!typeString.equals("Stand")){
+      System.out.println("Pas la");
+      //on regarde parmis tous les butous pris si est est était déjà pris
+      for(Emplacement e : FenetreUI.getSystem().getListeAutre()){
+        Autre e1 = (Autre) e;
+        indBase = e1.getCoordonneeX()*FenetreUI.getSystem().getDimX() + e1.getCoordonneeY();
+        for(int i = 0;i<e1.getLargeur();i++){
+          for(int j = indBase;j<indBase+e1.getLongueur();j++){
+            if(i * FenetreUI.getSystem().getDimX() + j == indexBut){
+              //on est deja pris donc on met le bouton à jour
+              but.setEnabled(false);
+              but.setBackground(Color.BLACK);
+              but.setText(String.valueOf(e1.getIdType()));
+            }
+          }
+        }
+      }
+      for(Emplacement e : FenetreUI.getSystem().getListeStand()){
+        if(e.getCoordonneeX() * FenetreUI.getSystem().getDimX() + e.getCoordonneeY() == indexBut){
+          //on est deja pris donc on met le bouton à jour
+          but.setEnabled(false);
+          but.setBackground(Color.GREEN);
+          but.setText(String.valueOf(e.getIdType()));
+        }
+      } 
+    }
+  } 
 }

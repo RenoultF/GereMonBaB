@@ -121,6 +121,56 @@ public class BaB {
 		autres.remove(id);
 		
 	}
+
+	public int emplacementPossible(Autre empCourant){
+		//indice de base de l'emplacement
+		int indBase = empCourant.getCoordonneeX()*dimX + empCourant.getCoordonneeY();
+		//On regarde si on dépase la taille du Bric à Brac
+		for(int iTmp = 0;iTmp<empCourant.getLargeur();iTmp++){
+			for(int jTmp = indBase;jTmp<indBase+empCourant.getLongueur();jTmp++){
+				if(iTmp * getDimX() + jTmp >= dimX*dimY){
+					//erreur de dépassement du bric à brac
+					return 2;
+				}
+			}
+		}
+
+		
+		//On regarde si on est est déja sur un stand déja créé
+		for(int iTmp1 = 0;iTmp1<empCourant.getLargeur();iTmp1++){
+			for(int jTmp1 = indBase;jTmp1<indBase+empCourant.getLongueur();jTmp1++){
+				for(Emplacement e : getListeStand()){
+      				if(e.getCoordonneeX() * getDimX() + e.getCoordonneeY() == iTmp1 * getDimX() + jTmp1){
+						  //on est sur un stand déja pris
+						  return 1;
+					  }
+				}
+			}
+		}
+
+		/* // Pas possible car trop de "for"
+		int indTemp;
+		//On regarde si on est est déja sur un emplacement autre
+		for(int iBase = 0;iBase<empCourant.getLargeur();iBase++){
+			for(int jBase = indBase;jBase<indBase+empCourant.getLongueur();jBase++){
+				for(Emplacement e : getListeAutre()){
+					Autre e1 = (Autre) e;
+					indTemp = e1.getCoordonneeX()*getDimX() + e1.getCoordonneeY();
+					for(int i = 0;i<e1.getLargeur();i++){
+					  	for(int j = indTemp;j<indTemp+e1.getLongueur();j++){
+							if(i * getDimX() + j == iBase * getDimX() + jBase){
+								//on est sur un emplacement déja pris
+								return 3;
+							}
+						}
+					}
+				}
+			}
+		}
+		*/
+		//tout est ok
+		return 0;
+	}
 	
 	
 	/************************************** Méthodes GET/SET **************************************/
