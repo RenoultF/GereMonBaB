@@ -125,10 +125,16 @@ public class BaB {
 	public int emplacementPossible(Autre empCourant){
 		//indice de base de l'emplacement
 		int indBase = empCourant.getCoordonneeX()*dimX + empCourant.getCoordonneeY();
-		//On regarde si on dépase la taille du Bric à Brac
+		//On regarde si on dépase la taille du Bric à Brac en longueur
+		if(indBase%dimX + empCourant.getLongueur() > dimX){
+			//erreur de dépassement du bric à brac
+			return 2;
+		}
+
+		//On regarde si on dépase la taille du Bric à Brac en largeur
 		for(int iTmp = 0;iTmp<empCourant.getLargeur();iTmp++){
 			for(int jTmp = indBase;jTmp<indBase+empCourant.getLongueur();jTmp++){
-				if(iTmp * getDimX() + jTmp >= dimX*dimY){
+				if((iTmp * getDimX() + jTmp >= dimX*dimY) ){
 					//erreur de dépassement du bric à brac
 					return 2;
 				}
