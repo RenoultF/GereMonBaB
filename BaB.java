@@ -6,6 +6,7 @@ import java.awt.*;
 public class BaB {
 
 	//Variables
+	private int idBaB;
 	private String nomBaB;
 	private String dateBaB;
 	private int prixStand;
@@ -32,7 +33,8 @@ public class BaB {
 	
 	public BaB(String nomBaB, String dateBaB, int prixStand, String adresse, int dimX, int dimY) {
 	
-		this.dimX = dimX; //Valeur par défaut
+		this.idBaB = 0;		//Valeur par défaut quand non sauvegardé
+		this.dimX = dimX;	//Valeur par défaut
 		this.dimY = dimY;
 
 		this.nomBaB = nomBaB;
@@ -180,6 +182,22 @@ public class BaB {
 	
 	
 	/************************************** Méthodes GET/SET **************************************/
+	
+	/**
+	 ** méthode permettant de récupérer l'identifiant du BaB
+	 ** @return idBaB l'identifiant du BaB
+	 **/
+	public int getIdBaB() {
+		return this.idBaB;
+	}
+	
+	/**
+	 ** méthode permettant de modifier l'identifiant du BaB
+	 ** @param idBaB le nouvel identifiant du BaB
+	 **/
+	public void setIdBaB(int nouvelIdBaB) {
+		this.idBaB = nouvelIdBaB;
+	}
 	
 	/**
 	 ** méthode permettant de récupérer les cartes
