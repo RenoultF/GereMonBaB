@@ -53,6 +53,15 @@ public class BaB {
 	
 	/************************************** Méthodes **************************************/
 	
+	/**** Méthodes de chargement ****/
+	public void chargerStand(Emplacement emp) {
+		Stands.addLast(emp);
+	}
+	
+	public void chargerAutre(Emplacement emp) {
+		autres.addLast(emp);
+	}
+	
 	public boolean ajouterStand(int coordX, int coordY) {
 		int idType;
 		Case caseCourante = carte.getCaseXY(coordX, coordY);

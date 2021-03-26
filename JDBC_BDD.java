@@ -1,5 +1,6 @@
 
 import java.sql.*;
+import java.util.*;
 
 public class JDBC_BDD {
    // JDBC driver name and database URL
@@ -13,8 +14,10 @@ public class JDBC_BDD {
    
 	static private Connection conn = null;
 	static private Statement  stmt = null;
-	static private ResultSet  res  = null;
 	static private DatabaseMetaData meta = null;
+	static private ResultSet  res  = null;
+	static private ResultSet  res2 = null;
+	static private ResultSet  res3 = null;
    
 	/****************************************************************************************************************************/
 	public static void startJDBC() {
@@ -59,15 +62,34 @@ public class JDBC_BDD {
 	
 	
 	/**
-	 ** Méthode privée permettant la recherche du prochain idBab pour la sauvegarde d'un nouveau bab
+	 ** Méthode privée permettant la recherche du prochain id dans une table dont le nom est passé en paramètre
 	 **/
-	static private int getNewIdBab() {
+	static private int getNewIdTable(String table) {
 		int newId = 0;
-		String sql = "SELECT max(idBab) FROM BAB";
+		String id;
+		
+		switch(table) {
+			case "BAB" :
+				id = "idBab";
+				break;
+			case "PROFIL" :
+				id = "idProfil";
+				break;
+			case "EMPLACEMENT" :
+				id = "idSauvegarde";
+				break;
+			case "TYPE" :
+				id = "idType";
+				break;
+			default :
+				id = "error";
+		}
+		
+		String sql = "SELECT max("+ id +") FROM " + table;
 		try{
 			res = stmt.executeQuery(sql);
 			while(res.next()) {
-				newId = res.getInt("max(idBab)")+1;
+				newId = res.getInt("max("+ id +")")+1;
 			}
 		}catch(SQLException se){
 			se.printStackTrace();
@@ -97,6 +119,75 @@ public class JDBC_BDD {
 		
 		try{
 			stmt.executeUpdate(sql);
+		}catch(SQLException se){
+			se.printStackTrace();
+		}
+	}
+	
+	/**
+	 ** Méthode sauvegardant toutes les données d'un Emplacement en créant une nouvelle sauvegarde si l'emplacement n'est pas dans la bdd, sinon il modifie les informations déjà présentes
+	 
+		if(!this.type.equals("Stand")){
+	 **/
+	static private void sauvegarderEmplacement(Emplacement emp, int idBab) {
+		int idEmp = emp.getIdSauvegarde();
+		int idType = 0;
+		
+		String sqlEmplacement, sqlGetType, sqlType, sqlContient = "";
+		
+		if(idEmp == 0) {
+			System.out.println("New Emplacement	");
+			
+			// Recherche de l'existence d'un possible type qui correspondrait au type de l'emplacement, sinon création d'un nouveau type			   
+			sqlGetType = "SELECT * FROM TYPE WHERE longueur = "+ emp.getTailleX()+" AND largeur = "+ emp.getTailleY() +" AND reservable = "+ emp.estStand()+"";
+			try{
+				res = stmt.executeQuery(sqlGetType);
+				if(res.next()) {
+					idType = res.getInt("idType");
+				}
+				else {
+					idType = getNewIdTable("TYPE");
+					sqlType = "INSERT INTO TYPE VALUES(" +
+						idType 				+ ", " 	+
+						emp.getTailleX() 	+ ", " 	+
+						emp.getTailleY() 	+ ", " 	+
+						emp.estStand()	 	+ ") ";
+					stmt.executeUpdate(sqlType);
+				}
+			}catch(SQLException se){
+				se.printStackTrace();
+			}
+			
+			// Création du nouvel emplacement
+			idEmp = getNewIdTable("EMPLACEMENT");
+			sqlEmplacement = "INSERT INTO EMPLACEMENT VALUES(" +
+			   idEmp 				+ ", " 	+
+			   emp.getIdType() 		+ ", '" +
+			   emp.getNom() 		+ "', '"+
+			   emp.getReservation() + "', '"+
+			   emp.getPaiement() 	+ "', " +
+			   emp.getCoordonneeX() + ", " 	+
+			   emp.getCoordonneeY() + ", " 	+
+			   idType + ") ";
+			
+			// Creation des données dans la table d'association
+			sqlContient = "INSERT INTO CONTIENT VALUES(" +
+			   idBab + ", " +
+			   idEmp + ") " ;
+		}
+		else {	
+			// Update de l'ancien emplacement		   
+			System.out.println("Old Emplacement");
+			sqlEmplacement = "UPDATE EMPLACEMENT SET " +
+			   "nom = "					+ emp.getNom() 			+ ", " 	+
+			   "statutReservation = '"	+ emp.getReservation() 	+ "', " +
+			   "statutPaiment = '"		+ emp.getPaiement() 	+ "' " 	+
+			   "WHERE idEmplacement = "	+ idEmp;		
+		}
+		
+		try{
+			stmt.executeUpdate(sqlEmplacement);
+			stmt.executeUpdate(sqlContient);
 		}catch(SQLException se){
 			se.printStackTrace();
 		}
@@ -137,54 +228,100 @@ public class JDBC_BDD {
 		return false;
 	}
 	
+	
+	
 	/**
 	 ** Méthode sauvegardant toutes les données d'un BaB en créant une nouvelle sauvegarde si le bab n'est pas dans la bdd, sinon il modifie les informations déjà présentes
 	 **/
 	static public void sauvegarderBab(BaB bab) {
-		String sql;
+		int idBab = bab.getIdBaB();
 		
-		if(bab.getIdBaB() != 0) {
-			System.out.println("Old BaB");
-			sql = "UPDATE BAB SET " +
-			   "nom = '"			+ bab.getNomBaB() + "', " +
-			   "adresse = '"		+ bab.getAdresseBaB() + "', " +
-			   "date = '"			+ bab.getDateBaB() + "', " +
-			   "prixStand =  "		+ bab.getPrixStand() + ", " +
-			   "dimensionCarteX = "	+ bab.getDimX() + ", " +
-			   "dimensionCarteX = "	+ bab.getDimY() + " " +
-			   "WHERE idBab = "		+ bab.getIdBaB();
-		}
-		else {
+		LinkedList<Emplacement> listeStands = bab.getListeStand();
+		LinkedList<Emplacement> listeAutres = bab.getListeAutre();
+		int size;
+		Emplacement emplacementCourant;
+		
+		String sqlBaB;
+		
+		if(idBab == 0) {
 			System.out.println("New BaB	");
-			sql = "INSERT INTO BAB VALUES(" +
-			   getNewIdBab() +", '"+
-			   bab.getNomBaB() + "', '" +
-			   bab.getAdresseBaB() + "', '" +
-			   bab.getDateBaB() + "', " +
-			   bab.getPrixStand() + ", " +
-			   bab.getDimX() + ", " +
-			   bab.getDimY() + ") ";
+			idBab = getNewIdTable("BAB");
+			sqlBaB = "INSERT INTO BAB VALUES(" 	+
+			   idBab 				+ ", '"		+
+			   bab.getNomBaB() 		+ "', '" 	+
+			   bab.getAdresseBaB() 	+ "', '" 	+
+			   bab.getDateBaB() 	+ "', " 	+
+			   bab.getPrixStand() 	+ ", " 		+
+			   bab.getDimX() 		+ ", " 		+
+			   bab.getDimY() 		+ ") "		;				
 		}
+		else {			   
+			System.out.println("Old BaB");
+			sqlBaB = "UPDATE BAB SET " +
+			   "nom = '"			+ bab.getNomBaB() 		+ "', " +
+			   "adresse = '"		+ bab.getAdresseBaB() 	+ "', " +
+			   "date = '"			+ bab.getDateBaB() 		+ "', " +
+			   "prixStand = "		+ bab.getPrixStand() 	+ ", " 	+
+			   "dimensionCarteX = "	+ bab.getDimX() 		+ ", " 	+
+			   "dimensionCarteX = "	+ bab.getDimY() 		+ " " 	+
+			   "WHERE idBab = "		+ bab.getIdBaB();		
+		}
+		
+		//Sauvegarde du BaB
 		try{
-			stmt.executeUpdate(sql);
+			stmt.executeUpdate(sqlBaB);
 		}catch(SQLException se){
 			se.printStackTrace();
 		}
+		
+		// Sauvegarder les données des stands
+		size = listeStands.size();
+		for(int i = 0; i < size; i++) {
+			emplacementCourant = listeStands.get(i);
+			sauvegarderEmplacement(emplacementCourant, idBab);
+		}
+		// Sauvegarder les données des emplacements autres
+		size = listeAutres.size();
+		for(int i = 0; i < size; i++) {
+			emplacementCourant = listeAutres.get(i);
+			sauvegarderEmplacement(emplacementCourant, idBab);
+		}
+
 	}
 	
+	/**
+	 ** Méthode publique chargeant les données d'un bab et les renvois
+	 ** @return un BaB
+	 **/
 	static public BaB chargerBab(int id) {
-		String sql = "SELECT * FROM BAB WHERE idBab = " + id +"";
+		//requete SQL
+		String sqlBab, sqlContient, sqlEmplacement, sqlType;
+		
+		//variables du BaB
+		int		idBaB = 0, prixBaB, dimXBaB, dimYBaB;
+		String	nomBaB, dateBaB, adreBaB;
+		
+		//variables de l'emplacement
+		Emplacement emp;
+		int 	idSauvegarde, idEmplacement = 0, coordonneeX = 0, coordonneeY = 0, idType = 0;
+		String	nomEmplacement = "", statutReservation = "", statutPaiement = "";
+		
+		//variables du type de l'emplacement
+		int		longueurType = 0, largeurType = 0;
+		boolean	reservableType = false;
+	
+		sqlBab = "SELECT * FROM BAB WHERE idBab = " + idBaB +"";
 		BaB babLoaded = null;
 		try{
-			res = stmt.executeQuery(sql);
+			res = stmt.executeQuery(sqlBab);
 			while(res.next()) {
-				int 	idBaB   = res.getInt("idBab");
-				String 	nomBaB  = res.getString("nom");
-				String 	dateBaB = res.getString("date");
-				String	adreBaB = res.getString("adresse");
-				int 	prixBaB = res.getInt("prixStand");
-				int 	dimXBaB = res.getInt("dimensionCarteX");
-				int 	dimYBaB = res.getInt("dimensionCarteY");
+				idBaB   = res.getInt("idBab");
+				nomBaB  = res.getString("nom");
+				dateBaB = res.getString("date");
+				adreBaB = res.getString("adresse");
+				prixBaB = res.getInt("prixStand");
+				dimXBaB = res.getInt("dimensionCarteX");
+				dimYBaB = res.getInt("dimensionCarteY");
 				
 				babLoaded = new BaB(nomBaB, dateBaB, prixBaB, adreBaB, dimXBaB, dimYBaB);
 				babLoaded.setIdBaB(idBaB);
@@ -192,6 +329,51 @@ public class JDBC_BDD {
 		}catch(SQLException se){
 			se.printStackTrace();
 		}
+		
+		sqlContient = "SELECT * FROM CONTIENT WHERE idBab = "+ idBaB +"";
+		try{
+			res = stmt.executeQuery(sqlContient);
+			while(res.next()) {
+				// Récupération de la liste des emplacements
+				idSauvegarde = res.getInt("idSauvegarde");
+				sqlEmplacement = "SELECT * FROM EMPLACEMENT WHERE idSauvegarde = "+ idSauvegarde +"";
+				res2 = stmt.executeQuery(sqlEmplacement);
+				while(res2.next()) {
+					idEmplacement		= res2.getInt("idEmplacement");
+					nomEmplacement		= res2.getString("nomEmplacement");
+					statutReservation	= res2.getString("statutReservation");
+					statutPaiement		= res2.getString("statutPaiement");
+					coordonneeX			= res2.getInt("coordonneeX");
+					coordonneeY			= res2.getInt("coordonneeY");
+					idType				= res2.getInt("idType");
+				}
+				
+				// Récupération du type associé à l'emplacement
+				sqlType = "SELECT * FROM TYPE WHERE idType = "+ idType +"";
+				res3 = stmt.executeQuery(sqlType);
+				while(res3.next()) {
+					longueurType		= res3.getInt("longueurType");
+					largeurType			= res3.getInt("largeurType");
+					reservableType		= res3.getBoolean("reservableType");
+				}
+				
+				//Paramètrage de l'emplacement avec les données sauvegardées
+				emp = new Emplacement(idEmplacement, nomEmplacement, coordonneeX, coordonneeY);
+				emp.setIdSauvegarde(idSauvegarde);
+				emp.setReservation(statutReservation);
+				emp.setPaiement(statutPaiement);
+				emp.setTailleX(longueurType);
+				emp.setTailleY(largeurType);
+				
+				if(reservableType) 
+					babLoaded.chargerStand(emp);
+				else 
+					babLoaded.chargerAutre(emp);
+			}
+		}catch(SQLException se){
+			se.printStackTrace();
+		}
+		
 		return babLoaded;
 	}
 	

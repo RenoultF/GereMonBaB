@@ -4,6 +4,9 @@
 import java.util.*;
 
 public class Emplacement {
+
+	//Variable de sauvegarde
+	private int idSauvegarde;
 	
 	//Variables d'identifications
 	private int idType;
@@ -19,14 +22,37 @@ public class Emplacement {
 	//Coordonnée de l'origine de l'emplacement (Coin haut gauche)
 	private int coordonneeX;
 	private int coordonneeY;
+	
+	//Status de la réservation et du paiement
+	private String reservation;
+	private String paiement;
 	 
 	public Emplacement(int idType, String type, int coordX, int coordY) {
+		this.idSauvegarde = 0;
 		this.idType = idType;
 		this.type = type;
 		this.coordonneeX = coordX;
 		this.coordonneeY = coordY;
 		
 		this.nom = type + idType;
+		
+		this.reservation = "libre";
+		this.paiement = "aucun";
+	}
+	
+	/**
+	 ** méthode retournant l'identifiant de la sauvegarde de l'emplacement
+	 ** @return idType
+	 **/
+	public int getIdSauvegarde() {
+		return this.idSauvegarde;
+	}
+
+	/**
+	 ** méthode mettant a jour l'id
+	 **/
+	public void setIdSauvegarde(int nvId) {
+		this.idSauvegarde = nvId;
 	}
 	
 	/**
@@ -69,11 +95,27 @@ public class Emplacement {
 	}
 	
 	/**
+	 ** méthode mettant à jour la taille X de l'emplacement
+	 ** @param tailleX
+	 **/
+	public void setTailleX(int nvTailleX) {
+		this.tailleX = nvTailleX;
+	}
+	
+	/**
 	 ** méthode retournant la taille Y de l'emplacement
 	 ** @return tailleY
 	 **/
 	public int getTailleY() {
 		return this.tailleY;
+	}
+	
+	/**
+	 ** méthode mettant à jour la taille Y de l'emplacement
+	 ** @param tailleY
+	 **/
+	public void setTailleY(int nvTailleY) {
+		this.tailleY = nvTailleY;
 	}
 	
 	/**
@@ -98,6 +140,38 @@ public class Emplacement {
 	 **/
 	public boolean estStand() {
 		return false;
+	}
+	
+	/**
+	 ** méthode retournant le statut de la réservation de l'emplacement
+	 ** @return reservation
+	 **/
+	public String getReservation() {
+		return this.reservation;
+	}
+	
+	/**
+	 ** méthode mettant à jour le statut de la réservation de l'emplacement
+	 ** @param nvStatut
+	 **/
+	public void setReservation(String nvStatut) {
+		this.reservation = nvStatut;
+	}
+	
+	/**
+	 ** méthode retournant le statut du paiement de l'emplacement
+	 ** @return paiement
+	 **/
+	public String getPaiement() {
+		return this.paiement;
+	}
+	
+	/**
+	 ** méthode mettant à jour le statut du paiement de l'emplacement
+	 ** @param nvStatut
+	 **/
+	public void setPaiement(String nvStatut) {
+		this.paiement = nvStatut;
 	}
 
 	/** DEBUGGAGE

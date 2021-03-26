@@ -28,13 +28,13 @@ public class JDBC_connect {
 		  System.out.println("Creating database......");
 		  //STEP 3: Execute query
 		  
-		  
+		  /****       TABLES        ****/
 		  String tableTYPE = 		"CREATE TABLE TYPE " 		+
-		  							"(id INTEGER not null, " 	+
+		  							"(idType INTEGER not null, "+
 		  							"longueur INTEGER, " 		+
 		  							"largeur INTEGER, " 		+
 		  							"Reservable BOOLEAN, " 		+
-		  							"PRIMARY KEY (id))";
+		  							"PRIMARY KEY (idType))";
 		  res = meta.getTables(null, null, "TYPE", null);
 		  if(!res.next()) {
 		  	  stmt.executeUpdate(tableTYPE);
@@ -55,12 +55,16 @@ public class JDBC_connect {
 		  }
 		  
 		  String tableEMPLACEMENT =	"CREATE TABLE EMPLACEMENT " 		+
-		  							"(idEmplacement INTEGER not null, " +
+		  							"(idSauvegarde INTEGER not null, " 	+
+		  							"idEmplacement INTEGER not null, " 	+
 		  							"nom VARCHAR(20), "					+
-		  							"prixStand INTEGER, " 				+
 		  							"statutReservation VARCHAR(20), "	+
 		  							"statutPaiment VARCHAR(20), "		+
-		  							"PRIMARY KEY (idEmplacement))";
+		  							"coordonneeX INTEGER, "				+
+		  							"coordonneeY INTEGER, "				+
+		  							"idType INTEGER not null,"			+
+		  							"PRIMARY KEY (idSauvegarde),"		+
+		  							"FOREIGN KEY (idType) REFERENCES TYPE (idType)) ";
 		  res = meta.getTables(null, null, "EMPLACEMENT", null);
 		  if(!res.next()) {
 		  	  stmt.executeUpdate(tableEMPLACEMENT);
@@ -83,10 +87,10 @@ public class JDBC_connect {
 		  /****  ASSOCIATION TABLES ****/
 		  String tablePARTICIPE	 =	"CREATE TABLE PARTICIPE "		 						+
 		  							"(idProfil INTEGER not null, " 							+
-		  							"idEmplacement INTEGER not null, "						+
-		  							"PRIMARY KEY (idProfil, idEmplacement), "				+
+		  							"idSauvegarde INTEGER not null, "						+
+		  							"PRIMARY KEY (idProfil, idSauvegarde), "				+
 		  							"FOREIGN KEY (idProfil) REFERENCES PROFIL (idProfil), "	+
-		  							"FOREIGN KEY (idEmplacement) REFERENCES EMPLACEMENT (idEmplacement))";
+		  							"FOREIGN KEY (idSauvegarde) REFERENCES EMPLACEMENT (idSauvegarde))";
 		  res = meta.getTables(null, null, "PARTICIPE", null);
 		  if(!res.next()) {
 		  	  stmt.executeUpdate(tablePARTICIPE);
@@ -105,10 +109,10 @@ public class JDBC_connect {
 		  
 		  String tableCONTIENT	 =	"CREATE TABLE CONTIENT "		 				+
 		  							"(idBab INTEGER not null, " 					+
-		  							"idEmplacement INTEGER not null, "				+
-		  							"PRIMARY KEY (idBab, idEmplacement), "			+
+		  							"idSauvegarde INTEGER not null, "				+
+		  							"PRIMARY KEY (idBab, idSauvegarde), "			+
 		  							"FOREIGN KEY (idBab) REFERENCES BAB (idBab),"	+
-		  							"FOREIGN KEY (idEmplacement) REFERENCES EMPLACEMENT (idEmplacement))";
+		  							"FOREIGN KEY (idSauvegarde) REFERENCES EMPLACEMENT (idSauvegarde))";
 		  res = meta.getTables(null, null, "CONTIENT", null);
 		  if(!res.next()) {
 		  	  stmt.executeUpdate(tableCONTIENT);

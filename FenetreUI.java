@@ -219,8 +219,11 @@ public class FenetreUI extends AbstractAction{
 			fenAutre.saisir();
 		}
 		else if(e.getSource() == btnSaveBaB){
-			//TODO sauvegarder dans BDD
-
+			JDBC_BDD baseDeDonnees = new JDBC_BDD();
+			baseDeDonnees.startJDBC();
+			System.out.println("Début de la sauvegarde...");
+			baseDeDonnees.sauvegarderBab(system);
+			System.out.println("Sauvegarde réussie");
 		}
 		else if(e.getSource() == btnSupprimerBaB){
 			frame.dispose();
