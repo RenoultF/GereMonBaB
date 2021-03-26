@@ -91,6 +91,22 @@ public class Emplacement {
 	public int getCoordonneeY() {
 		return this.coordonneeY;
 	}
+
+	/**
+	 ** méthode retournant la largeur de l'emplacement
+	 ** @return 1
+	 **/
+	public Double getLargeur() {
+		return 1.0;
+	}
+
+	/**
+	 ** méthode retournant la longueur de l'emplacement
+	 ** @return 1
+	 **/
+	public Double getLongueur() {
+		return 1.0;
+	}
 	
 	/**
 	 ** méthode permettant de savoir si c'est un stand ou non
