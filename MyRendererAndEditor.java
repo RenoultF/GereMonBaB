@@ -61,8 +61,12 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
         index = (int)FenetreUI.tabStands.getValueAt(row, 0);
         //On va chercher l'emplacement qui correspond à l'index
         empCourant = FenetreUI.getSystem().getListeStand().get(index);
+        Stand empCourantStand = (Stand) empCourant;
         //on supprime la ligne dans le tableau
         FenetreUI.tabStands.removeRow(row);
+        //on ajoute le stand au emplacement supprimé de la session
+        FenetreUI.getSystem().getListeStandSuppr().add(empCourantStand);
+        System.out.println(FenetreUI.getSystem().getListeStandSuppr());
         //on suprrime le stand de la liste
         FenetreUI.getSystem().supprimerStand(empCourant.getIdType());
         //suppression du boutons de la liste stands
@@ -79,6 +83,9 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
         Autre empCourantAutre = (Autre) empCourant;
         //on supprime la ligne dans le tableau
         FenetreUI.tabAutres.removeRow(row);
+        //on ajoute l'emplacement autre au emplacement supprimé de la session
+        FenetreUI.getSystem().getListeAutreSuppr().add(empCourantAutre);
+        System.out.println(FenetreUI.getSystem().getListeAutreSuppr());
         //on suprrime le stand de la liste
         FenetreUI.getSystem().supprimerAutre(empCourantAutre.getIdType());
         //suppression du boutons de la liste autres
