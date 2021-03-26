@@ -61,16 +61,16 @@ class ActionBtn extends AbstractAction  {
 					//On vérifie si on peut mettre l'emplacement
 					int erreurEmplacement;
 					erreurEmplacement = FenetreUI.getSystem().emplacementPossible(emplacementAjouteAutre);
-					System.out.print("\n erreur = " + erreurEmplacement + "\n");
 					//l'emplacement peut être créé
 					if(erreurEmplacement == 0){
 						//on met à jour le/les boutons
+						JButton btnAutreColor;
 						for(int i = 0;i<emplacementAjouteAutre.getLargeur();i++){
 							for(int j = ind;j<ind+emplacementAjouteAutre.getLongueur();j++){
-								boutonCourant = FenetreUI.listBut.get(i * FenetreUI.getSystem().getDimX() + j);
-								boutonCourant.setBackground(Color.BLACK);
-								boutonCourant.setEnabled(false);
-								boutonCourant.setText(Integer.toString(emplacementAjouteAutre.getIdType()));
+								btnAutreColor = FenetreUI.listBut.get(i * FenetreUI.getSystem().getDimX() + j);
+								btnAutreColor.setBackground(Color.BLACK);
+								btnAutreColor.setEnabled(false);
+								btnAutreColor.setText(Integer.toString(emplacementAjouteAutre.getIdType()));
 							}
 						}
 						FenetreUI.listButAutres.add(boutonCourant);

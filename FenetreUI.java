@@ -200,6 +200,7 @@ public class FenetreUI extends AbstractAction{
 		panFenetre.add(ongletBab);
 		panFenetre.add(scrollStands);
 		panFenetre.add(scrollAutres);
+		actualiseFenetre();
 		frame.getContentPane().add(panFenetre);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //frame.dispose(); si on veux juste quitter la fenetre et non aps l'appli.
@@ -259,7 +260,7 @@ public class FenetreUI extends AbstractAction{
 				for(int iTmp = 0;iTmp<emplacementAutre.getLargeur();iTmp++){
 					for(int jTmp = indBase;jTmp<indBase+emplacementAutre.getLongueur();jTmp++){
 						//on va cherche les boutons voulu pour les mettre à jour
-					  listBut.get(iTmp * FenetreUI.getSystem().getDimX() + jTmp).setText(String.valueOf(listeAutre.get(i).getIdType()));
+					  listBut.get(iTmp * getSystem().getDimX() + jTmp).setText(String.valueOf(listeAutre.get(i).getIdType()));
 					}
 				}
 				//on change la valeur dans le tableau
@@ -275,6 +276,50 @@ public class FenetreUI extends AbstractAction{
 
 	public static BaB getSystem() {
 		return system;
+	}
+
+	public void actualiseFenetre(){
+		int indBase;
+		JButton btnCourant;
+		if(!system.getListeStand().isEmpty()){
+			for(Emplacement e : system.getListeStand()){
+				indBase = e.getCoordonneeX()*dimX + e.getCoordonneeY();
+				btnCourant = listBut.get(indBase);
+				btnCourant.setBackground(Color.GREEN);
+				btnCourant.setEnabled(false);
+				btnCourant.setText(Integer.toString(e.getIdType()));
+				listButStands.add(btnCourant);
+				Object[] newData = {e.getIdType(),e.getCoordonneeX(),e.getCoordonneeY()};
+				tabStands.addRow(newData);
+				//ajoute le bouton supprimer
+				tableStands.getColumn("").setCellRenderer(new MyRendererAndEditor(tableStands,"Stand"));
+				tableStands.getColumn("").setCellEditor(new MyRendererAndEditor(tableStands,"Stand"));
+			}
+		}
+
+		if(!system.getListeAutre().isEmpty()){
+			Autre emplacementAutre;
+			JButton btnAutreColor;
+			for(Emplacement e : system.getListeAutre()){
+				emplacementAutre = (Autre) e;
+				indBase = emplacementAutre.getCoordonneeX()*dimX + emplacementAutre.getCoordonneeY();
+				btnCourant = listBut.get(indBase);
+				for(int i = 0;i<emplacementAutre.getLargeur();i++){
+					for(int j = indBase;j<indBase+emplacementAutre.getLongueur();j++){
+						btnAutreColor = listBut.get(i * getSystem().getDimX() + j);
+						btnAutreColor.setBackground(Color.BLACK);
+						btnAutreColor.setEnabled(false);
+						btnAutreColor.setText(Integer.toString(emplacementAutre.getIdType()));
+					}
+				}
+				listButAutres.add(btnCourant);
+				//on met a jour le tableau
+				Object[] newData = {emplacementAutre.getIdType(),emplacementAutre.getType(),emplacementAutre.getCoordonneeX(),emplacementAutre.getCoordonneeY(),emplacementAutre.getLargeur(),emplacementAutre.getLongueur()};
+				tabAutres.addRow(newData);
+				tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(tableAutres,"Autre"));
+				tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(tableAutres,"Autre"));
+			}
+		}
 	}
 
 }
