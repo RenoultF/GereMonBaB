@@ -24,7 +24,7 @@ public class FenetreExposant extends AbstractAction {
 	private JLabel labContact;
 
 	public FenetreExposant() {
-		frame = new JFrame("GereMonBaB - Organisateur");
+		frame = new JFrame("GereMonBaB - Exposant");
         global_panel = new JPanel(new GridLayout(1, 1));
 		onglets = new JTabbedPane();
 

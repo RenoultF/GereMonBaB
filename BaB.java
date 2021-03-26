@@ -22,8 +22,14 @@ public class BaB {
 	private Quadrillage carte; 
 	
 	//liste des emplacements dans le bab
-	private LinkedList<Emplacement> Stands;
+	private LinkedList<Emplacement> stands;
 	private LinkedList<Emplacement> autres;
+
+	//liste des emplacements supprimé durant la session
+	private LinkedList<Stand> standsSuppr;
+	private LinkedList<Autre> autresSuppr;
+
+
 
 	//type de l'emplacement selectionné
 	private String type;
@@ -44,10 +50,12 @@ public class BaB {
 		
 		//Initialisation des listes
 		carte = new Quadrillage(this.dimX, this.dimY);
-		Stands = new LinkedList<Emplacement>();
+		stands = new LinkedList<Emplacement>();
 		autres = new LinkedList<Emplacement>();
+		standsSuppr = new LinkedList<Stand>();
+		autresSuppr = new LinkedList<Autre>();
+
 		type = new String("Stand");
-	
 	
 	}
 	
@@ -67,13 +75,13 @@ public class BaB {
 		Case caseCourante = carte.getCaseXY(coordX, coordY);
 		if(caseCourante.estLibre()) {
 			
-			if(Stands.size() == 0)
+			if(stands.size() == 0)
 				idType = 0;
 			else
-				idType = Stands.getLast().getIdType() + 1;
+				idType = stands.getLast().getIdType() + 1;
 				
 			Emplacement nouveauStand = new Stand(idType, coordX, coordY);
-			Stands.addLast(nouveauStand);
+			stands.addLast(nouveauStand);
 			caseCourante.occuper();
 			
 			return true;
@@ -86,11 +94,11 @@ public class BaB {
 	
 	public void supprimerStand(int id) {
 	
-		int coordX = Stands.get(id).getCoordonneeX();
-		int coordY = Stands.get(id).getCoordonneeY();
+		int coordX = stands.get(id).getCoordonneeX();
+		int coordY = stands.get(id).getCoordonneeY();
 		carte.getCaseXY(coordX, coordY).liberer();
 		
-		Stands.remove(id);
+		stands.remove(id);
 		
 	}
 	
@@ -217,7 +225,7 @@ public class BaB {
 	}
 	
 	/**
-	 ** méthode permettant de récupérer la taille X des Stands
+	 ** méthode permettant de récupérer la taille X des stands
 	 ** @return tailleAutreLongueur la taille X d'un Stand
 	 **/
 	public Double getTailleAutreLongueur() {
@@ -225,7 +233,7 @@ public class BaB {
 	}
 	
 	/**
-	 ** méthode permettant de récupérer la taille Y des Stands
+	 ** méthode permettant de récupérer la taille Y des stands
 	 ** @return tailleAutreLongueur la taille Y d'un Stand
 	 **/
 	public Double getTailleAutreLargeur() {
@@ -233,7 +241,7 @@ public class BaB {
 	}
 	
 	/**
-	 ** méthode permettant de modifier la taille X des Stands
+	 ** méthode permettant de modifier la taille X des stands
 	 ** @param nouveauX la nouvelle taille X d'un Stand
 	 **/
 	public void setTailleAutreLongueur(Double nouveauX) {
@@ -241,7 +249,7 @@ public class BaB {
 	}
 	
 	/**
-	 ** méthode permettant de modifier la taille Y des Stands
+	 ** méthode permettant de modifier la taille Y des stands
 	 ** @param nouveauY la nouvelle taille Y d'un Stand
 	 **/
 	public void setTailleAutreLargeur(Double nouveauY) {
@@ -364,11 +372,11 @@ public class BaB {
 	}
 
 	/**
-	 ** méthode permettant de récupérer la liste des Stands
-	 ** @return Stands la liste des Stands
+	 ** méthode permettant de récupérer la liste des stands
+	 ** @return stands la liste des stands
 	 **/
 	public LinkedList<Emplacement> getListeStand() {
-		return this.Stands;
+		return this.stands;
 	}
 	
 	/**
@@ -378,13 +386,29 @@ public class BaB {
 	public LinkedList<Emplacement> getListeAutre() {
 		return this.autres;
 	}
+
+	/**
+	 ** méthode permettant de récupérer la liste des stands supprimé
+	 ** @return standsSuppr la liste des stands
+	 **/
+	public LinkedList<Stand> getListeStandSuppr() {
+		return this.standsSuppr;
+	}
+	
+	/**
+	 ** méthode permettant de récupérer la liste des autres supprimé
+	 ** @return autresSuppr la liste des autres
+	 **/
+	public LinkedList<Autre> getListeAutreSuppr() {
+		return this.autresSuppr;
+	}
 	
 	/************************************** DEBOGGAGE **************************************/
 	
 	public void afficherStands() {
-		System.out.println("Stands : ");
-		for(int i = 0; i < Stands.size(); i++) {
-			Stands.get(i).afficher();
+		System.out.println("stands : ");
+		for(int i = 0; i < stands.size(); i++) {
+			stands.get(i).afficher();
 		}
 	}
 	

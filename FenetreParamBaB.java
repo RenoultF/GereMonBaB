@@ -184,7 +184,8 @@ public class FenetreParamBaB extends JFrame {
     public void fermerFenetre() {
         sem.V(); // Relachement du semaphore
         this.dispose();
-	    new FenetreUI(new BaB(this.getNomBaB(), this.getDateBaB(), this.getPrixStand(), this.getAdresseBaB(), this.getDimensionX(), this.getDimensionY()));
+        BaB nvBaB = new BaB(this.getNomBaB(), this.getDateBaB(), this.getPrixStand(), this.getAdresseBaB(), this.getDimensionX(), this.getDimensionY());
+;	    new FenetreUI(nvBaB);
     }
 
     // Classe interne permettant de gérer le bouton OK
