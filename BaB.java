@@ -63,7 +63,7 @@ public class BaB {
 	
 	/**** Méthodes de chargement ****/
 	public void chargerStand(Emplacement emp) {
-		Stands.addLast(emp);
+		stands.addLast(emp);
 	}
 	
 	public void chargerAutre(Emplacement emp) {

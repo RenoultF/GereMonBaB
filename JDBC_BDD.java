@@ -139,7 +139,7 @@ public class JDBC_BDD {
 			System.out.println("New Emplacement	");
 			
 			// Recherche de l'existence d'un possible type qui correspondrait au type de l'emplacement, sinon création d'un nouveau type			   
-			sqlGetType = "SELECT * FROM TYPE WHERE longueur = "+ emp.getTailleX()+" AND largeur = "+ emp.getTailleY() +" AND reservable = "+ emp.estStand()+"";
+			sqlGetType = "SELECT * FROM TYPE WHERE longueur = "+ emp.getLongueur()+" AND largeur = "+ emp.getLargeur() +" AND reservable = "+ emp.estStand()+"";
 			try{
 				res = stmt.executeQuery(sqlGetType);
 				if(res.next()) {
@@ -149,8 +149,8 @@ public class JDBC_BDD {
 					idType = getNewIdTable("TYPE");
 					sqlType = "INSERT INTO TYPE VALUES(" +
 						idType 				+ ", " 	+
-						emp.getTailleX() 	+ ", " 	+
-						emp.getTailleY() 	+ ", " 	+
+						emp.getLongueur() 	+ ", " 	+
+						emp.getLargeur() 	+ ", " 	+
 						emp.estStand()	 	+ ") ";
 					stmt.executeUpdate(sqlType);
 				}
