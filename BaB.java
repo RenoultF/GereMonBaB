@@ -28,6 +28,7 @@ public class BaB {
 	//liste des emplacements supprimé durant la session
 	private LinkedList<Stand> standsSuppr;
 	private LinkedList<Autre> autresSuppr;
+	private LinkedList<Reservation> reservations;
 
 
 
@@ -54,6 +55,7 @@ public class BaB {
 		autres = new LinkedList<Emplacement>();
 		standsSuppr = new LinkedList<Stand>();
 		autresSuppr = new LinkedList<Autre>();
+		reservations = new LinkedList<Reservation>();
 
 		type = new String("Stand");
 	
@@ -403,6 +405,13 @@ public class BaB {
 		return this.autresSuppr;
 	}
 	
+	/**
+	 ** méthode permettant de récupérer la liste des reservations
+	 ** @return reservations la liste des reservation
+	 **/
+	public LinkedList<Reservation> getListeReservation() {
+		return this.reservations;
+	}
 	/************************************** DEBOGGAGE **************************************/
 	
 	public void afficherStands() {

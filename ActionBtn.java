@@ -10,7 +10,7 @@ class ActionBtn extends AbstractAction  {
 	private int coord_x;
 	private int coord_y;
 	
-    private boolean clic = false;
+    private boolean dejaClic;
     
 	private JButton boutonCourant;
 	
@@ -22,13 +22,14 @@ class ActionBtn extends AbstractAction  {
 		ind = i;
 		coord_x = x;
 		coord_y = y;
+		dejaClic = false;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		boutonCourant = FenetreUI.listBut.get(ind);
+		if(!dejaClic){
 			if(FenetreUI.getSystem().ajouterEmplacement(coord_x, coord_y)) {
-				FenetreUI.getSystem().afficherStands();
 				if(FenetreUI.getSystem().getType().equals("Stand")){
 					//on recupere l'emplacement
 					emplacementAjoute = FenetreUI.getSystem().getListeStand().getLast();
@@ -43,7 +44,6 @@ class ActionBtn extends AbstractAction  {
 				if(emplacementAjoute.getType().equals("Stand")){
 					//on met à jour le bouton
 					boutonCourant.setBackground(Color.GREEN);
-					boutonCourant.setEnabled(false);
 					boutonCourant.setText(Integer.toString(emplacementAjoute.getIdType()));
 					//ajoute le bouton a la liste
 					FenetreUI.listButStands.add(boutonCourant);
@@ -113,13 +113,24 @@ class ActionBtn extends AbstractAction  {
 					}		
 				}
 			}
-		//}
-
-		System.out.println(ind + "=" + coord_x + ":" + coord_y + "(" + clic + ")"); // Pour dev....
+			dejaClic = true;
+		}
+		// on veut reserver
+		else{
+			int retour = JOptionPane.showConfirmDialog(FenetreUI.getJFrame(), "Voulez-vous reserver ce stand ?","Avertissement Reservation Stand",JOptionPane.OK_CANCEL_OPTION);
+			if(retour!=2){
+				FenetreReservation fenReser = new FenetreReservation("Prenom", "Nom", "Moyen de paiement", emplacementAjoute,FenetreUI.getSystem(),boutonCourant);
+				fenReser.saisir();
+			}
+		}
 	}
 	
 	public boolean getClic() {
-		return clic;
+		return dejaClic;
+	}
+
+	public void setClic(boolean nvClic){
+		this.dejaClic = nvClic;
 	}
 	
 }
