@@ -91,7 +91,7 @@ public class FenetreUI extends AbstractAction{
 		sem = new Semaphore(1);
 		
 		/** Variables de la fenêtre **/
-		frame = new JFrame("Quadrillage");
+		frame = new JFrame("GereMonBaB - Editeur");
 		panFenetre = new JPanel(new GridLayout(2,2));
 		panGrille = new JPanel(new GridLayout(dimX, dimY));
 

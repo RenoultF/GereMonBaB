@@ -1,8 +1,11 @@
 import java.awt.*;
+import java.awt.event.*;
 import javax.swing.*;
-import java.awt.event.ActionEvent;
+import javax.swing.event.*;
 
-public class FenetreParamBaB extends JFrame {
+public class PanelParamBaB {
+    static JPanel pan;
+
     // Dimension d'un stand en metres
     private String nomBaB;
     private String dateBaB;
@@ -32,7 +35,8 @@ public class FenetreParamBaB extends JFrame {
 
     private Semaphore sem; // Mutex
 
-    public FenetreParamBaB(String nomBaB, String dateBaB, int prixStand, String adresse, int dimX, int dimY) {
+    public PanelParamBaB(String nomBaB, String dateBaB, int prixStand, String adresse, int dimX, int dimY) {
+        this.pan = new JPanel(null); // Absolute Positioning
 
         // ***** Valeurs par défaut *****
         this.nomBaB = nomBaB;
@@ -45,89 +49,76 @@ public class FenetreParamBaB extends JFrame {
         sem = new Semaphore(1);
     }
 
-    public void saisir() {
+    public JPanel getPannel() {
         sem.P(); // Prise du semaphore
-        System.out.println("Semaphore pris");
 
+        // ***** Construction des composants *****
         labTitre = new JLabel("Parametre du BaB :");
 
         labNomBaB = new JLabel("Nom du BaB :");
-        labDateBaB = new JLabel("Date du BaB (JJ/MM/AAAA):");
+        labDateBaB = new JLabel("Date du BaB (JJ/MM/AAAA) :");
         labAdresse = new JLabel("Adresse du BaB :");
         labDimX = new JLabel("Dimension X du BaB :");
         labDimY = new JLabel("Dimension Y du BaB :");
         labPrixStand = new JLabel("Prix d'un Stand :");
 
         txtNomBaB = new JTextField(15);
-        txtDateBaB = new JTextField(10);
-        txtAdresse = new JTextField(30);
-        txtDimX = new JTextField(5);
-        txtDimY = new JTextField(5);
-        txtPrixStand = new JTextField(5);
-
-        butOk = new JButton(new ActionBtnOk("OK"));
-
-        // ***** Absolute Positioning *****
-        labTitre.setBounds(5, 5, 160, 25);
-
-        labNomBaB.setBounds(30, 35, 120, 25);
-        txtNomBaB.setBounds(155, 35, 100, 25);
-
-        labDateBaB.setBounds(30, 65, 120, 25);
-        txtDateBaB.setBounds(155, 65, 100, 25);
-
-        labAdresse.setBounds(30, 95, 120, 25);
-        txtAdresse.setBounds(155, 95, 100, 25);
-
-        labDimX.setBounds(30, 125, 120, 25);
-        txtDimX.setBounds(155, 125, 100, 25);
-
-        labDimY.setBounds(30, 155, 120, 25);
-        txtDimY.setBounds(155, 155, 100, 25);
-
-        labPrixStand.setBounds(30, 185, 120, 25);
-        txtPrixStand.setBounds(155, 185, 100, 25);
-
-
-        butOk.setBounds(280, 105, 65, 55);
-
-        // ***** Valeurs par défaut *****
         txtNomBaB.setText(this.nomBaB);
+        txtDateBaB = new JTextField(10);
         txtDateBaB.setText(this.dateBaB);
+        txtAdresse = new JTextField(30);
         txtAdresse.setText(this.adresse);
+        txtDimX = new JTextField(5);
         txtDimX.setText(Integer.toString(this.dimX));
+        txtDimY = new JTextField(5);
         txtDimY.setText(Integer.toString(this.dimY));
+        txtPrixStand = new JTextField(5);
         txtPrixStand.setText(Integer.toString(this.prixStand));
 
-        add(labTitre);
+        butOk = new JButton(new ActionBtnOk("Valider"));
 
-        add(labNomBaB);
-        add(txtNomBaB);
 
-        add(labDateBaB);
-        add(txtDateBaB);
+        // ***** Ajout des composants *****
+        pan.add(labTitre);
+        pan.add(labNomBaB);
+        pan.add(txtNomBaB);
+        pan.add(labDateBaB);
+        pan.add(txtDateBaB);
+        pan.add(labAdresse);
+        pan.add(txtAdresse);
+        pan.add(labDimX);
+        pan.add(txtDimX);
+        pan.add(labDimY);
+        pan.add(txtDimY);
+        pan.add(labPrixStand);
+        pan.add(txtPrixStand);
+        pan.add(butOk);
 
-        add(labAdresse);
-        add(txtAdresse);
 
-        add(labDimX);
-        add(txtDimX);
+        // ***** Positionnement *****
+        labTitre.setBounds(5, 5, 200, 25);
 
-        add(labDimY);
-        add(txtDimY);
+        labNomBaB.setBounds(30, 85, 200, 25);
+        txtNomBaB.setBounds(210, 85, 200, 25);
 
-        add(labPrixStand);
-        add(txtPrixStand);
+        labDateBaB.setBounds(30, 135, 200, 25);
+        txtDateBaB.setBounds(210, 135, 200, 25);
 
-        add(butOk);
+        labAdresse.setBounds(30, 185, 200, 25);
+        txtAdresse.setBounds(210, 185, 200, 25);
 
-        // ***** Fenêtre *****
-        this.setLayout(null);
-        this.setTitle("Parametre BaB");
-        this.setSize(400, 300);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setLocationRelativeTo(null);
-        this.setVisible(true);
+        labDimX.setBounds(30, 235, 200, 25);
+        txtDimX.setBounds(210, 235, 100, 25);
+
+        labDimY.setBounds(30, 285, 200, 25);
+        txtDimY.setBounds(210, 285, 100, 25);
+
+        labPrixStand.setBounds(30, 335, 200, 25);
+        txtPrixStand.setBounds(210, 335, 100, 25);
+
+        butOk.setBounds(350, 500, 300, 80);
+
+        return pan;
     }
 
     // ********** Getters **********
@@ -183,7 +174,7 @@ public class FenetreParamBaB extends JFrame {
 
     public void fermerFenetre() {
         sem.V(); // Relachement du semaphore
-        this.dispose();
+        //this.dispose();
         BaB nvBaB = new BaB(this.getNomBaB(), this.getDateBaB(), this.getPrixStand(), this.getAdresseBaB(), this.getDimensionX(), this.getDimensionY());
 ;	    new FenetreUI(nvBaB);
     }
