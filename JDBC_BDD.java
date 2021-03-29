@@ -41,28 +41,12 @@ public class JDBC_BDD {
 	
 	
 	/*************************************************PRIVATE METHODS************************************************************/
-	
-	/**
-	 ** Méthode privée permettant la recherche du prochain IdProfil pour la création d'un nouvel utilisateur
-	 **/
-	static private int getNewIdUser() {
-		int newId = 0;
-		String sql = "SELECT max(idProfil) FROM PROFIL";
-		try{
-			res = stmt.executeQuery(sql);
-			while(res.next()) {
-				newId = res.getInt("max(idProfil)")+1;
-			}
-		}catch(SQLException se){
-			se.printStackTrace();
-		}//end try
 		
-		return newId;
-	}
-	
 	
 	/**
-	 ** Méthode privée permettant la recherche du prochain id dans une table dont le nom est passé en paramètre
+	 ** Méthode privée permettant la recherche du prochain id dans une table
+	 ** @param  table un String contenant le nom de la table
+	 ** @return newId un entier contenant le prochain id de la table passée en paramètre
 	 **/
 	static private int getNewIdTable(String table) {
 		int newId = 0;
@@ -100,22 +84,22 @@ public class JDBC_BDD {
 	
 	/**
 	 ** Méthode privée permettant de créer un profil en faisant passer les informations en paramètres
-	 ** param
-	 ** param
-	 ** param
-	 ** param
-	 ** param
+	 ** @param
+	 ** @param
+	 ** @param
+	 ** @param
+	 ** @param
 	 ** ATTENTION LES MOTS DE PASSE NE SONT PAS CRYPTES
 	 **/
 	static private void creerProfil(String nom, String prenom, String mail, String mdp, String typeProfil) {
 		String sql;
 		sql = "INSERT INTO PROFIL VALUES(" +
-			   getNewIdUser() +", '" +
-			   nom + "', '" +
-			   prenom + "', '" +
-			   typeProfil + "', '" +
-			   mail + "', '" +
-			   mdp + "') ";
+			   getNewIdTable("PROFIL") 	+ ", '"  +
+			   nom 						+ "', '" +
+			   prenom 					+ "', '" +
+			   typeProfil 				+ "', '" +
+			   mail 					+ "', '" +
+			   mdp 						+ "') ";
 		
 		try{
 			stmt.executeUpdate(sql);
@@ -126,8 +110,6 @@ public class JDBC_BDD {
 	
 	/**
 	 ** Méthode sauvegardant toutes les données d'un Emplacement en créant une nouvelle sauvegarde si l'emplacement n'est pas dans la bdd, sinon il modifie les informations déjà présentes
-	 
-		if(!this.type.equals("Stand")){
 	 **/
 	static private void sauvegarderEmplacement(Emplacement emp, int idBab) {
 		int idEmp = emp.getIdSauvegarde();
@@ -168,7 +150,7 @@ public class JDBC_BDD {
 			   emp.getPaiement() 	+ "', " +
 			   emp.getCoordonneeX() + ", " 	+
 			   emp.getCoordonneeY() + ", " 	+
-			   idType + ") ";
+			   idType 				+ ") ";
 			
 			// Creation des données dans la table d'association
 			sqlContient = "INSERT INTO CONTIENT VALUES(" +
@@ -290,7 +272,7 @@ public class JDBC_BDD {
 	}
 	
 	/**
-	 ** Méthode publique chargeant les données d'un bab et les renvois
+	 ** Méthode publique chargeant toutes les données d'un bab et sa liste d'emplacements
 	 ** @return un BaB
 	 **/
 	static public BaB chargerBab(int id) {
@@ -375,6 +357,54 @@ public class JDBC_BDD {
 		}
 		
 		return babLoaded;
+	}
+	
+	/**
+	 ** Méthode publique retournant le nombre de babs sauvegardé dans la base de données
+	 ** @reutnr nbBab un entier contenant le nombre de babs
+	 **/
+	public int compterBab() {
+		//requete SQL
+		String sqlNbBab;
+		//Variable à retourner
+		int nbBab = 0;
+		
+		sqlNbBab = "SELECT COUNT(idBab) FROM BAB";
+		try{
+			res = stmt.executeQuery(sqlNbBab);
+			while(res.next()) {
+				nbBab   = res.getInt("COUNT(idBab)");
+			}
+		}catch(SQLException se){
+			se.printStackTrace();
+		}
+		return nbBab;
+	}
+	
+	/**
+	 ** Méthode publique retournant les infos générales de tous les babs dans la base de données
+	 ** @return infosBabs un String contenant l'id, le nom, la date et l'adresse de tous les babs
+	 **/
+	public String[][] chargerToutesInfos() {
+		//requete SQL
+		String sqlBab;
+		//Variable à retourner
+		String[][] infos = new String[99999][2];
+		
+		int i = 0;
+		
+		sqlBab = "SELECT idBab, nom FROM BAB";
+		try{
+			res = stmt.executeQuery(sqlBab);
+			while(res.next()) {
+				infos[i][0] = String.valueOf(res.getInt("idBab"));
+				infos[i][1] = res.getString("nom");
+				i++;
+			}
+		}catch(SQLException se){
+			se.printStackTrace();
+		}
+		return infos;
 	}
 	
 	

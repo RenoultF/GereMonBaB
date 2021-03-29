@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 import javax.swing.event.*;
+import javax.swing.table.DefaultTableModel;
 
 public class FenetreOrganisateur extends AbstractAction {
     private JFrame frame;
@@ -11,14 +12,20 @@ public class FenetreOrganisateur extends AbstractAction {
 	
 	// ***** Panels correspondant aux onglets *****
 	private JPanel panCreerBaB;
-	private JPanel panMesBaB;
+	private JPanel panMesBaBs;
 	private JPanel panContact;
 
 	// ***** Variables pour onglet CreerBaB *****
 	private JButton butCreerBaB; // Permet de confirmer la création
 
 	// ***** Variables pour onglet MesBaB *****
-	// todo
+	private JScrollPane 		scrollMesBabs;
+	public static DefaultTableModel	tabMesBabs;
+	private JTable				tableMesBabs;
+	private JDBC_BDD 	baseDeDonnees;
+	//private Object[] 	nvBab;
+	private String[][]	infosBabs;
+	private String[] 	header = {"Id","NomBab","Charger","Publier"};
 
 	// ***** Variables pour onglet Contact *****
 	private JLabel labContact;
@@ -37,8 +44,26 @@ public class FenetreOrganisateur extends AbstractAction {
 		panCreerBaB.add(butCreerBaB);
 
 		// ********** Onglet : Mes BaB **********
-		panMesBaB = new JPanel();
-		onglets.add("Mes BaB", panMesBaB);
+		panMesBaBs 		= new JPanel();
+		onglets.add("Mes BaBs", panMesBaBs);
+		tabMesBabs 		= new DefaultTableModel(header, 0);
+		tableMesBabs 	= new JTable(tabMesBabs);
+		scrollMesBabs 	= new JScrollPane(tableMesBabs);
+		
+		
+		baseDeDonnees = new JDBC_BDD();
+		baseDeDonnees.startJDBC();
+		infosBabs = baseDeDonnees.chargerToutesInfos();
+		for(int i = 0; i < baseDeDonnees.compterBab(); i++) {
+			Object[] nvBab = {Integer.parseInt(infosBabs[i][0]), infosBabs[i][1]};
+			tabMesBabs.addRow(nvBab);
+			tableMesBabs.getColumn("Charger").setCellRenderer	(new MyRendererAndEditorChargerBab(tableMesBabs, "Charger"));
+			tableMesBabs.getColumn("Charger").setCellEditor		(new MyRendererAndEditorChargerBab(tableMesBabs, "Charger"));
+			tableMesBabs.getColumn("Publier").setCellRenderer	(new MyRendererAndEditorChargerBab(tableMesBabs, "Publier"));
+			tableMesBabs.getColumn("Publier").setCellEditor		(new MyRendererAndEditorChargerBab(tableMesBabs, "Publier"));
+			//TO DO parametré le bouton charger dans MyRendererAndEditorChargerBab.java
+		}
+		panMesBaBs.add(scrollMesBabs);
 
 		// ********** Onglet : Contact **********
 		panContact = new JPanel();
