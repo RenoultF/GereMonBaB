@@ -317,8 +317,21 @@ public class FenetreUI extends AbstractAction{
 			for(Emplacement e : system.getListeStand()){
 				indBase = e.getCoordonneeX()*dimX + e.getCoordonneeY();
 				btnCourant = listBut.get(indBase);
-				btnCourant.setBackground(Color.GREEN);
-				btnCourant.setEnabled(false);
+				switch(e.getReservation()){
+					case "libre":
+						btnCourant.setBackground(Color.GREEN);
+						break;
+					case "semi_reserve":
+						btnCourant.setBackground(Color.ORANGE);
+						break;
+					case "reserve":
+						btnCourant.setBackground(Color.RED);
+						btnCourant.setEnabled(false);
+						break;
+					default:
+						System.out.println("Reservation non identitifé");
+						btnCourant.setBackground(Color.GREEN);
+				}
 				btnCourant.setText(Integer.toString(e.getIdType()));
 				listButStands.add(btnCourant);
 				Object[] newData = {e.getIdType(),e.getCoordonneeX(),e.getCoordonneeY()};
@@ -350,6 +363,19 @@ public class FenetreUI extends AbstractAction{
 				tabAutres.addRow(newData);
 				tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(tableAutres,"Autre"));
 				tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(tableAutres,"Autre"));
+			}
+		}
+
+		if(!system.getListeReservation().isEmpty()){
+			for(Reservation resa : system.getListeReservation()){
+				Emplacement empReserve = resa.getEmplacement();
+				String coordTemp = "( "+empReserve.getCoordonneeX()+ " ; "+ empReserve.getCoordonneeY() + " )";
+            	Object[] newData = {resa.getIdReservation(), resa.getNom(), resa.getPrenom(), empReserve.getIdType(),coordTemp,resa.getMoyenPaiement()};
+				tabReservation.addRow(newData);
+            	tableReservation.getColumn("Accepter").setCellRenderer(new MyRendererAndEditorResaVal(tableReservation));
+				tableReservation.getColumn("Accepter").setCellEditor(new MyRendererAndEditorResaVal(tableReservation));
+            	tableReservation.getColumn("Refuser").setCellRenderer(new MyRendererAndEditorResaSuppr(tableReservation));
+				tableReservation.getColumn("Refuser").setCellEditor(new MyRendererAndEditorResaSuppr(tableReservation));
 			}
 		}
 	}
