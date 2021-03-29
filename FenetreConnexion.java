@@ -7,30 +7,30 @@ public class FenetreConnexion extends JFrame {
     // ***** Contenu de la fentre *****
     private JLabel jcomp1;
     private JLabel jcomp2;
-    private JTextField jcomp3;
-    private JPasswordField jcomp4;
+    private JTextField identifiant;
+    private JPasswordField motDePasse;
     private JButton jcomp5;
 
     public FenetreConnexion() {
         // ***** Construction des composants *****
         jcomp1 = new JLabel("Identifiant");
         jcomp2 = new JLabel("Mot de passe");
-        jcomp3 = new JTextField(5);
-        jcomp4 = new JPasswordField(5);
+        identifiant = new JTextField(5);
+        motDePasse = new JPasswordField(5);
         jcomp5 = new JButton(new ActionBtnOk("Valider"));
 
         // ***** Ajout des composants *****
         add(jcomp1);
         add(jcomp2);
-        add(jcomp3);
-        add(jcomp4);
+        add(identifiant);
+        add(motDePasse);
         add(jcomp5);
 
         // ***** Positionnement *****
         jcomp1.setBounds(5, 30, 120, 25);
         jcomp2.setBounds(5, 59, 120, 25);
-        jcomp3.setBounds(130, 30, 204, 25);
-        jcomp4.setBounds(130, 60, 100, 25);
+        identifiant.setBounds(130, 30, 204, 25);
+        motDePasse.setBounds(130, 60, 100, 25);
         jcomp5.setBounds(235, 60, 100, 25);
 
         // ***** Fenêtre *****
