@@ -26,6 +26,7 @@ public class Emplacement {
 	//Status de la réservation et du paiement
 	private String reservation; //"libre","semi_reserve","reserve"
 	private String paiement;
+	private String proprietaire;
 	 
 	public Emplacement(int idType, String type, int coordX, int coordY) {
 		this.idSauvegarde = 0;
@@ -38,6 +39,7 @@ public class Emplacement {
 		
 		this.reservation = "libre";
 		this.paiement = "aucun";
+		this.proprietaire = "";
 	}
 	
 	/**
@@ -85,7 +87,24 @@ public class Emplacement {
 	public String getNom() {
 		return this.nom;
 	}
+
+	/**
+	 ** méthode retournant le nom du propiretaire
+	 ** @return proprietaire
+	 **/
+	public String getProprietaire() {
+		return this.proprietaire;
+	}
 	
+	/**
+	 ** méthode mettant à jour le nom du proprietaire de l'emplacement
+	 ** @param nvProprietaire
+	 **/
+	public void setProprietaire(String nvProprietaire) {
+		this.proprietaire = nvProprietaire;
+	}
+
+
 	/**
 	 ** méthode retournant la taille X de l'emplacement
 	 ** @return tailleX

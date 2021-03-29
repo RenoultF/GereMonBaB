@@ -274,21 +274,25 @@ public class FenetreUI extends AbstractAction{
 		
 	}
 
-	public static void actualiserTabValResa(Reservation resa){
-		int indexBase;
-		for(Reservation resaTmp : system.getListeReservation()){
-			if(!resaTmp.equals(resa)){
-				if(resaTmp.getEmplacement().equals(resa.getEmplacement())){
-					for(indexBase = system.getListeReservation().indexOf(resaTmp);indexBase<system.getListeReservation().size();indexBase++){
-						system.getListeReservation().get(indexBase).setIdReservation(system.getListeReservation().get(indexBase).getIdReservation()-1);
-						//on change la valeur dans le tableau
-						tableReservation.setValueAt(system.getListeReservation().get(indexBase).getIdReservation(), indexBase, 0);
-					}
+	public static void actualiserTabValResa(Reservation resa,int index){
+		int i;
+		int idEmplacement = resa.getEmplacement().getIdType();
+		Iterator<Reservation> itResa = system.getListeReservation().iterator();
+		while(itResa.hasNext()){
+			Reservation resaTmp = itResa.next();
+			int indexTmp;
+			
+				if(resaTmp.getEmplacement().getIdType()==idEmplacement){
+					indexTmp = resaTmp.getIdReservation();
+					actualiserTabSupprResa(indexTmp);
+					itResa.remove();
+					tabReservation.removeRow(indexTmp);
 				}
-			}
+			
 		}
 	}
-	public static void actualiserTabSupprResa(Reservation resa, int index){
+	
+	public static void actualiserTabSupprResa(int index){
 		int i;
 		for(i = index; i<system.getListeReservation().size();i++){
 			system.getListeReservation().get(i).setIdReservation(system.getListeReservation().get(i).getIdReservation()-1);	

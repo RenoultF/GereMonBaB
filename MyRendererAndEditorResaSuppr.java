@@ -58,24 +58,27 @@ class MyRendererAndEditorResaSuppr extends AbstractAction implements TableCellRe
       FenetreUI.tabReservation.removeRow(row);
       //supprimer de la liste des reservé
       Reservation resa = FenetreUI.getSystem().getListeReservation().get(index);
+      //actualise le bouton
       actualiserBtnSiBesoin(resa);
+      //supprime de la liste des reservation
       FenetreUI.getSystem().getListeReservation().remove(index);
-      FenetreUI.actualiserTabSupprResa(resa,index);
-      
+      //actualise le tableau
+      FenetreUI.actualiserTabSupprResa(index);
     }
   }
 
   public void actualiserBtn(JButton but){
-    btn.setBackground(Color.RED);
-    btn.setEnabled(false);
+    but.setBackground(Color.RED);
+    but.setEnabled(false);
   }
 
   public void actualiserBtnSiBesoin(Reservation resa){
     for(Reservation resaTmp : FenetreUI.getSystem().getListeReservation()){
-      if(resaTmp.getIdReservation()!=resa.getIdReservation())
+      if(resaTmp.getIdReservation()!=resa.getIdReservation()){
         if(resaTmp.getEmplacement().getIdType() == resa.getEmplacement().getIdType()){
           return;
         }
+      }
     }
     JButton btnModif = FenetreUI.listBut.get(resa.getEmplacement().getCoordonneeX()*FenetreUI.getSystem().getDimX() + resa.getEmplacement().getCoordonneeY());
     btnModif.setBackground(Color.GREEN);

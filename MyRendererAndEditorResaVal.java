@@ -53,28 +53,35 @@ class MyRendererAndEditorResaVal extends AbstractAction implements TableCellRend
   @Override
   public void actionPerformed(ActionEvent e) {
     if(e.getSource() == this.btn){
-        int index;
-        //On recupere l'idval_suppr qui est dans le tableau
-        System.out.println("ICI 1");
-        index = (int)FenetreUI.tabReservation.getValueAt(row, 0);
-        //on supprime la ligne dans le tableau
-        FenetreUI.tabReservation.removeRow(row);
-        //supprimer de la liste des reservé
-        Reservation resa = FenetreUI.getSystem().getListeReservation().get(index);
-        //on actualise le bouton
-        Emplacement empTmp = resa.getEmplacement();
-        JButton btnTmp = FenetreUI.listBut.get(empTmp.getCoordonneeX()*FenetreUI.getSystem().getDimX() + empTmp.getCoordonneeY());
-        actualiserBtn(btnTmp);
-        //mise a jour de l'emplacement
-        empTmp.setReservation("reserve");
-        empTmp.setPaiement(resa.getMoyenPaiement());
-        FenetreUI.actualiserTabValResa(resa);
+      int index;
+      //On recupere l'idval_suppr qui est dans le tableau
+      //System.out.println("ICI 1");
+      index = (int)FenetreUI.tabReservation.getValueAt(row, 0);
+      //on supprime la ligne dans le tableau
+      //FenetreUI.tabReservation.removeRow(row);
+      //supprimer de la liste des reservé
+      Reservation resa = FenetreUI.getSystem().getListeReservation().get(index);
+      //on actualise le bouton
+      Emplacement empTmp = resa.getEmplacement();
+      JButton btnTmp = FenetreUI.listBut.get(empTmp.getCoordonneeX()*FenetreUI.getSystem().getDimX() + empTmp.getCoordonneeY());
+      actualiserBtn(btnTmp);
+      //mise a jour de l'emplacement
+      empTmp.setReservation("reserve");
+      empTmp.setPaiement(resa.getMoyenPaiement());
+      String nvProprietaire = ""+resa.getNom()+" "+resa.getPrenom();
+      empTmp.setProprietaire(nvProprietaire);
+
+      //supprime de la liste des reservation
+      //FenetreUI.getSystem().getListeReservation().remove(index);
+
+      //actualise le tableau
+      FenetreUI.actualiserTabValResa(resa,index);
     }
   }
 
   public void actualiserBtn(JButton but){
-    btn.setBackground(Color.RED);
-    btn.setEnabled(false);
+    but.setBackground(Color.RED);
+    but.setEnabled(false);
   }
 }
 
