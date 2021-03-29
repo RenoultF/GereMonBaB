@@ -83,6 +83,7 @@ class MyRendererAndEditorResaSuppr extends AbstractAction implements TableCellRe
     JButton btnModif = FenetreUI.listBut.get(resa.getEmplacement().getCoordonneeX()*FenetreUI.getSystem().getDimX() + resa.getEmplacement().getCoordonneeY());
     btnModif.setBackground(Color.GREEN);
     resa.getEmplacement().setReservation("libre");
+    FenetreUI.tabStands.setValueAt(resa.getEmplacement().getReservation(), resa.getEmplacement().getIdType(), 2);
   }
 }
 

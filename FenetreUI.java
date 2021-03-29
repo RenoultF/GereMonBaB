@@ -59,8 +59,8 @@ public class FenetreUI extends AbstractAction{
 	private JButton btnVal;
 
 	/*variable des tableaux*/
-	private String[] nomColStands = {"Numero","X","Y",""};
-	private String[] nomColAutres = {"Numero","Nom_deco","X","Y","Largeur","Longueur","Supprimer"};
+	private String[] nomColStands = {"Numero","Coordonnees","status","Paiement",""};
+	private String[] nomColAutres = {"Numero","Nom_deco","Coordonnees","Largeur","Longueur","Supprimer"};
 
 	private String[] nomColReservation = {"ID","Nom","Prenom","ID Stand","Coordonnees","Paiement","Accepter","Refuser"};
 	public static DefaultTableModel tabReservation;
@@ -334,7 +334,9 @@ public class FenetreUI extends AbstractAction{
 				}
 				btnCourant.setText(Integer.toString(e.getIdType()));
 				listButStands.add(btnCourant);
-				Object[] newData = {e.getIdType(),e.getCoordonneeX(),e.getCoordonneeY()};
+				//on remplit le tableau
+				String coordonneEmp = "( "+ e.getCoordonneeX() + " ; " + e.getCoordonneeY() + " )";
+				Object[] newData = {e.getIdType(),coordonneEmp,e.getReservation(),e.getPaiement()};
 				tabStands.addRow(newData);
 				//ajoute le bouton supprimer
 				tableStands.getColumn("").setCellRenderer(new MyRendererAndEditor(tableStands,"Stand"));
@@ -358,8 +360,8 @@ public class FenetreUI extends AbstractAction{
 					}
 				}
 				listButAutres.add(btnCourant);
-				//on met a jour le tableau
-				Object[] newData = {emplacementAutre.getIdType(),emplacementAutre.getType(),emplacementAutre.getCoordonneeX(),emplacementAutre.getCoordonneeY(),emplacementAutre.getLargeur(),emplacementAutre.getLongueur()};
+				String coordonneEmp = "( "+ e.getCoordonneeX() + " ; " + e.getCoordonneeY() + " )";
+				Object[] newData = {e.getIdType(),e.getType(),coordonneEmp,e.getLargeur(),e.getLongueur()};
 				tabAutres.addRow(newData);
 				tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(tableAutres,"Autre"));
 				tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(tableAutres,"Autre"));
