@@ -3,6 +3,6 @@
 public class GereMonBaB {
 		
 	public static void main(String [] args) {
-		new FenetreConnexion();
+		new FenetreAccueil();
 	}
 }

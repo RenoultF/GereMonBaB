@@ -43,6 +43,10 @@ public class FenetreConnexion extends JFrame {
         this.setResizable(false);
     }
 
+    public void fermerFenetre() {
+        this.dispose();
+    }
+
     // Classe interne permettant de gérer le bouton OK
     class ActionBtnOk extends AbstractAction {
         public ActionBtnOk(String nomBtn) {
@@ -51,6 +55,7 @@ public class FenetreConnexion extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
+            fermerFenetre();
             // ***** Ouverture de l'UI correspondante *****
             // !! TEMPORAIRE !!
 		    new FenetreOrganisateur();
