@@ -67,6 +67,14 @@ class MyRendererAndEditor extends AbstractAction implements TableCellRenderer, T
         //on ajoute le stand au emplacement supprimé de la session
         FenetreUI.getSystem().getListeStandSuppr().add(empCourantStand);
         System.out.println(FenetreUI.getSystem().getListeStandSuppr());
+        //supprimer de la liste des reservé
+        if(!empCourant.getReservation().equals("libre")){
+          for(Reservation resa : FenetreUI.getSystem().getListeReservation()){
+              if(resa.getEmplacement().equals(empCourant)){
+                FenetreUI.getSystem().getListeReservation().remove(resa);
+              }
+          }
+        }
         //on suprrime le stand de la liste
         FenetreUI.getSystem().supprimerStand(empCourant.getIdType());
         //suppression du boutons de la liste stands

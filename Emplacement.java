@@ -24,7 +24,7 @@ public class Emplacement {
 	private int coordonneeY;
 	
 	//Status de la réservation et du paiement
-	private String reservation;
+	private String reservation; //"libre","semi_reserve","reserve"
 	private String paiement;
 	 
 	public Emplacement(int idType, String type, int coordX, int coordY) {
