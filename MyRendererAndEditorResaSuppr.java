@@ -7,18 +7,16 @@ import java.util.EventObject;
 import java.awt.*;
 
 
-class MyRendererAndEditorResa extends AbstractAction implements TableCellRenderer, TableCellEditor 
+class MyRendererAndEditorResaSuppr extends AbstractAction implements TableCellRenderer, TableCellEditor 
 {
   private JButton btn;
   private int row;
   private JTable table;
-  private String val_suppr;
 
-  MyRendererAndEditorResa(JTable table, String val_suppr) {
-    btn = new JButton(val_suppr);
+  public MyRendererAndEditorResaSuppr(JTable table) {
+    btn = new JButton("Supprimer");
     btn.addActionListener(this);
     this.table = table;
-    this.val_suppr = val_suppr;
   }
   
   @Override
@@ -53,32 +51,17 @@ class MyRendererAndEditorResa extends AbstractAction implements TableCellRendere
   @Override
   public void actionPerformed(ActionEvent e) {
     if(e.getSource() == this.btn){
-        int index;
-        //On recupere l'idval_suppr qui est dans le tableau
-        index = (int)FenetreUI.tabReservation.getValueAt(row, 0);
-        if(val_suppr.equals("supprimer")){
-            //on supprime la ligne dans le tableau
-            FenetreUI.tabReservation.removeRow(row);
-            //supprimer de la liste des reservé
-            Reservation resa = FenetreUI.getSystem().getListeReservation().get(index);
-            actualiserBtnSiBesoin(resa);
-            FenetreUI.getSystem().getListeReservation().remove(resa);
-            FenetreUI.actualiserTabSupprResa(resa);
-        }
-        else if(val_suppr.equals("valider")){
-            //on supprime la ligne dans le tableau
-            FenetreUI.tabReservation.removeRow(row);
-            //supprimer de la liste des reservé
-            Reservation resa = FenetreUI.getSystem().getListeReservation().get(index);
-            //on actualise le bouton
-            Emplacement empTmp = resa.getEmplacement();
-            JButton btnTmp = FenetreUI.listBut.get(empTmp.getCoordonneeX()*FenetreUI.getSystem().getDimX() + empTmp.getCoordonneeY());
-            actualiserBtn(btnTmp);
-            //mise a jour de l'emplacement
-            empTmp.setReservation("reserve");
-            empTmp.setPaiement(resa.getMoyenPaiement());
-            FenetreUI.actualiserTabValResa(resa);
-        }
+      int index;
+      //On recupere l'idval_suppr qui est dans le tableau
+      index = (int)FenetreUI.tabReservation.getValueAt(row, 0);
+      //on supprime la ligne dans le tableau
+      FenetreUI.tabReservation.removeRow(row);
+      //supprimer de la liste des reservé
+      Reservation resa = FenetreUI.getSystem().getListeReservation().get(index);
+      actualiserBtnSiBesoin(resa);
+      FenetreUI.getSystem().getListeReservation().remove(index);
+      FenetreUI.actualiserTabSupprResa(resa,index);
+      
     }
   }
 
@@ -89,8 +72,9 @@ class MyRendererAndEditorResa extends AbstractAction implements TableCellRendere
 
   public void actualiserBtnSiBesoin(Reservation resa){
     for(Reservation resaTmp : FenetreUI.getSystem().getListeReservation()){
-        if(resaTmp.getEmplacement().equals(resa)){
-            return;
+      if(resaTmp.getIdReservation()!=resa.getIdReservation())
+        if(resaTmp.getEmplacement().getIdType() == resa.getEmplacement().getIdType()){
+          return;
         }
     }
     JButton btnModif = FenetreUI.listBut.get(resa.getEmplacement().getCoordonneeX()*FenetreUI.getSystem().getDimX() + resa.getEmplacement().getCoordonneeY());

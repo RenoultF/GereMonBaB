@@ -122,10 +122,10 @@ public class FenetreReservation extends JFrame {
             String coordTemp = "( "+empReserve.getCoordonneeX()+ " ; "+ empReserve.getCoordonneeY() + " )";
             Object[] newData = {reservation.getIdReservation(), nom, prenom, empReserve.getIdType(),coordTemp,reservation.getMoyenPaiement()};
 			FenetreUI.tabReservation.addRow(newData);
-            FenetreUI.tableReservation.getColumn("Accepter").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableReservation,"valider"));
-			FenetreUI.tableReservation.getColumn("Accepter").setCellEditor(new MyRendererAndEditor(FenetreUI.tableReservation,"valider"));
-            FenetreUI.tableReservation.getColumn("Refuser").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableReservation,"supprimer"));
-			FenetreUI.tableReservation.getColumn("Refuser").setCellEditor(new MyRendererAndEditor(FenetreUI.tableReservation,"supprimer"));
+            FenetreUI.tableReservation.getColumn("Accepter").setCellRenderer(new MyRendererAndEditorResaVal(FenetreUI.tableReservation));
+			FenetreUI.tableReservation.getColumn("Accepter").setCellEditor(new MyRendererAndEditorResaVal(FenetreUI.tableReservation));
+            FenetreUI.tableReservation.getColumn("Refuser").setCellRenderer(new MyRendererAndEditorResaSuppr(FenetreUI.tableReservation));
+			FenetreUI.tableReservation.getColumn("Refuser").setCellEditor(new MyRendererAndEditorResaSuppr(FenetreUI.tableReservation));
             fermerFenetre();
         }
     }

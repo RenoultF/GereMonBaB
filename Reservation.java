@@ -2,7 +2,7 @@ public class Reservation {
 
     private Emplacement empReserve;
 
-    public static int id_reservation = 0;
+    private int id_reservation;
 
     private String nom;
     private String prenom;
@@ -16,7 +16,12 @@ public class Reservation {
         this.empReserve = empReserve;
         this.id_reservant = id_reservant;
         this.moyenPaiement = moyenPaiement;
-        id_reservation++;
+        if(FenetreUI.getSystem().getListeReservation().size()==0){
+            id_reservation = 0;
+        }
+        else{
+            id_reservation = FenetreUI.getSystem().getListeReservation().getLast().getIdReservation()+1;
+        }
 
     }
 

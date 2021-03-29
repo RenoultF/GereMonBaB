@@ -284,19 +284,17 @@ public class FenetreUI extends AbstractAction{
 						//on change la valeur dans le tableau
 						tableReservation.setValueAt(system.getListeReservation().get(indexBase).getIdReservation(), indexBase, 0);
 					}
-					Reservation.id_reservation--;
 				}
 			}
 		}
 	}
-	public static void actualiserTabSupprResa(Reservation resa){
-		int indexBase;
-		for(indexBase = system.getListeReservation().indexOf(resa);indexBase<system.getListeReservation().size();indexBase++){
-			system.getListeReservation().get(indexBase).setIdReservation(system.getListeReservation().get(indexBase).getIdReservation()-1);	
+	public static void actualiserTabSupprResa(Reservation resa, int index){
+		int i;
+		for(i = index; i<system.getListeReservation().size();i++){
+			system.getListeReservation().get(i).setIdReservation(system.getListeReservation().get(i).getIdReservation()-1);	
 			//on change la valeur dans le tableau
-			tableReservation.setValueAt(system.getListeReservation().get(indexBase).getIdReservation(), indexBase, 0);
+			tableReservation.setValueAt(system.getListeReservation().get(i).getIdReservation(), i, 0);
 		}
-		Reservation.id_reservation--;
 	}
 
 
