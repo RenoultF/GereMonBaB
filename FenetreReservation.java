@@ -43,9 +43,9 @@ public class FenetreReservation extends JFrame {
         sem.P(); // Prise du semaphore
 
         labTitre = new JLabel("Demande de Reservation");
-        labPrenom = new JLabel("prenom :");
-        labNom = new JLabel("Longeur :");
-        labTypePaiement = new JLabel("TypePaiement :");
+        labPrenom = new JLabel("Prenom :");
+        labNom = new JLabel("Nom :");
+        labTypePaiement = new JLabel("Type Paiement :");
         txtNom = new JTextField(5);
         txtPrenom = new JTextField(5);
         txtTypePaiement = new JTextField(15);
@@ -115,9 +115,17 @@ public class FenetreReservation extends JFrame {
             nom = String.valueOf(txtPrenom.getText());
             typePaiement = txtTypePaiement.getText();
             int id_reservant = 1;
-            reservation = new Reservation(nom, prenom, 1, empReserve);
+            empReserve.setReservation("semi_reserve");
+            reservation = new Reservation(nom, prenom, 1, empReserve,typePaiement);
             system.getListeReservation().add(reservation);
 			btnReserve.setBackground(Color.ORANGE);
+            String coordTemp = "( "+empReserve.getCoordonneeX()+ " ; "+ empReserve.getCoordonneeY() + " )";
+            Object[] newData = {reservation.getIdReservation(), nom, prenom, empReserve.getIdType(),coordTemp,reservation.getMoyenPaiement()};
+			FenetreUI.tabReservation.addRow(newData);
+            FenetreUI.tableReservation.getColumn("Accepter").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableReservation,"valider"));
+			FenetreUI.tableReservation.getColumn("Accepter").setCellEditor(new MyRendererAndEditor(FenetreUI.tableReservation,"valider"));
+            FenetreUI.tableReservation.getColumn("Refuser").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableReservation,"supprimer"));
+			FenetreUI.tableReservation.getColumn("Refuser").setCellEditor(new MyRendererAndEditor(FenetreUI.tableReservation,"supprimer"));
             fermerFenetre();
         }
     }

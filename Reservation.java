@@ -8,12 +8,16 @@ public class Reservation {
     private String prenom;
     private int id_reservant;
 
-    public Reservation(String nom, String prenom,int id_reservant, Emplacement empReserve){
+    private String moyenPaiement;
+
+    public Reservation(String nom, String prenom,int id_reservant, Emplacement empReserve, String moyenPaiement){
         this.nom = nom;
         this.prenom = prenom;
         this.empReserve = empReserve;
         this.id_reservant = id_reservant;
+        this.moyenPaiement = moyenPaiement;
         id_reservation++;
+
     }
 
     /*****************************Setter & getter ******************************/
@@ -27,7 +31,15 @@ public class Reservation {
         return this.nom;
     }
 
-     /**
+    /**
+	 ** méthode permettant de récupérer le moyen de paiement
+	 ** @return moyenPaiement 
+	 **/
+    public String getMoyenPaiement(){
+        return this.moyenPaiement;
+    }
+
+      /**
 	 ** méthode permettant de récupérer le prenom qui a reservé l'emplacement
 	 ** @return prenom 
 	 **/

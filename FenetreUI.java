@@ -62,7 +62,7 @@ public class FenetreUI extends AbstractAction{
 	private String[] nomColStands = {"Numero","X","Y",""};
 	private String[] nomColAutres = {"Numero","Nom_deco","X","Y","Largeur","Longueur","Supprimer"};
 
-	private String[] nomColReservation = {"Nom","Prenom","ID Stand","Coordonnees","Accepter","Refuser"};
+	private String[] nomColReservation = {"ID","Nom","Prenom","ID Stand","Coordonnees","Paiement","Accepter","Refuser"};
 	public static DefaultTableModel tabReservation;
 	public static JTable tableReservation;
 	private JScrollPane scrollReservation;
@@ -272,7 +272,33 @@ public class FenetreUI extends AbstractAction{
 		}
 		
 	}
-	
+
+	public static void actualiserTabValResa(Reservation resa){
+		int indexBase;
+		for(Reservation resaTmp : system.getListeReservation()){
+			if(!resaTmp.equals(resa)){
+				if(resaTmp.getEmplacement().equals(resa.getEmplacement())){
+					for(indexBase = system.getListeReservation().indexOf(resaTmp);indexBase<system.getListeReservation().size();indexBase++){
+						system.getListeReservation().get(indexBase).setIdReservation(system.getListeReservation().get(indexBase).getIdReservation()-1);
+						//on change la valeur dans le tableau
+						tableReservation.setValueAt(system.getListeReservation().get(indexBase).getIdReservation(), indexBase, 0);
+					}
+					Reservation.id_reservation--;
+				}
+			}
+		}
+	}
+	public static void actualiserTabSupprResa(Reservation resa){
+		int indexBase;
+		for(indexBase = system.getListeReservation().indexOf(resa);indexBase<system.getListeReservation().size();indexBase++){
+			system.getListeReservation().get(indexBase).setIdReservation(system.getListeReservation().get(indexBase).getIdReservation()-1);	
+			//on change la valeur dans le tableau
+			tableReservation.setValueAt(system.getListeReservation().get(indexBase).getIdReservation(), indexBase, 0);
+		}
+		Reservation.id_reservation--;
+	}
+
+
 	public static JFrame getJFrame(){
 		return frame;
 	}
