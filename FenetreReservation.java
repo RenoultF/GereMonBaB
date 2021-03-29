@@ -116,6 +116,8 @@ public class FenetreReservation extends JFrame {
             typePaiement = txtTypePaiement.getText();
             int id_reservant = 1;
             empReserve.setReservation("semi_reserve");
+            //Maj du status dans le tableaux
+            FenetreUI.tabStands.setValueAt(empReserve.getReservation(), empReserve.getIdType(), 2);
             reservation = new Reservation(nom, prenom, 1, empReserve,typePaiement);
             system.getListeReservation().add(reservation);
 			btnReserve.setBackground(Color.ORANGE);

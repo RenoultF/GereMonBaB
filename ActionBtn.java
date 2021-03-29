@@ -48,7 +48,8 @@ class ActionBtn extends AbstractAction  {
 					//ajoute le bouton a la liste
 					FenetreUI.listButStands.add(boutonCourant);
 					//on remplit le tableau
-					Object[] newData = {emplacementAjoute.getIdType(),emplacementAjoute.getCoordonneeX(),emplacementAjoute.getCoordonneeY()};
+					String coordonneEmp = "( "+ emplacementAjoute.getCoordonneeX() + " ; " + emplacementAjoute.getCoordonneeY() + " )";
+					Object[] newData = {emplacementAjoute.getIdType(),coordonneEmp,emplacementAjoute.getReservation(),emplacementAjoute.getPaiement()};
 					FenetreUI.tabStands.addRow(newData);
 					//ajoute le bouton supprimer
 					FenetreUI.tableStands.getColumn("").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableStands,"Stand"));
@@ -74,8 +75,9 @@ class ActionBtn extends AbstractAction  {
 							}
 						}
 						FenetreUI.listButAutres.add(boutonCourant);
-						//on met a jour le tableau
-						Object[] newData = {emplacementAjouteAutre.getIdType(),emplacementAjouteAutre.getType(),emplacementAjouteAutre.getCoordonneeX(),emplacementAjouteAutre.getCoordonneeY(),emplacementAjouteAutre.getLargeur(),emplacementAjouteAutre.getLongueur()};
+						//mis a jour du tableau
+						String coordonneEmp = "( "+ emplacementAjouteAutre.getCoordonneeX() + " ; " + emplacementAjouteAutre.getCoordonneeY() + " )";
+						Object[] newData = {emplacementAjouteAutre.getIdType(),emplacementAjouteAutre.getType(),coordonneEmp,emplacementAjouteAutre.getLargeur(),emplacementAjouteAutre.getLongueur()};
 						FenetreUI.tabAutres.addRow(newData);
 						FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
 						FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
@@ -94,7 +96,8 @@ class ActionBtn extends AbstractAction  {
 							}
 							FenetreUI.listButAutres.add(boutonCourant);
 							//on met a jour le tableau
-							Object[] newData = {emplacementAjouteAutre.getIdType(),emplacementAjouteAutre.getType(),emplacementAjouteAutre.getCoordonneeX(),emplacementAjouteAutre.getCoordonneeY(),emplacementAjouteAutre.getLargeur(),emplacementAjouteAutre.getLongueur()};
+							String coordonneEmp = "( "+ emplacementAjouteAutre.getCoordonneeX() + " ; " + emplacementAjouteAutre.getCoordonneeY() + " )";
+							Object[] newData = {emplacementAjouteAutre.getIdType(),emplacementAjouteAutre.getType(),coordonneEmp,emplacementAjouteAutre.getLargeur(),emplacementAjouteAutre.getLongueur()};
 							FenetreUI.tabAutres.addRow(newData);
 							FenetreUI.tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));
 							FenetreUI.tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(FenetreUI.tableAutres,"Autre"));

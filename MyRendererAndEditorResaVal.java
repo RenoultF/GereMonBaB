@@ -68,6 +68,9 @@ class MyRendererAndEditorResaVal extends AbstractAction implements TableCellRend
       //mise a jour de l'emplacement
       empTmp.setReservation("reserve");
       empTmp.setPaiement(resa.getMoyenPaiement());
+      //mise a jour status de reservation et paiement
+      FenetreUI.tabStands.setValueAt(empTmp.getReservation(), empTmp.getIdType(), 2);
+      FenetreUI.tabStands.setValueAt(resa.getMoyenPaiement(), empTmp.getIdType(), 3);
       String nvProprietaire = ""+resa.getNom()+" "+resa.getPrenom();
       empTmp.setProprietaire(nvProprietaire);
 
