@@ -12,16 +12,12 @@ public class FenetreExposant extends AbstractAction {
 	// ***** Panels correspondant aux onglets *****
 	private JPanel panAccueil;
 	private JPanel panListe;
-	private JPanel panContact;
 
 	// ***** Variables pour onglet Accueil *****
     // todo
 
 	// ***** Variables pour onglet Liste *****
 	// todo
-
-	// ***** Variables pour onglet Contact *****
-	private JLabel labContact;
 
 	public FenetreExposant() {
 		frame = new JFrame("GereMonBaB - Exposant");
@@ -38,10 +34,7 @@ public class FenetreExposant extends AbstractAction {
 		onglets.add("Liste des BaB", panListe);
 
 		// ********** Onglet : Contact **********
-		panContact = new JPanel();
-		onglets.add("Contact", panContact);
-		labContact = new JLabel("Coordonnées du support technique : support@bab.com");
-		panContact.add(labContact);
+		onglets.add("Contact", PanelContact.get());
 		// ===========================================================================
 
 		global_panel.add(onglets);
