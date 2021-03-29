@@ -158,6 +158,7 @@ public class FenetreUI extends AbstractAction{
 			for(int j = 0; j < dimY; j++) {
 				JButton but = new JButton(new ActionBtn(ind, i, j));
 				but.setBackground(Color.WHITE);
+				but.setText("");
 				ind += 1;
 				listBut.add(but);
 				panGrille.add(but);

@@ -28,7 +28,7 @@ class ActionBtn extends AbstractAction  {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		boutonCourant = FenetreUI.listBut.get(ind);
-		if(!dejaClic){
+		if(boutonCourant.getText().equals("")){
 			if(FenetreUI.getSystem().ajouterEmplacement(coord_x, coord_y)) {
 				if(FenetreUI.getSystem().getType().equals("Stand")){
 					//on recupere l'emplacement
@@ -113,7 +113,7 @@ class ActionBtn extends AbstractAction  {
 					}		
 				}
 			}
-			dejaClic = true;
+			//dejaClic = true;
 		}
 		// on veut reserver
 		else{
