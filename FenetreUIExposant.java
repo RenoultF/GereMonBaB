@@ -6,11 +6,11 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 
 
-public class FenetreUI extends AbstractAction{
-	
-	/** Déclaration des variables du système **/
-	private static BaB system;
-	private Quadrillage carte;
+public class FenetreUIExposant extends AbstractAction{
+
+    /** Déclaration des variables du système **/
+    private static BaB system;
+
 	public static int dimX;
 	private int dimY;
 	
@@ -23,22 +23,20 @@ public class FenetreUI extends AbstractAction{
 	public static LinkedList<JButton> listBut = new LinkedList<>();
 	public static LinkedList<JButton> listButStands = new LinkedList<>();
 	public static LinkedList<JButton> listButAutres = new LinkedList<>();
-	private JButton btnTypeStand;
-	private JButton btnTypeAutre;
-	
+
+	public static LinkedList<Reservation> reservationsTmp = new LinkedList<Reservation>();
 	private static JFrame frame;
-	private JFrame fenInfo;
+
 
 	private JTabbedPane ongletBab;
 	
 	private JPanel panFenetre;
 	private JPanel panGrille;
 
-	private JPanel panBtnType;
-	private JPanel panInfoBaB;
+    private JPanel panInfoBaB;
 	private JPanel panListeReservation;
 
-	/*variable onglet information BaB*/
+    /*variable onglet information BaB*/
 	private JLabel labNomBaB;
     private JLabel labDateBaB;
     private JLabel labPrixStand;
@@ -53,22 +51,20 @@ public class FenetreUI extends AbstractAction{
     private JTextField txtDimX;
     private JTextField txtDimY;
 
-	private JButton btnSaveBaB;
-	private JButton btnSupprimerBaB;
-
 	private JButton btnVal;
 
 	/*variable des tableaux*/
-	private String[] nomColStands = {"Numero","Coordonnees","status","Paiement",""};
-	private String[] nomColAutres = {"Numero","Nom_deco","Coordonnees","Largeur","Longueur","Supprimer"};
+	private String[] nomColStands = {"Numero","Coordonnees","status","Paiement"};
+	private String[] nomColAutres = {"Numero","Nom_deco","Coordonnees","Largeur","Longueur"};
 
-	private String[] nomColReservation = {"ID","Nom","Prenom","ID Stand","Coordonnees","Paiement","Accepter","Refuser"};
+	private String[] nomColReservation = {"ID","Nom","Prenom","ID Stand","Coordonnees","Paiement","Supprimer"};
 	public static DefaultTableModel tabReservation;
 	public static JTable tableReservation;
 	private JScrollPane scrollReservation;
 	
 	public static DefaultTableModel tabStands;
 	public static DefaultTableModel tabAutres;
+
 	public static JTable tableStands;
 	public static JTable tableAutres;
 	
@@ -77,18 +73,15 @@ public class FenetreUI extends AbstractAction{
 
 	private Semaphore sem;
 
-
-	public FenetreUI(BaB system){
-	
-		/** Variables du système **/
+    public FenetreUIExposant(BaB system){
+        /** Variables du système **/
 		this.system = system;
-		system.setUtilisateur("Organisateur");
-		carte = system.getCarte();
-		dimX = carte.getDimensionX();
-		dimY = carte.getDimensionY();
+		dimX = system.getDimX();
+		dimY = system.getDimY();
 		
 		listeStand = system.getListeStand();
 		listeAutre = system.getListeAutre();
+
 		sem = new Semaphore(1);
 		
 		/** Variables de la fenêtre **/
@@ -97,7 +90,6 @@ public class FenetreUI extends AbstractAction{
 		panGrille = new JPanel(new GridLayout(dimX, dimY));
 
 		ongletBab = new JTabbedPane();
-		panBtnType = new JPanel(new GridLayout(1,3));
 		panInfoBaB = new JPanel(new GridLayout(8,2));
 		panListeReservation = new JPanel();
 
@@ -124,18 +116,10 @@ public class FenetreUI extends AbstractAction{
         txtDimX.setText(Integer.toString(system.getDimX()));
         txtDimY.setText(Integer.toString(system.getDimY()));
         txtPrixStand.setText(Integer.toString(system.getPrixStand()));
-		btnSaveBaB = new JButton("Sauvegarder BaB");
-		btnSaveBaB.addActionListener(this);
-		btnSupprimerBaB = new JButton("Supprimer BaB");
-		btnSupprimerBaB.addActionListener(this);
-		btnVal = new JButton("Valider informations");
+
+		btnVal = new JButton("Valider Réservation");
 		btnVal.addActionListener(this);
 
-		
-		btnTypeStand = new JButton("Stand");
-		btnTypeStand.addActionListener(this);
-		btnTypeAutre = new JButton("Autre");
-		btnTypeAutre.addActionListener(this);
 		
 		tabReservation = new DefaultTableModel(nomColReservation,0);
 		tableReservation = new JTable(tabReservation);
@@ -160,14 +144,12 @@ public class FenetreUI extends AbstractAction{
 				JButton but = new JButton(new ActionBtn(ind, i, j));
 				but.setBackground(Color.WHITE);
 				but.setText("");
+                but.setEnabled(false);
 				ind += 1;
 				listBut.add(but);
 				panGrille.add(but);
 			}
 		
-	
-		panBtnType.add(btnTypeStand);
-		panBtnType.add(btnTypeAutre);
 
 		
 		panInfoBaB.add(labNomBaB);
@@ -188,17 +170,15 @@ public class FenetreUI extends AbstractAction{
         panInfoBaB.add(labPrixStand);
         panInfoBaB.add(txtPrixStand);
 
-		panInfoBaB.add(btnVal);
-		panInfoBaB.add(btnSupprimerBaB);
-		panInfoBaB.add(btnSaveBaB);
-
+		
 		panListeReservation.add(scrollReservation);
+
+        panListeReservation.add(btnVal);
 		
 		// ***** Fenêtre *****
 		panFenetre.add(panGrille);
-		ongletBab.add("Creation emplacement",panBtnType);
+        ongletBab.add("Liste Reservation",panListeReservation);
 		ongletBab.add("Infomation BaB",panInfoBaB);
-		ongletBab.add("Liste Reservation",panListeReservation);
 		panFenetre.add(ongletBab);
 		panFenetre.add(scrollStands);
 		panFenetre.add(scrollAutres);
@@ -207,117 +187,45 @@ public class FenetreUI extends AbstractAction{
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //frame.dispose(); si on veux juste quitter la fenetre et non aps l'appli.
 		frame.setSize(1000, 500);
-	}
+    }
 
-	@Override
+    @Override
 	public void actionPerformed(ActionEvent e) {
-		Emplacement temp;
-		if(e.getSource() == btnTypeStand){
-			system.setType("Stand");
-			System.out.println("on passe au type :" + system.getType());
-		
-		}
-		else if(e.getSource() == btnTypeAutre){
-			FenetreAutre fenAutre = new FenetreAutre(1.0,1.0,"Autre",system);
-			fenAutre.saisir();
-		}
-		else if(e.getSource() == btnSaveBaB){
-			JDBC_BDD baseDeDonnees = new JDBC_BDD();
-			baseDeDonnees.startJDBC();
-			System.out.println("Début de la sauvegarde...");
-			baseDeDonnees.sauvegarderBab(system);
-			System.out.println("Sauvegarde réussie");
-		}
-		else if(e.getSource() == btnSupprimerBaB){
-			frame.dispose();
-		}
-		else if(e.getSource() == btnVal){
-			//MAJ des variable du system
-			system.setAdresseBaB(txtAdresse.getText());
-			system.setNomBaB(txtNomBaB.getText());
-			system.setDateBaB(txtDateBaB.getText());
-			system.setPrixStand(Integer.valueOf(txtPrixStand.getText()));
-			system.setDimX(Integer.valueOf(txtDimX.getText()));
-			system.setDimY(Integer.valueOf(txtDimY.getText()));
+		if(e.getSource() == btnVal){
+			for(Reservation resa : reservationsTmp){
+                tabReservation.removeRow(resa.getIdReservation());
+                system.ajouterReservation(resa);
+            }
+            //TO-DO tristan Mettre a jour la liste des reservation dans le system
+            reservationsTmp.clear();
 		}
 	}
 
-	public static void actualiserTab(String type, int index){
-		int i;
-		if(type.equals("Stand")){
-			for(i = index; i < listeStand.size(); i++){
-				//on met a jour l'id de tous les autres stands
-				listeStand.get(i).setIdType(listeStand.get(i).getIdType()-1);
-				//mis a jour des valeur des boutons
-				listButStands.get(i).setText(String.valueOf(listeStand.get(i).getIdType()));
-				//on change la valeur dans le tableau
-				tableStands.setValueAt(listeStand.get(i).getIdType(), i, 0);
-			}
-		}
-		else{
-			for(i = index; i < listeAutre.size(); i++){
-				Emplacement empCourant = listeAutre.get(i);
-				Autre emplacementAutre = (Autre) empCourant;
-				int indBase = empCourant.getCoordonneeX()*dimX + empCourant.getCoordonneeY();
-				//on met a jour l'id de tous les autres stands
-				emplacementAutre.setIdType(listeAutre.get(i).getIdType()-1);
-				//mis a jour des valeur des boutons
-				for(int iTmp = 0;iTmp<emplacementAutre.getLargeur();iTmp++){
-					for(int jTmp = indBase;jTmp<indBase+emplacementAutre.getLongueur();jTmp++){
-						//on va cherche les boutons voulu pour les mettre à jour
-					  listBut.get(iTmp * getSystem().getDimX() + jTmp).setText(String.valueOf(listeAutre.get(i).getIdType()));
-					}
-				}
-				//on change la valeur dans le tableau
-				tableAutres.setValueAt(listeAutre.get(i).getIdType(), i, 0);
-			}
-		}
-		
-	}
-
-	public static void actualiserTabValResa(Reservation resa,int index){
-		int i;
-		int idEmplacement = resa.getEmplacement().getIdType();
-		Iterator<Reservation> itResa = system.getListeReservation().iterator();
-		while(itResa.hasNext()){
-			Reservation resaTmp = itResa.next();
-			int indexTmp;
-			
-				if(resaTmp.getEmplacement().getIdType()==idEmplacement){
-					indexTmp = resaTmp.getIdReservation();
-					actualiserTabSupprResa(indexTmp);
-					itResa.remove();
-					tabReservation.removeRow(indexTmp);
-				}
-			
-		}
-	}
-	
-	public static void actualiserTabSupprResa(int index){
-		int i;
-		for(i = index; i<system.getListeReservation().size();i++){
-			system.getListeReservation().get(i).setIdReservation(system.getListeReservation().get(i).getIdReservation()-1);	
-			//on change la valeur dans le tableau
-			tableReservation.setValueAt(system.getListeReservation().get(i).getIdReservation(), i, 0);
-		}
-	}
-
-
-	public static JFrame getJFrame(){
-		return frame;
-	}
-
-	public static BaB getSystem() {
+    public static BaB getSystem() {
 		return system;
 	}
 
-	public void actualiseFenetre(){
+    public static void ajouterReservationExpo(Reservation resa){
+		int id_reservation;
+		if(reservationsTmp.size()==0){
+            id_reservation = 0;
+        }
+        else{
+            id_reservation = reservationsTmp.getLast().getIdReservation()+1;
+        }
+		resa.setIdReservation(id_reservation);
+		reservationsTmp.add(resa);
+	}
+
+
+    public void actualiseFenetre(){
 		int indBase;
 		JButton btnCourant;
 		if(!system.getListeStand().isEmpty()){
 			for(Emplacement e : system.getListeStand()){
 				indBase = e.getCoordonneeX()*dimX + e.getCoordonneeY();
 				btnCourant = listBut.get(indBase);
+                btnCourant.setEnabled(true);
 				switch(e.getReservation()){
 					case "libre":
 						btnCourant.setBackground(Color.GREEN);
@@ -339,9 +247,6 @@ public class FenetreUI extends AbstractAction{
 				String coordonneEmp = "( "+ e.getCoordonneeX() + " ; " + e.getCoordonneeY() + " )";
 				Object[] newData = {e.getIdType(),coordonneEmp,e.getReservation(),e.getPaiement()};
 				tabStands.addRow(newData);
-				//ajoute le bouton supprimer
-				tableStands.getColumn("").setCellRenderer(new MyRendererAndEditor(tableStands,"Stand"));
-				tableStands.getColumn("").setCellEditor(new MyRendererAndEditor(tableStands,"Stand"));
 			}
 		}
 
@@ -364,24 +269,16 @@ public class FenetreUI extends AbstractAction{
 				String coordonneEmp = "( "+ e.getCoordonneeX() + " ; " + e.getCoordonneeY() + " )";
 				Object[] newData = {e.getIdType(),e.getType(),coordonneEmp,e.getLargeur(),e.getLongueur()};
 				tabAutres.addRow(newData);
-				tableAutres.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditor(tableAutres,"Autre"));
-				tableAutres.getColumn("Supprimer").setCellEditor(new MyRendererAndEditor(tableAutres,"Autre"));
-			}
-		}
-
-		if(!system.getListeReservation().isEmpty()){
-			for(Reservation resa : system.getListeReservation()){
-				Emplacement empReserve = resa.getEmplacement();
-				String coordTemp = "( "+empReserve.getCoordonneeX()+ " ; "+ empReserve.getCoordonneeY() + " )";
-            	Object[] newData = {resa.getIdReservation(), resa.getNom(), resa.getPrenom(), empReserve.getIdType(),coordTemp,resa.getMoyenPaiement()};
-				tabReservation.addRow(newData);
-            	tableReservation.getColumn("Accepter").setCellRenderer(new MyRendererAndEditorResaVal(tableReservation));
-				tableReservation.getColumn("Accepter").setCellEditor(new MyRendererAndEditorResaVal(tableReservation));
-            	tableReservation.getColumn("Refuser").setCellRenderer(new MyRendererAndEditorResaSuppr(tableReservation));
-				tableReservation.getColumn("Refuser").setCellEditor(new MyRendererAndEditorResaSuppr(tableReservation));
 			}
 		}
 	}
 
+    public static void actualiserTabSupprResa(int index){
+		int i;
+		for(i = index; i<reservationsTmp.size();i++){
+			reservationsTmp.get(i).setIdReservation(reservationsTmp.get(i).getIdReservation()-1);	
+			//on change la valeur dans le tableau
+			tableReservation.setValueAt(reservationsTmp.get(i).getIdReservation(), i, 0);
+		}
+	}
 }
-

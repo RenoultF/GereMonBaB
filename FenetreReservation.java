@@ -116,18 +116,29 @@ public class FenetreReservation extends JFrame {
             typePaiement = txtTypePaiement.getText();
             int id_reservant = 1;
             empReserve.setReservation("semi_reserve");
-            //Maj du status dans le tableaux
-            FenetreUI.tabStands.setValueAt(empReserve.getReservation(), empReserve.getIdType(), 2);
             reservation = new Reservation(nom, prenom, 1, empReserve,typePaiement);
-            system.getListeReservation().add(reservation);
-			btnReserve.setBackground(Color.ORANGE);
-            String coordTemp = "( "+empReserve.getCoordonneeX()+ " ; "+ empReserve.getCoordonneeY() + " )";
-            Object[] newData = {reservation.getIdReservation(), nom, prenom, empReserve.getIdType(),coordTemp,reservation.getMoyenPaiement()};
-			FenetreUI.tabReservation.addRow(newData);
-            FenetreUI.tableReservation.getColumn("Accepter").setCellRenderer(new MyRendererAndEditorResaVal(FenetreUI.tableReservation));
-			FenetreUI.tableReservation.getColumn("Accepter").setCellEditor(new MyRendererAndEditorResaVal(FenetreUI.tableReservation));
-            FenetreUI.tableReservation.getColumn("Refuser").setCellRenderer(new MyRendererAndEditorResaSuppr(FenetreUI.tableReservation));
-			FenetreUI.tableReservation.getColumn("Refuser").setCellEditor(new MyRendererAndEditorResaSuppr(FenetreUI.tableReservation));
+            //Maj du status dans le tableaux
+            if(system.getUtilisateur().equals("Organisateur")){
+                FenetreUI.tabStands.setValueAt(empReserve.getReservation(), empReserve.getIdType(), 2);
+                system.ajouterReservation(reservation);
+                btnReserve.setBackground(Color.ORANGE);
+                String coordTemp = "( "+empReserve.getCoordonneeX()+ " ; "+ empReserve.getCoordonneeY() + " )";
+                Object[] newData = {reservation.getIdReservation(), nom, prenom, empReserve.getIdType(),coordTemp,reservation.getMoyenPaiement()};
+                FenetreUI.tabReservation.addRow(newData);
+                FenetreUI.tableReservation.getColumn("Accepter").setCellRenderer(new MyRendererAndEditorResaVal(FenetreUI.tableReservation));
+                FenetreUI.tableReservation.getColumn("Accepter").setCellEditor(new MyRendererAndEditorResaVal(FenetreUI.tableReservation));
+                FenetreUI.tableReservation.getColumn("Refuser").setCellRenderer(new MyRendererAndEditorResaSuppr(FenetreUI.tableReservation));
+                FenetreUI.tableReservation.getColumn("Refuser").setCellEditor(new MyRendererAndEditorResaSuppr(FenetreUI.tableReservation));
+            }
+            else if(system.getUtilisateur().equals("Exposant")){
+                btnReserve.setBackground(Color.ORANGE);
+                FenetreUIExposant.ajouterReservationExpo(reservation);
+                String coordTemp = "( "+empReserve.getCoordonneeX()+ " ; "+ empReserve.getCoordonneeY() + " )";
+                Object[] newData = {reservation.getIdReservation(), nom, prenom, empReserve.getIdType(),coordTemp,reservation.getMoyenPaiement()};
+                FenetreUIExposant.tabReservation.addRow(newData);
+                FenetreUIExposant.tableReservation.getColumn("Supprimer").setCellRenderer(new MyRendererAndEditorResaSupprExpo(FenetreUIExposant.tableReservation));
+                FenetreUIExposant.tableReservation.getColumn("Supprimer").setCellEditor(new MyRendererAndEditorResaSupprExpo(FenetreUIExposant.tableReservation));
+            }
             fermerFenetre();
         }
     }

@@ -30,6 +30,8 @@ public class BaB {
 	private LinkedList<Autre> autresSuppr;
 	private LinkedList<Reservation> reservations;
 
+	private String utilisateur;
+
 
 
 	//type de l'emplacement selectionné
@@ -131,6 +133,18 @@ public class BaB {
 			return ajouterAutre(coordX,coordY);
 		}
 		return ajouterStand(coordX,coordY);
+	}
+
+	public void ajouterReservation(Reservation resa){
+		int id_reservation;
+		if(reservations.size()==0){
+            id_reservation = 0;
+        }
+        else{
+            id_reservation = reservations.getLast().getIdReservation()+1;
+        }
+		resa.setIdReservation(id_reservation);
+		reservations.add(resa);
 	}
 	
 	public void supprimerAutre(int id) {
@@ -274,6 +288,21 @@ public class BaB {
 		this.dateBaB = nvDateBaB;
 	}
 
+	/**
+	 ** méthode permettant de modifier l'utilisateur du bab
+	 ** @param nvUtilisateur le nouvelle utilisateur
+	 **/
+	public void setUtilisateur(String nvUtilisateur) {
+		this.utilisateur = nvUtilisateur;
+	}
+
+	/**
+	 ** méthode permettant de récupérer l'utilisateur courant
+	 ** @param nvUtilisateur le nouvelle utilisateur
+	 **/
+	public String getUtilisateur() {
+		return this.utilisateur;
+	}
 
 	/**
 	 ** méthode permettant de modifier l'adresse du BaB

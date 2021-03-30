@@ -16,13 +16,6 @@ public class Reservation {
         this.empReserve = empReserve;
         this.id_reservant = id_reservant;
         this.moyenPaiement = moyenPaiement;
-        if(FenetreUI.getSystem().getListeReservation().size()==0){
-            id_reservation = 0;
-        }
-        else{
-            id_reservation = FenetreUI.getSystem().getListeReservation().getLast().getIdReservation()+1;
-        }
-
     }
 
     /*****************************Setter & getter ******************************/
