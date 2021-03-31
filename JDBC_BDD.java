@@ -115,10 +115,15 @@ public class JDBC_BDD {
 	/**
 	 ** Méthode sauvegardant toutes les données d'un Emplacement en créant une nouvelle sauvegarde si l'emplacement n'est pas dans la bdd, sinon il modifie les informations déjà présentes
 	 **/
-	static private void sauvegarderEmplacement(Emplacement emp, int idBab) {
+	static private void sauvegarderEmplacement(Emplacement emp, BaB bab) {
+	
 		int idEmp = emp.getIdSauvegarde();
-		int idType = 0;
+		int idBab = bab.getIdBaB();
+		int idType = 0, size;
 		boolean contient = false;
+		
+		LinkedList<Reservation> listeReservation = bab.getListeReservation();
+		Reservation reservationCourante;
 		
 		String sqlEmplacement, sqlGetType, sqlType, sqlContient = "";
 		
@@ -180,22 +185,53 @@ public class JDBC_BDD {
 		}catch(SQLException se){
 			se.printStackTrace();
 		}
+		
+		// Sauvegarder les données des réservations
+		size = listeReservation.size();
+		for(int i = 0; i < size; i++) {
+			reservationCourante = listeReservation.get(i);
+			sauvegarderReservation(reservationCourante, idEmp);
+		}
 	}
 	
 	/**
 	 ** Méthode sauvegardant toutes les données d'une réservation en créant une nouvelle sauvegarde si la réservation n'est pas dans la bdd, sinon il modifie les informations déjà présentes
 	 **/
-	static private void sauvegarderReservation(Reservation rsv, int idBab) {
+	static private void sauvegarderReservation(Reservation rsv, int idEmp) {
 		
-		String sqlProfil;
+		String sqlGetProfilSpecial, sqlProfilSpecial, sqlParticipe;
 		
-		if(rsv.getIdReservant == 0) {
+		int idProfil;
+		
+		if(rsv.getIdReservant() == 0) {
 			System.out.println("Reservation par organisateur");
 			
-			// Recherche de l'existence d'un possible type qui correspondrait au profil, sinon création d'un nouveau profil			   
-			sqlGetType = "SELECT * FROM PROFIL WHERE mail = "+rsv.getNom()+"."+rsv.getPrenom()+"@reservation";
+			// Recherche de l'existence d'un possible type qui correspondrait au profil, sinon création d'un nouveau profil
+			String mailReservation =  rsv.getNom()+"."+rsv.getPrenom()+"@reservation";
+			sqlGetProfilSpecial	   = "SELECT * FROM PROFIL WHERE mail = '" + mailReservation+"'";
 			try{
-				res = stmt.executeQuery(sqlGetType);
+				res = stmt.executeQuery(sqlGetProfilSpecial);
+				if(res.next()) {
+					idProfil = res.getInt("idProfil");
+				}
+				else {
+					idProfil = getNewIdTable("PROFIL");
+					sqlProfilSpecial = "INSERT INTO PROFIL VALUES(" +
+						idProfil 			+ ", '"	+
+						rsv.getNom() 		+ "', '"+
+						rsv.getPrenom() 	+ "', '"+
+						"exposant"			+ "', '"+
+						mailReservation		+ "', '"+
+						"12345678"		 	+ "') ";
+					stmt.executeUpdate(sqlProfilSpecial);
+				}
+				
+				// Creation des données dans la table d'association
+				sqlParticipe = "INSERT INTO PARTICIPE VALUES(" +
+				   idProfil	+ ", " +
+				   idEmp	+ ") " ;
+				   
+			stmt.executeUpdate(sqlParticipe);
 			}catch(SQLException se){
 				se.printStackTrace();
 			}
@@ -253,10 +289,8 @@ public class JDBC_BDD {
 		
 		LinkedList<Emplacement> listeStands = bab.getListeStand();
 		LinkedList<Emplacement> listeAutres = bab.getListeAutre();
-		LinkedList<Reservation> listeReservation = bab.getListeReservation();
 		int size;
 		Emplacement emplacementCourant;
-		Reservation reservationCourante;
 		
 		String sqlBaB;
 		
@@ -295,19 +329,13 @@ public class JDBC_BDD {
 		size = listeStands.size();
 		for(int i = 0; i < size; i++) {
 			emplacementCourant = listeStands.get(i);
-			sauvegarderEmplacement(emplacementCourant, idBab);
+			sauvegarderEmplacement(emplacementCourant, bab);
 		}
 		// Sauvegarder les données des emplacements autres
 		size = listeAutres.size();
 		for(int i = 0; i < size; i++) {
 			emplacementCourant = listeAutres.get(i);
-			sauvegarderEmplacement(emplacementCourant, idBab);
-		}
-		// Sauvegarder les données des réservations
-		size = listeReservation.size();
-		for(int i = 0; i < size; i++) {
-			reservationCourante = listeReservation.get(i);
-			sauvegarderReservation(reservationCourante, idBab);
+			sauvegarderEmplacement(emplacementCourant, bab);
 		}
 
 	}

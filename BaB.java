@@ -28,6 +28,8 @@ public class BaB {
 	//liste des emplacements supprimé durant la session
 	private LinkedList<Stand> standsSuppr;
 	private LinkedList<Autre> autresSuppr;
+	
+	//liste des reservations sur les stands dans le bab
 	private LinkedList<Reservation> reservations;
 
 	private String utilisateur;

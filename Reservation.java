@@ -6,18 +6,16 @@ public class Reservation {
 
     private String nom;
     private String prenom;
-    private int id_reservant;
+    private int idReservant;
 
     private String moyenPaiement;
 
-    public Reservation(String nom, String prenom,int id_reservant, Emplacement empReserve, String moyenPaiement){
+    public Reservation(String nom, String prenom,int idReservant, Emplacement empReserve, String moyenPaiement){
         this.nom = nom;
         this.prenom = prenom;
         this.empReserve = empReserve;
         this.idReservant = idReservant;
         this.moyenPaiement = moyenPaiement;
-        
-
     }
 
     /*****************************Setter & getter ******************************/
@@ -65,7 +63,7 @@ public class Reservation {
 
       /**
 	 ** méthode permettant de récupérer le id du reservant
-	 ** @return id_reservant 
+	 ** @return idReservant 
 	 **/
     public int getIdReservant(){
         return this.idReservant;
@@ -100,7 +98,7 @@ public class Reservation {
 	 ** @param nvId le nouveau emplacement
 	 **/
     public void setIdReservation(int nvId){
-        this.id_reservation = nvId;
+        this.idReservant = nvId;
     }
 
     /**
@@ -108,7 +106,7 @@ public class Reservation {
 	 ** @param nvIdReservant le nouveau emplacement
 	 **/
     public void setIdReservant(int nvIdReservant){
-        this.id_reservant = nvIdReservant;
+        this.idReservant = nvIdReservant;
     }
 
 }
