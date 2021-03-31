@@ -43,7 +43,7 @@ public class FenetreOrganisateur {
 		paramBaB = new PanelParamBaB("nomBaB", "01/01/2021", 10, "rue des fleurs", 10, 10);
 		onglets.add("Créer son BaB", paramBaB.getPannel());
 		
-		/*baseDeDonnees = new JDBC_BDD();
+		baseDeDonnees = new JDBC_BDD();
 		baseDeDonnees.startJDBC();
 		infosBabs = baseDeDonnees.chargerToutesInfos();
 		for(int i = 0; i < baseDeDonnees.compterBab(); i++) {
@@ -54,7 +54,7 @@ public class FenetreOrganisateur {
 			tableMesBabs.getColumn("Publier").setCellRenderer	(new MyRendererAndEditorChargerBab(tableMesBabs, "Publier"));
 			tableMesBabs.getColumn("Publier").setCellEditor		(new MyRendererAndEditorChargerBab(tableMesBabs, "Publier"));
 			//TO DO parametré le bouton charger dans MyRendererAndEditorChargerBab.java
-		}*/
+		}
 		panMesBaBs.add(scrollMesBabs);
 
 		// ********** Onglet : Contact **********

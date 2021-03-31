@@ -122,7 +122,7 @@ class ActionBtn extends AbstractAction  {
 		else{
 			int retour = JOptionPane.showConfirmDialog(FenetreUI.getJFrame(), "Voulez-vous reserver ce stand ?","Avertissement Reservation Stand",JOptionPane.OK_CANCEL_OPTION);
 			if(retour!=2){
-				FenetreReservation fenReser = new FenetreReservation("Prenom", "Nom", "Moyen de paiement", emplacementAjoute,FenetreUI.getSystem(),boutonCourant);
+				FenetreReservation fenReser = new FenetreReservation("Prenom", "Nom", "Moyen de paiement", FenetreUI.getSystem().getListeStand().get(Integer.parseInt(boutonCourant.getText())),FenetreUI.getSystem(),boutonCourant);
 				fenReser.saisir();
 			}
 		}

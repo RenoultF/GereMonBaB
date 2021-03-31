@@ -1,4 +1,4 @@
-
+//import com.mysql.jdbc.Driver;
 import java.sql.*;
 import java.util.*;
 
@@ -13,11 +13,13 @@ public class JDBC_BDD {
 	static final String PASS = "password";
    
 	static private Connection conn = null;
-	static private Statement  stmt = null;
 	static private DatabaseMetaData meta = null;
-	static private ResultSet  res  = null;
-	static private ResultSet  res2 = null;
-	static private ResultSet  res3 = null;
+	static private Statement  stmt  = null;
+	static private Statement  stmt2 = null;
+	static private Statement  stmt3 = null;
+	static private ResultSet  res   = null;
+	static private ResultSet  res2  = null;
+	static private ResultSet  res3  = null;
    
 	/****************************************************************************************************************************/
 	public static void startJDBC() {
@@ -27,8 +29,10 @@ public class JDBC_BDD {
 		  System.out.println("Connecting to database...");
 		  conn = DriverManager.getConnection(DB_URL, USER, PASS);
 		  System.out.println("Connected successfully");
-      	  stmt = conn.createStatement();
-      	  meta = conn.getMetaData();
+      	  stmt  = conn.createStatement();
+      	  stmt2 = conn.createStatement();
+      	  stmt3 = conn.createStatement();
+      	  meta  = conn.getMetaData();
 
 		}catch(SQLException se){
 		  //Handle errors for JDBC
@@ -114,6 +118,7 @@ public class JDBC_BDD {
 	static private void sauvegarderEmplacement(Emplacement emp, int idBab) {
 		int idEmp = emp.getIdSauvegarde();
 		int idType = 0;
+		boolean contient = false;
 		
 		String sqlEmplacement, sqlGetType, sqlType, sqlContient = "";
 		
@@ -145,7 +150,7 @@ public class JDBC_BDD {
 			sqlEmplacement = "INSERT INTO EMPLACEMENT VALUES(" +
 			   idEmp 				+ ", " 	+
 			   emp.getIdType() 		+ ", '" +
-			   emp.getNom() 		+ "', '"+
+			   emp.getType() 		+ "', '"+
 			   emp.getReservation() + "', '"+
 			   emp.getPaiement() 	+ "', " +
 			   emp.getCoordonneeX() + ", " 	+
@@ -153,6 +158,7 @@ public class JDBC_BDD {
 			   idType 				+ ") ";
 			
 			// Creation des données dans la table d'association
+			contient = true;
 			sqlContient = "INSERT INTO CONTIENT VALUES(" +
 			   idBab + ", " +
 			   idEmp + ") " ;
@@ -161,7 +167,7 @@ public class JDBC_BDD {
 			// Update de l'ancien emplacement		   
 			System.out.println("Old Emplacement");
 			sqlEmplacement = "UPDATE EMPLACEMENT SET " +
-			   "nom = "					+ emp.getNom() 			+ ", " 	+
+			   "nom = '"				+ emp.getType()			+ "', " +
 			   "statutReservation = '"	+ emp.getReservation() 	+ "', " +
 			   "statutPaiment = '"		+ emp.getPaiement() 	+ "' " 	+
 			   "WHERE idEmplacement = "	+ idEmp;		
@@ -169,12 +175,19 @@ public class JDBC_BDD {
 		
 		try{
 			stmt.executeUpdate(sqlEmplacement);
-			stmt.executeUpdate(sqlContient);
+			if(contient)
+				stmt.executeUpdate(sqlContient);
 		}catch(SQLException se){
 			se.printStackTrace();
 		}
 	}
 	
+	/**
+	 ** Méthode sauvegardant toutes les données d'une réservation en créant une nouvelle sauvegarde si la réservation n'est pas dans la bdd, sinon il modifie les informations déjà présentes
+	 **/
+	static private void sauvegarderReservation(Emplacement emp, int idBab) {
+		
+	}
 	
 	/*************************************************PUBLIC METHODS*************************************************************/
 	
@@ -190,6 +203,13 @@ public class JDBC_BDD {
 	 **/
 	static public void creerOrganisateur(String nom, String prenom, String mail, String mdp) {
 		creerProfil(nom, prenom, mail, mdp, "organisateur");
+	}
+	
+	/**
+	 ** Méthode qui renvois le profil et le résultat du test 
+	 **/
+	static public void chargerProfil(String mail, String mdp) {
+		
 	}
 	
 	static public boolean connexion(String mail, String mdp) {
@@ -292,7 +312,7 @@ public class JDBC_BDD {
 		int		longueurType = 0, largeurType = 0;
 		boolean	reservableType = false;
 	
-		sqlBab = "SELECT * FROM BAB WHERE idBab = " + idBaB +"";
+		sqlBab = "SELECT * FROM BAB WHERE idBab = " + id +"";
 		BaB babLoaded = null;
 		try{
 			res = stmt.executeQuery(sqlBab);
@@ -306,25 +326,25 @@ public class JDBC_BDD {
 				dimYBaB = res.getInt("dimensionCarteY");
 				
 				babLoaded = new BaB(nomBaB, dateBaB, prixBaB, adreBaB, dimXBaB, dimYBaB);
-				babLoaded.setIdBaB(idBaB);
+				babLoaded.setIdBaB(id);
 			}
 		}catch(SQLException se){
 			se.printStackTrace();
 		}
 		
-		sqlContient = "SELECT * FROM CONTIENT WHERE idBab = "+ idBaB +"";
+		sqlContient = "SELECT * FROM CONTIENT WHERE idBab = "+ id +"";
 		try{
 			res = stmt.executeQuery(sqlContient);
 			while(res.next()) {
 				// Récupération de la liste des emplacements
 				idSauvegarde = res.getInt("idSauvegarde");
 				sqlEmplacement = "SELECT * FROM EMPLACEMENT WHERE idSauvegarde = "+ idSauvegarde +"";
-				res2 = stmt.executeQuery(sqlEmplacement);
+				res2 = stmt2.executeQuery(sqlEmplacement);
 				while(res2.next()) {
 					idEmplacement		= res2.getInt("idEmplacement");
-					nomEmplacement		= res2.getString("nomEmplacement");
+					nomEmplacement		= res2.getString("nom");
 					statutReservation	= res2.getString("statutReservation");
-					statutPaiement		= res2.getString("statutPaiement");
+					statutPaiement		= res2.getString("statutPaiment");
 					coordonneeX			= res2.getInt("coordonneeX");
 					coordonneeY			= res2.getInt("coordonneeY");
 					idType				= res2.getInt("idType");
@@ -332,11 +352,11 @@ public class JDBC_BDD {
 				
 				// Récupération du type associé à l'emplacement
 				sqlType = "SELECT * FROM TYPE WHERE idType = "+ idType +"";
-				res3 = stmt.executeQuery(sqlType);
+				res3 = stmt3.executeQuery(sqlType);
 				while(res3.next()) {
-					longueurType		= res3.getInt("longueurType");
-					largeurType			= res3.getInt("largeurType");
-					reservableType		= res3.getBoolean("reservableType");
+					longueurType		= res3.getInt("longueur");
+					largeurType			= res3.getInt("largeur");
+					reservableType		= res3.getBoolean("Reservable");
 				}
 				
 				//Paramètrage de l'emplacement avec les données sauvegardées
@@ -355,6 +375,7 @@ public class JDBC_BDD {
 		}catch(SQLException se){
 			se.printStackTrace();
 		}
+		System.out.println("BAB : "+ babLoaded.getListeStand());
 		
 		return babLoaded;
 	}

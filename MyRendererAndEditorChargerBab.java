@@ -72,6 +72,7 @@ class MyRendererAndEditorChargerBab extends AbstractAction implements TableCellR
 				index = (int)FenetreOrganisateur.tabMesBabs.getValueAt(row, 0);
 				JDBC_BDD baseDeDonnees = new JDBC_BDD();
 				baseDeDonnees.startJDBC();
+				System.out.println("INDEX : " + index);
 				BaB nvBaB = baseDeDonnees.chargerBab(index);
 	    		new FenetreUI(nvBaB);
 				
