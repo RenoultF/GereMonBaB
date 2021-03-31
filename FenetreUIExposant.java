@@ -76,6 +76,7 @@ public class FenetreUIExposant extends AbstractAction{
     public FenetreUIExposant(BaB system){
         /** Variables du système **/
 		this.system = system;
+		system.setUtilisateur("Exposant");
 		dimX = system.getDimX();
 		dimY = system.getDimY();
 		

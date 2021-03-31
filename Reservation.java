@@ -16,6 +16,8 @@ public class Reservation {
         this.empReserve = empReserve;
         this.id_reservant = id_reservant;
         this.moyenPaiement = moyenPaiement;
+        
+
     }
 
     /*****************************Setter & getter ******************************/
