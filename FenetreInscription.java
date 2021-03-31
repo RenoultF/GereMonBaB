@@ -89,7 +89,7 @@ public class FenetreInscription extends JFrame {
         this.setLayout(null);
         this.setTitle("Gere mon BaB - Inscription");
         this.setSize(new Dimension(500, 380));
-        //this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);

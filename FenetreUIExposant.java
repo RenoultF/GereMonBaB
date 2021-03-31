@@ -187,6 +187,7 @@ public class FenetreUIExposant extends AbstractAction{
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setUndecorated(true);
 		frame.setVisible(true);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		//frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //frame.dispose(); si on veux juste quitter la fenetre et non aps l'appli.
 		
