@@ -419,7 +419,7 @@ public class BaB {
 	}
 
 	/**
-	 ** méthode permettant de récupérer la liste des stands supprimé
+	 ** méthode permettant de récupérer la liste des stands supprimés
 	 ** @return standsSuppr la liste des stands
 	 **/
 	public LinkedList<Stand> getListeStandSuppr() {
@@ -427,7 +427,7 @@ public class BaB {
 	}
 	
 	/**
-	 ** méthode permettant de récupérer la liste des autres supprimé
+	 ** méthode permettant de récupérer la liste des autres supprimés
 	 ** @return autresSuppr la liste des autres
 	 **/
 	public LinkedList<Autre> getListeAutreSuppr() {

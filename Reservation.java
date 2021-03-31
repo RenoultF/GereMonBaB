@@ -14,7 +14,7 @@ public class Reservation {
         this.nom = nom;
         this.prenom = prenom;
         this.empReserve = empReserve;
-        this.id_reservant = id_reservant;
+        this.idReservant = idReservant;
         this.moyenPaiement = moyenPaiement;
     }
 
@@ -58,7 +58,7 @@ public class Reservation {
 	 ** @return id_reservation 
 	 **/
     public int getIdReservation(){
-        return this.id_reservation;
+        return this.idReservant;
     }
 
       /**
@@ -66,7 +66,7 @@ public class Reservation {
 	 ** @return id_reservant 
 	 **/
     public int getIdReservant(){
-        return this.id_reservant;
+        return this.idReservant;
     }
 
     /**

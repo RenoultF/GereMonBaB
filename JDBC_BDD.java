@@ -185,8 +185,21 @@ public class JDBC_BDD {
 	/**
 	 ** Méthode sauvegardant toutes les données d'une réservation en créant une nouvelle sauvegarde si la réservation n'est pas dans la bdd, sinon il modifie les informations déjà présentes
 	 **/
-	static private void sauvegarderReservation(Emplacement emp, int idBab) {
+	static private void sauvegarderReservation(Reservation rsv, int idBab) {
 		
+		String sqlProfil;
+		
+		if(rsv.getIdReservant == 0) {
+			System.out.println("Reservation par organisateur");
+			
+			// Recherche de l'existence d'un possible type qui correspondrait au profil, sinon création d'un nouveau profil			   
+			sqlGetType = "SELECT * FROM PROFIL WHERE mail = "+rsv.getNom()+"."+rsv.getPrenom()+"@reservation";
+			try{
+				res = stmt.executeQuery(sqlGetType);
+			}catch(SQLException se){
+				se.printStackTrace();
+			}
+		}
 	}
 	
 	/*************************************************PUBLIC METHODS*************************************************************/
@@ -240,8 +253,10 @@ public class JDBC_BDD {
 		
 		LinkedList<Emplacement> listeStands = bab.getListeStand();
 		LinkedList<Emplacement> listeAutres = bab.getListeAutre();
+		LinkedList<Reservation> listeReservation = bab.getListeReservation();
 		int size;
 		Emplacement emplacementCourant;
+		Reservation reservationCourante;
 		
 		String sqlBaB;
 		
@@ -287,6 +302,12 @@ public class JDBC_BDD {
 		for(int i = 0; i < size; i++) {
 			emplacementCourant = listeAutres.get(i);
 			sauvegarderEmplacement(emplacementCourant, idBab);
+		}
+		// Sauvegarder les données des réservations
+		size = listeReservation.size();
+		for(int i = 0; i < size; i++) {
+			reservationCourante = listeReservation.get(i);
+			sauvegarderReservation(reservationCourante, idBab);
 		}
 
 	}
