@@ -252,18 +252,16 @@ public class FenetreUIExposant extends AbstractAction{
 		}
 
 		if(!system.getListeAutre().isEmpty()){
-			Autre emplacementAutre;
 			JButton btnAutreColor;
 			for(Emplacement e : system.getListeAutre()){
-				emplacementAutre = (Autre) e;
-				indBase = emplacementAutre.getCoordonneeX()*dimX + emplacementAutre.getCoordonneeY();
+				indBase = e.getCoordonneeX()*dimX + e.getCoordonneeY();
 				btnCourant = listBut.get(indBase);
-				for(int i = 0;i<emplacementAutre.getLargeur();i++){
-					for(int j = indBase;j<indBase+emplacementAutre.getLongueur();j++){
+				for(int i = 0;i<e.getLargeur();i++){
+					for(int j = indBase;j<indBase+e.getLongueur();j++){
 						btnAutreColor = listBut.get(i * getSystem().getDimX() + j);
 						btnAutreColor.setBackground(Color.BLACK);
 						btnAutreColor.setEnabled(false);
-						btnAutreColor.setText(Integer.toString(emplacementAutre.getIdType()));
+						btnAutreColor.setText(Integer.toString(e.getIdType()));
 					}
 				}
 				listButAutres.add(btnCourant);

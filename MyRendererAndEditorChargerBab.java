@@ -83,7 +83,7 @@ class MyRendererAndEditorChargerBab extends AbstractAction implements TableCellR
 
       if(nom.equals("Visiter")) {
 				//On recupere l'idType qui est dans le tableau
-				index = (int)FenetreOrganisateur.tabMesBabs.getValueAt(row, 0);
+				index = (int)FenetreExposant.tabMesBabs.getValueAt(row, 0);
 				JDBC_BDD baseDeDonnees = new JDBC_BDD();
 				baseDeDonnees.startJDBC();
 				System.out.println("INDEX : " + index);
