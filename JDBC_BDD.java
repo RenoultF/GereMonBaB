@@ -257,6 +257,20 @@ public class JDBC_BDD {
 		}
 	}
 	
+	/**
+	 ** Méthode privée supprimant les données des réservations supprimés du bab pendant la session
+	 **/
+	static private void supprimerReservation(Reservation res) {
+		String sqlDeletePar;
+		System.out.println("id reservant : " +  res.getIdReservant());
+		sqlDeletePar   = "DELETE FROM PARTICIPE WHERE idProfil = " + res.getIdReservant()+" AND idSauvegarde = "+ res.getEmplacement().getIdSauvegarde() +"";
+		try{
+			stmt.executeUpdate(sqlDeletePar);
+		}catch(SQLException se){
+			se.printStackTrace();
+		}
+	}
+	
 	/*************************************************PUBLIC METHODS*************************************************************/
 	
 	/**
@@ -383,6 +397,15 @@ public class JDBC_BDD {
 			emplacementCourant = listeAutresSuppr.get(i);
 			supprimerEmplacement(emplacementCourant, bab);
 		}
+		// Suppression des données des réservations supprimées
+		size = listeReservationSuppr.size();
+		for(int i = 0; i < size; i++) {
+			System.out.println("");
+			reservationCourante = listeReservationSuppr.get(i);
+			supprimerReservation(reservationCourante);
+			System.out.println("listeReservation n°"+i);
+		}
+		
 		
 		// Sauvegarder les données des stands
 		size = listeStands.size();
@@ -396,7 +419,6 @@ public class JDBC_BDD {
 			emplacementCourant = listeAutres.get(i);
 			sauvegarderEmplacement(emplacementCourant, bab);
 		}
-		
 		// Sauvegarder les données des réservations
 		size = listeReservation.size();
 		for(int i = 0; i < size; i++) {

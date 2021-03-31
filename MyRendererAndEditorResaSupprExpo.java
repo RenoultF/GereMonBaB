@@ -54,12 +54,16 @@ class MyRendererAndEditorResaSupprExpo extends AbstractAction implements TableCe
       int index;
       //On recupere l'idval_suppr qui est dans le tableau
       index = (int)FenetreUIExposant.tabReservation.getValueAt(row, 0);
+      //supprimer de la liste des reservé
+      Reservation resa = FenetreUI.getSystem().getListeReservation().get(index);
       //on supprime la ligne dans le tableau
       FenetreUIExposant.tabReservation.removeRow(row);
       //supprime de la liste des reservation
       FenetreUIExposant.reservationsTmp.remove(index);
       //actualise le tableau
       FenetreUIExposant.actualiserTabSupprResa(index);
+      //ajoute la suppression dans le tableau des suppressions
+      FenetreUI.getSystem().getListeReservationSuppr().addLast(resa);
     }
   }
 

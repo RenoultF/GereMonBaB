@@ -61,6 +61,7 @@ public class BaB {
 		standsSuppr = new LinkedList<Emplacement>();
 		autresSuppr = new LinkedList<Emplacement>();
 		reservations = new LinkedList<Reservation>();
+		reservationsSuppr = new LinkedList<Reservation>();
 
 		type = new String("Stand");
 	

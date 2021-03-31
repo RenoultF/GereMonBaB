@@ -64,6 +64,9 @@ class MyRendererAndEditorResaSuppr extends AbstractAction implements TableCellRe
       FenetreUI.getSystem().getListeReservation().remove(index);
       //actualise le tableau
       FenetreUI.actualiserTabSupprResa(index);
+      //ajoute la suppression dans le tableau des suppressions
+      //System.out.println(resa.getNom());
+      FenetreUI.getSystem().getListeReservationSuppr().addLast(resa);
     }
   }
 
