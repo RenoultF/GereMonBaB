@@ -95,13 +95,27 @@ public class FenetreInscription extends JFrame {
     
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO...
+            JDBC_BDD baseDeDonnees = new JDBC_BDD();
+            baseDeDonnees.startJDBC();
 
-            //if(radButExposant.isSelected())
-            //else
+            int id = baseDeDonnees.getNewIdTable("PROFIL");
+            Profil profil;
+
+            // Exposant
+            if(radButExposant.isSelected()) {
+                profil = new Profil(id, txtPrenom.getText(), txtNom.getText(), "exposant", txtCourriel.getText(), txtMDP.getText());
+                baseDeDonnees.creerExposant(id, txtNom.getText(), txtPrenom.getText(), txtCourriel.getText(), txtMDP.getText());
+                new FenetreExposant(profil);
+            }
+
+            // Organisateur
+            else {
+                profil = new Profil(id, txtPrenom.getText(), txtNom.getText(), "organisateur", txtCourriel.getText(), txtMDP.getText());
+                baseDeDonnees.creerOrganisateur(id, txtNom.getText(), txtPrenom.getText(), txtCourriel.getText(), txtMDP.getText());
+                new FenetreOrganisateur(profil);
+            }
 
             fermerFenetre();
-            new FenetreConnexion();
         }
     }
 }

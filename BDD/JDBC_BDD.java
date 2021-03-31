@@ -43,7 +43,7 @@ public class JDBC_BDD {
 	/**
 	 ** Méthode privée permettant la recherche du prochain IdProfil pour la création d'un nouvel utilisateur
 	 **/
-	static private int getNewIdUser() {
+	static public int getNewIdUser() {
 		int newId = 0;
 		String sql = "SELECT max(idProfil) FROM PROFIL";
 		try{
@@ -86,10 +86,10 @@ public class JDBC_BDD {
 	 ** param
 	 ** ATTENTION LES MOTS DE PASSE NE SONT PAS CRYPTES
 	 **/
-	static private void creerProfil(String nom, String prenom, String mail, String mdp, String typeProfil) {
+	static private void creerProfil(int id, String nom, String prenom, String mail, String mdp, String typeProfil) {
 		String sql;
 		sql = "INSERT INTO PROFIL VALUES(" +
-			   getNewIdUser() +", '" +
+			   id +", '" +
 			   nom + "', '" +
 			   prenom + "', '" +
 			   typeProfil + "', '" +
@@ -109,15 +109,15 @@ public class JDBC_BDD {
 	/**
 	 ** Méthode appelant la méthode privée pour créer un nouveau profil exposant
 	 **/
-	static public void creerExposant(String nom, String prenom, String mail, String mdp) {
-		creerProfil(nom, prenom, mail, mdp, "exposant");
+	static public void creerExposant(int id, String nom, String prenom, String mail, String mdp) {
+		creerProfil(id, nom, prenom, mail, mdp, "exposant");
 	}
 	
 	/**
 	 ** Méthode appelant la méthode privée pour créer un nouveau profil organisateur
 	 **/
-	static public void creerOrganisateur(String nom, String prenom, String mail, String mdp) {
-		creerProfil(nom, prenom, mail, mdp, "organisateur");
+	static public void creerOrganisateur(int id, String nom, String prenom, String mail, String mdp) {
+		creerProfil(id, nom, prenom, mail, mdp, "organisateur");
 	}
 	
 	static public boolean connexion(String mail, String mdp) {

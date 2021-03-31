@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 public class FenetreExposant extends AbstractAction {
+	private Profil profil;
+
     private JFrame frame;
     private JPanel global_panel;
 
@@ -19,7 +21,9 @@ public class FenetreExposant extends AbstractAction {
 	// ***** Variables pour onglet Liste *****
 	// todo
 
-	public FenetreExposant() {
+	public FenetreExposant(Profil profil) {
+		this.profil = profil;
+
 		frame = new JFrame("GereMonBaB - Exposant");
         global_panel = new JPanel(new GridLayout(1, 1));
 		onglets = new JTabbedPane();
