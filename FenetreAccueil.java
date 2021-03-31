@@ -68,7 +68,7 @@ public class FenetreAccueil {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-		    new FenetreConnexion();
+		    new FenetreConnexion(frame);
         }
     }
 
@@ -79,7 +79,7 @@ public class FenetreAccueil {
     
         @Override
         public void actionPerformed(ActionEvent e) {
-            new FenetreInscription();
+            new FenetreInscription(frame);
         }
     }
 }
