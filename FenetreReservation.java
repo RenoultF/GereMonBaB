@@ -114,7 +114,13 @@ public class FenetreReservation extends JFrame {
             prenom = String.valueOf(txtNom.getText());
             nom = String.valueOf(txtPrenom.getText());
             typePaiement = txtTypePaiement.getText();
-            int idReservant = 0;
+            int idReservant;
+            if(system.getUtilisateur().equals("Organisateur")){
+                idReservant = 0;
+            }
+            else{
+                idReservant = system.getProfil().getIdProfil();
+            }
             empReserve.setReservation("semi_reserve");
             reservation = new Reservation(nom, prenom, idReservant, empReserve,typePaiement);
             //Maj du status dans le tableaux
