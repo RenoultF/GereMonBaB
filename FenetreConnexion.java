@@ -55,7 +55,7 @@ public class FenetreConnexion extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            baseDeDonnees = new JDBC_BDD();
+            JDBC_BDD baseDeDonnees = new JDBC_BDD();
             baseDeDonnees.startJDBC();
             if(baseDeDonnees.connexion(identifiant.getText(), motDePasse.getText())) {
                 // ***** Ouverture de l'UI correspondante *****
