@@ -122,9 +122,6 @@ public class JDBC_BDD {
 		int idType = 0, size;
 		boolean contient = false;
 		
-		LinkedList<Reservation> listeReservation = bab.getListeReservation();
-		Reservation reservationCourante;
-		
 		String sqlEmplacement, sqlGetType, sqlType, sqlContient = "";
 		
 		if(idEmp == 0) {
@@ -185,57 +182,59 @@ public class JDBC_BDD {
 		}catch(SQLException se){
 			se.printStackTrace();
 		}
-		
-		// Sauvegarder les données des réservations
-		size = listeReservation.size();
-		for(int i = 0; i < size; i++) {
-			reservationCourante = listeReservation.get(i);
-			sauvegarderReservation(reservationCourante, idEmp);
-		}
 	}
 	
 	/**
 	 ** Méthode sauvegardant toutes les données d'une réservation en créant une nouvelle sauvegarde si la réservation n'est pas dans la bdd, sinon il modifie les informations déjà présentes
 	 **/
-	static private void sauvegarderReservation(Reservation rsv, int idEmp) {
+	static private void sauvegarderReservation(Reservation rsv) {
 		
-		String sqlGetProfilSpecial, sqlProfilSpecial, sqlParticipe;
+		String sqlGetProfilSpecial, sqlProfilSpecial, sqlParticipe = "", sqlGetParticipe;
 		
-		int idProfil;
+		int idProfil, idEmp = rsv.getEmplacement().getIdSauvegarde();
 		
-		if(rsv.getIdReservant() == 0) {
-			System.out.println("Reservation par organisateur");
-			
-			// Recherche de l'existence d'un possible type qui correspondrait au profil, sinon création d'un nouveau profil
-			String mailReservation =  rsv.getNom()+"."+rsv.getPrenom()+"@reservation";
-			sqlGetProfilSpecial	   = "SELECT * FROM PROFIL WHERE mail = '" + mailReservation+"'";
-			try{
-				res = stmt.executeQuery(sqlGetProfilSpecial);
-				if(res.next()) {
-					idProfil = res.getInt("idProfil");
-				}
-				else {
-					idProfil = getNewIdTable("PROFIL");
-					sqlProfilSpecial = "INSERT INTO PROFIL VALUES(" +
-						idProfil 			+ ", '"	+
-						rsv.getNom() 		+ "', '"+
-						rsv.getPrenom() 	+ "', '"+
-						"exposant"			+ "', '"+
-						mailReservation		+ "', '"+
-						"12345678"		 	+ "') ";
-					stmt.executeUpdate(sqlProfilSpecial);
-				}
+			if(rsv.getIdReservant() == 0) {
+				System.out.println("Reservation par organisateur");
 				
-				// Creation des données dans la table d'association
-				sqlParticipe = "INSERT INTO PARTICIPE VALUES(" +
-				   idProfil	+ ", " +
-				   idEmp	+ ") " ;
-				   
-			stmt.executeUpdate(sqlParticipe);
-			}catch(SQLException se){
-				se.printStackTrace();
+				// Recherche de l'existence d'un possible type qui correspondrait au profil, sinon création d'un nouveau profil
+				String mailReservation =  rsv.getNom()+"."+rsv.getPrenom()+"@reservation";
+				sqlGetProfilSpecial	   = "SELECT * FROM PROFIL WHERE mail = '" + mailReservation+"'";
+				try{
+					res = stmt.executeQuery(sqlGetProfilSpecial);
+					if(res.next()) {
+						idProfil = res.getInt("idProfil");
+					}
+					else {
+						idProfil = getNewIdTable("PROFIL");
+						sqlProfilSpecial = "INSERT INTO PROFIL VALUES(" +
+							idProfil 			+ ", '"	+
+							rsv.getNom() 		+ "', '"+
+							rsv.getPrenom() 	+ "', '"+
+							"exposant"			+ "', '"+
+							mailReservation		+ "', '"+
+							"12345678"		 	+ "') ";
+						stmt.executeUpdate(sqlProfilSpecial);
+					}
+					
+					sqlGetParticipe	   = "SELECT * FROM PARTICIPE WHERE idProfil = " + idProfil +" AND idSauvegarde = " + idEmp + "";
+					try{
+						res = stmt.executeQuery(sqlGetParticipe);
+						if(!(res.next())) {
+							// Creation des données dans la table d'association
+							sqlParticipe = "INSERT INTO PARTICIPE VALUES(" +
+							   idProfil		 		  + ", "  +
+							   idEmp		 		  + ", '" +
+							   rsv.getMoyenPaiement() + "')";
+							stmt.executeUpdate(sqlParticipe);
+						}
+					}catch(SQLException se){
+						se.printStackTrace();
+					}   
+				}catch(SQLException se){
+					se.printStackTrace();
+				}
 			}
-		}
+		
 	}
 	
 	/*************************************************PUBLIC METHODS*************************************************************/
@@ -289,8 +288,12 @@ public class JDBC_BDD {
 		
 		LinkedList<Emplacement> listeStands = bab.getListeStand();
 		LinkedList<Emplacement> listeAutres = bab.getListeAutre();
-		int size;
+		LinkedList<Reservation> listeReservation = bab.getListeReservation();
+		
 		Emplacement emplacementCourant;
+		Reservation reservationCourante;
+		
+		int size, sizeR;
 		
 		String sqlBaB;
 		
@@ -331,11 +334,21 @@ public class JDBC_BDD {
 			emplacementCourant = listeStands.get(i);
 			sauvegarderEmplacement(emplacementCourant, bab);
 		}
+			
 		// Sauvegarder les données des emplacements autres
 		size = listeAutres.size();
 		for(int i = 0; i < size; i++) {
 			emplacementCourant = listeAutres.get(i);
 			sauvegarderEmplacement(emplacementCourant, bab);
+		}
+		
+		// Sauvegarder les données des réservations
+		sizeR = listeReservation.size();
+		for(int j = 0; j < sizeR; j++) {
+			System.out.println("");
+			reservationCourante = listeReservation.get(j);
+			sauvegarderReservation(reservationCourante);
+			System.out.println("listeReservation n°"+j);
 		}
 
 	}
@@ -346,7 +359,7 @@ public class JDBC_BDD {
 	 **/
 	static public BaB chargerBab(int id) {
 		//requete SQL
-		String sqlBab, sqlContient, sqlEmplacement, sqlType;
+		String sqlBab, sqlContient, sqlEmplacement, sqlType, sqlParticipe, sqlProfil;
 		
 		//variables du BaB
 		int		idBaB = 0, prixBaB, dimXBaB, dimYBaB;
@@ -356,6 +369,11 @@ public class JDBC_BDD {
 		Emplacement emp;
 		int 	idSauvegarde, idEmplacement = 0, coordonneeX = 0, coordonneeY = 0, idType = 0;
 		String	nomEmplacement = "", statutReservation = "", statutPaiement = "";
+		
+		//variables du Profil
+		Reservation rsv;
+		int 	idProfil = 0;
+		String	nomProfil = "", prenomProfil = "", statutPaiementReservation = "";
 		
 		//variables du type de l'emplacement
 		int		longueurType = 0, largeurType = 0;
@@ -420,11 +438,33 @@ public class JDBC_BDD {
 					babLoaded.chargerStand(emp);
 				else 
 					babLoaded.chargerAutre(emp);
+					
+				// Récupération de la liste des réservations
+				sqlParticipe = "SELECT * FROM PARTICIPE WHERE idSauvegarde = "+ idSauvegarde +"";
+				try {
+					res2 = stmt2.executeQuery(sqlParticipe);
+					while(res2.next()) {
+						idProfil 					= res2.getInt("idProfil");
+						statutPaiementReservation 	= res2.getString("moyenPaiement");
+						
+						sqlProfil = "SELECT * FROM PROFIL WHERE idProfil = "+ idProfil +"";
+						res3 = stmt3.executeQuery(sqlProfil);
+						while(res3.next()) {
+							nomProfil		= res3.getString("nom");
+							prenomProfil	= res3.getString("prenom");
+							System.out.println("chargement d'un profil");
+						}
+						rsv = new Reservation(nomProfil, prenomProfil, idProfil, emp, statutPaiementReservation);
+						babLoaded.ajouterReservation(rsv);
+						emp.setReservation("semi_reserve");
+					}
+				}catch(SQLException se){
+					se.printStackTrace();
+				}
 			}
 		}catch(SQLException se){
 			se.printStackTrace();
 		}
-		System.out.println("BAB : "+ babLoaded.getListeStand());
 		
 		return babLoaded;
 	}

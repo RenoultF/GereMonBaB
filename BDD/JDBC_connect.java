@@ -88,6 +88,7 @@ public class JDBC_connect {
 		  String tablePARTICIPE	 =	"CREATE TABLE PARTICIPE "		 						+
 		  							"(idProfil INTEGER not null, " 							+
 		  							"idSauvegarde INTEGER not null, "						+
+		  							"moyenPaiement VARCHAR(20) not null, "					+
 		  							"PRIMARY KEY (idProfil, idSauvegarde), "				+
 		  							"FOREIGN KEY (idProfil) REFERENCES PROFIL (idProfil), "	+
 		  							"FOREIGN KEY (idSauvegarde) REFERENCES EMPLACEMENT (idSauvegarde))";
