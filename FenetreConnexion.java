@@ -55,11 +55,21 @@ public class FenetreConnexion extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            fermerFenetre();
-            // ***** Ouverture de l'UI correspondante *****
-            // !! TEMPORAIRE !!
-		    new FenetreOrganisateur();
-		    // new FenetreExposant();
+            baseDeDonnees = new JDBC_BDD();
+            baseDeDonnees.startJDBC();
+            if(baseDeDonnees.connexion(identifiant.getText(), motDePasse.getText())) {
+                // ***** Ouverture de l'UI correspondante *****
+                //if(baseDeDonnees.estOrganisateur(identifiant.getText(), motDePasse.getText()))
+		            new FenetreOrganisateur();
+                //else
+		            new FenetreExposant();
+                fermerFenetre();
+            }
+            else {
+                System.out.println("Utilisateur inconnu");
+                identifiant.setText("");
+                motDePasse.setText("");
+            }
         }
     }
 }

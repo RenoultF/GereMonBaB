@@ -137,7 +137,13 @@ public class JDBC_BDD {
 		}
 		return false;
 	}
-	
+
+	// TODO
+	/**
+	 ** Méthode renvoyant un boolean True si c'est un organisateur, False sinon. (On considere que l'utilisateur existe)
+	 */
+	//static public boolean estOrganisateur(String mail, String mdp) {}
+
 	/**
 	 ** Méthode sauvegardant toutes les données d'un BaB
 	 **/
