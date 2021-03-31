@@ -41,7 +41,7 @@ public class FenetreConnexion extends JFrame {
         this.setLayout(null);
         this.setTitle("Gere mon BaB - Connexion");
         this.setSize(370, 140);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);

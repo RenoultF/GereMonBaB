@@ -184,9 +184,12 @@ public class FenetreUIExposant extends AbstractAction{
 		panFenetre.add(scrollAutres);
 		actualiseFenetre();
 		frame.getContentPane().add(panFenetre);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setUndecorated(true);
 		frame.setVisible(true);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //frame.dispose(); si on veux juste quitter la fenetre et non aps l'appli.
-		frame.setSize(1000, 500);
+		//frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); //frame.dispose(); si on veux juste quitter la fenetre et non aps l'appli.
+		
     }
 
     @Override
