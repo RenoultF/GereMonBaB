@@ -70,6 +70,7 @@ public class FenetreOrganisateur {
 		frame.getContentPane().add(global_panel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1000, 700);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        //frame.setUndecorated(true);
 	}
 }

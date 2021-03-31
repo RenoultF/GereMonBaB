@@ -206,7 +206,7 @@ public class FenetreUI extends AbstractAction{
 		frame.getContentPane().add(panFenetre);
 		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		frame.setUndecorated(true);
+		//frame.setUndecorated(true);
 		frame.setVisible(true);
 	
 		//frame.dispose(); si on veux juste quitter la fenetre et non aps l'appli.
