@@ -206,6 +206,10 @@ public class FenetreUIExposant extends AbstractAction{
 		return system;
 	}
 
+	public static JFrame getJFrame(){
+		return frame;
+	}
+
     public static void ajouterReservationExpo(Reservation resa){
 		int id_reservation;
 		if(reservationsTmp.size()==0){
