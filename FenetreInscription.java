@@ -12,10 +12,13 @@ public class FenetreInscription extends JFrame {
     private JLabel jcomp5;
     private JLabel jcomp7;
     private JButton jcomp6;
+    private JLabel jcomp8;
     private JTextField txtNom;
     private JTextField txtPrenom;
     private JTextField txtCourriel;
     private JPasswordField txtMDP;
+    private JPasswordField txtCode_Secret;
+    private JLabel msgErreur;
 
     private ButtonGroup radButtGrp = new ButtonGroup();
 
@@ -30,11 +33,14 @@ public class FenetreInscription extends JFrame {
         jcomp4 = new JLabel("Courriel");
         jcomp5 = new JLabel("Mot de passe");
         jcomp7 = new JLabel("Rôle");
+        jcomp8 = new JLabel(("Code secret"));
         jcomp6 = new JButton(new ActionBtnOk("Valider"));
         txtNom = new JTextField(5);
         txtPrenom = new JTextField(5);
         txtCourriel = new JTextField(5);
         txtMDP = new JPasswordField(5);
+        txtCode_Secret = new JPasswordField(5);
+        msgErreur = new JLabel("");
 
         radButExposant = new JRadioButton("Exposant");
         radButOrganisateur = new JRadioButton("Organisateur");
@@ -51,12 +57,15 @@ public class FenetreInscription extends JFrame {
         add(jcomp5);
         add(jcomp6);
         add(jcomp7);
+        add(jcomp8);
         add(txtNom);
         add(txtPrenom);
         add(txtCourriel);
         add(txtMDP);
+        add(txtCode_Secret);
         add(radButExposant);
         add(radButOrganisateur);
+        add(msgErreur);
 
         // ***** Positionnement *****
         jcomp1.setBounds(205, 0, 100, 25);
@@ -66,12 +75,15 @@ public class FenetreInscription extends JFrame {
         jcomp5.setBounds(45, 125, 100, 25);
         jcomp6.setBounds(205, 315, 100, 25);
         jcomp7.setBounds(45, 150, 100, 25);
+        jcomp8.setBounds(45, 200, 100, 25);
         txtNom.setBounds(145, 50, 100, 25);
         txtPrenom.setBounds(145, 75, 100, 25);
         txtCourriel.setBounds(145, 100, 240, 25);
         txtMDP.setBounds(145, 125, 135, 25);
         radButExposant.setBounds(145, 150, 130, 25);
         radButOrganisateur.setBounds(280, 150, 150, 25);
+        txtCode_Secret.setBounds(145, 200, 135, 25);
+        msgErreur.setBounds(145, 225, 300, 25);
 
         // ***** Fenêtre *****
         this.setLayout(null);
@@ -95,13 +107,33 @@ public class FenetreInscription extends JFrame {
     
         @Override
         public void actionPerformed(ActionEvent e) {
-            // TODO...
+            JDBC_BDD baseDeDonnees = new JDBC_BDD();
+            baseDeDonnees.startJDBC();
 
-            //if(radButExposant.isSelected())
-            //else
+            int id = baseDeDonnees.getNewIdTable("PROFIL");
+            Profil profil;
+
+            // Exposant
+            if(radButExposant.isSelected()) {
+                profil = new Profil(id, txtPrenom.getText(), txtNom.getText(), "exposant", txtCourriel.getText(), txtMDP.getText());
+                baseDeDonnees.creerExposant(id, txtNom.getText(), txtPrenom.getText(), txtCourriel.getText(), txtMDP.getText());
+                new FenetreExposant(profil);
+            }
+
+            // Organisateur
+            else {
+                if(txtCode_Secret.getText().equals("1234")) {
+                    profil = new Profil(id, txtPrenom.getText(), txtNom.getText(), "organisateur", txtCourriel.getText(), txtMDP.getText());
+                    baseDeDonnees.creerOrganisateur(id, txtNom.getText(), txtPrenom.getText(), txtCourriel.getText(), txtMDP.getText());
+                    new FenetreOrganisateur(profil);
+                }
+                else {
+                    msgErreur.setText("Le code secret est incorrect");
+                    msgErreur.setForeground(Color.red);
+                }
+            }
 
             fermerFenetre();
-            new FenetreConnexion();
         }
     }
 }

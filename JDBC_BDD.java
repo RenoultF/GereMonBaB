@@ -52,7 +52,7 @@ public class JDBC_BDD {
 	 ** @param  table un String contenant le nom de la table
 	 ** @return newId un entier contenant le prochain id de la table passée en paramètre
 	 **/
-	static private int getNewIdTable(String table) {
+	static public int getNewIdTable(String table) {
 		int newId = 0;
 		String id;
 		
@@ -95,10 +95,10 @@ public class JDBC_BDD {
 	 ** @param
 	 ** ATTENTION LES MOTS DE PASSE NE SONT PAS CRYPTES
 	 **/
-	static private void creerProfil(String nom, String prenom, String mail, String mdp, String typeProfil) {
+	static private void creerProfil(int id, String nom, String prenom, String mail, String mdp, String typeProfil) {
 		String sql;
 		sql = "INSERT INTO PROFIL VALUES(" +
-			   getNewIdTable("PROFIL") 	+ ", '"  +
+			   id  						+ ", '"  +
 			   nom 						+ "', '" +
 			   prenom 					+ "', '" +
 			   typeProfil 				+ "', '" +
@@ -192,6 +192,8 @@ public class JDBC_BDD {
 		String sqlGetProfilSpecial, sqlProfilSpecial, sqlParticipe = "", sqlGetParticipe;
 		
 		int idProfil, idEmp = rsv.getEmplacement().getIdSauvegarde();
+		System.out.println("Emplacement : " + idEmp);
+		System.out.println("Reservation : " + rsv.getIdReservant());
 		
 			if(rsv.getIdReservant() == 0) {
 				System.out.println("Reservation par organisateur");
@@ -242,15 +244,15 @@ public class JDBC_BDD {
 	/**
 	 ** Méthode appelant la méthode privée pour créer un nouveau profil exposant
 	 **/
-	static public void creerExposant(String nom, String prenom, String mail, String mdp) {
-		creerProfil(nom, prenom, mail, mdp, "exposant");
+	static public void creerExposant(int id, String nom, String prenom, String mail, String mdp) {
+		creerProfil(id, nom, prenom, mail, mdp, "exposant");
 	}
 	
 	/**
 	 ** Méthode appelant la méthode privée pour créer un nouveau profil organisateur
 	 **/
-	static public void creerOrganisateur(String nom, String prenom, String mail, String mdp) {
-		creerProfil(nom, prenom, mail, mdp, "organisateur");
+	static public void creerOrganisateur(int id, String nom, String prenom, String mail, String mdp) {
+		creerProfil(id, nom, prenom, mail, mdp, "organisateur");
 	}
 	
 	/**
@@ -278,7 +280,25 @@ public class JDBC_BDD {
 		return false;
 	}
 	
-	
+	/**
+	 ** Méthode renvoyant un boolean True si c'est un organisateur, False sinon. (On considere que l'utilisateur existe)
+	 */
+	static public boolean estOrganisateur(String mail) {
+		String sql = "SELECT type FROM PROFIL WHERE mail = '" + mail +"'";
+		try{
+			res = stmt.executeQuery(sql);
+			while(res.next()) {
+				String type = res.getString("type");
+				if(type.equals("organisateur"))
+					return true;
+				else 
+					return false;
+			}
+		}catch(SQLException se){
+			se.printStackTrace();
+		}
+		return false;
+	}
 	
 	/**
 	 ** Méthode sauvegardant toutes les données d'un BaB en créant une nouvelle sauvegarde si le bab n'est pas dans la bdd, sinon il modifie les informations déjà présentes

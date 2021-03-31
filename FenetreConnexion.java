@@ -4,7 +4,8 @@ import javax.swing.*;
 import javax.swing.event.*;
 
 public class FenetreConnexion extends JFrame {
-    // ***** Contenu de la fentre *****
+    // ***** Contenu de la fenetre *****
+    private JLabel msgErreur;
     private JLabel jcomp1;
     private JLabel jcomp2;
     private JTextField identifiant;
@@ -13,6 +14,7 @@ public class FenetreConnexion extends JFrame {
 
     public FenetreConnexion() {
         // ***** Construction des composants *****
+        msgErreur = new JLabel("");
         jcomp1 = new JLabel("Identifiant");
         jcomp2 = new JLabel("Mot de passe");
         identifiant = new JTextField(5);
@@ -20,6 +22,7 @@ public class FenetreConnexion extends JFrame {
         jcomp5 = new JButton(new ActionBtnOk("Valider"));
 
         // ***** Ajout des composants *****
+        add(msgErreur);
         add(jcomp1);
         add(jcomp2);
         add(identifiant);
@@ -27,6 +30,7 @@ public class FenetreConnexion extends JFrame {
         add(jcomp5);
 
         // ***** Positionnement *****
+        msgErreur.setBounds(130, 0, 200, 25);
         jcomp1.setBounds(5, 30, 120, 25);
         jcomp2.setBounds(5, 59, 120, 25);
         identifiant.setBounds(130, 30, 204, 25);
@@ -55,11 +59,24 @@ public class FenetreConnexion extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            fermerFenetre();
-            // ***** Ouverture de l'UI correspondante *****
-            // !! TEMPORAIRE !!
-		    new FenetreOrganisateur();
-		    // new FenetreExposant();
+            JDBC_BDD baseDeDonnees = new JDBC_BDD();
+            baseDeDonnees.startJDBC();
+
+            if(baseDeDonnees.connexion(identifiant.getText(), motDePasse.getText())) {
+                // ***** Ouverture de l'UI correspondante *****
+                if(baseDeDonnees.estOrganisateur(identifiant.getText()))
+		            new FenetreOrganisateur(null);
+                else
+		            new FenetreExposant(null);
+                fermerFenetre();
+            }
+            else {
+                System.out.println("Utilisateur inconnu");
+                msgErreur.setText("Utilisateur inconnu");
+                msgErreur.setForeground(Color.red);
+                identifiant.setText("");
+                motDePasse.setText("");
+            }
         }
     }
 }

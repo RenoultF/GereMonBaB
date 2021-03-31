@@ -5,6 +5,8 @@ import javax.swing.event.*;
 import javax.swing.table.DefaultTableModel;
 
 public class FenetreOrganisateur {
+	private Profil profil;
+	
     private JFrame frame;
     private JPanel global_panel;
 
@@ -26,7 +28,9 @@ public class FenetreOrganisateur {
 	// ***** Variables pour onglet CreerBaB *****
 	PanelParamBaB paramBaB;
 
-	public FenetreOrganisateur() {
+	public FenetreOrganisateur(Profil profil) {
+		this.profil = profil;
+
 		frame = new JFrame("GereMonBaB - Organisateur");
 		global_panel = new JPanel(new GridLayout(1, 1));
 		onglets = new JTabbedPane();
