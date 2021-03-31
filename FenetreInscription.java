@@ -24,9 +24,12 @@ public class FenetreInscription extends JFrame {
 
     private JRadioButton radButExposant;
     private JRadioButton radButOrganisateur;
+    
+    private JFrame frameAccueil;
 
-    public FenetreInscription() {
+    public FenetreInscription(JFrame frameAccueil) {
         // ***** Construction des composants *****
+        this.frameAccueil = frameAccueil;
         jcomp1 = new JLabel("Compte");
         jcomp2 = new JLabel("Nom");
         jcomp3 = new JLabel("Prénom");
@@ -89,7 +92,7 @@ public class FenetreInscription extends JFrame {
         this.setLayout(null);
         this.setTitle("Gere mon BaB - Inscription");
         this.setSize(new Dimension(500, 380));
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
@@ -112,7 +115,7 @@ public class FenetreInscription extends JFrame {
 
             int id = baseDeDonnees.getNewIdTable("PROFIL");
             Profil profil;
-
+            frameAccueil.dispose();
             // Exposant
             if(radButExposant.isSelected()) {
                 profil = new Profil(id, txtPrenom.getText(), txtNom.getText(), "exposant", txtCourriel.getText(), txtMDP.getText());

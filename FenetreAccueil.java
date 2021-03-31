@@ -54,7 +54,9 @@ public class FenetreAccueil {
 		frame.getContentPane().add(global_panel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(780, 600);
+		//frame.setSize(780, 600);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        //frame.setUndecorated(true);
         frame.setResizable(false);
     }
 
@@ -66,7 +68,7 @@ public class FenetreAccueil {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-		    new FenetreConnexion();
+		    new FenetreConnexion(frame);
         }
     }
 
@@ -77,7 +79,7 @@ public class FenetreAccueil {
     
         @Override
         public void actionPerformed(ActionEvent e) {
-            new FenetreInscription();
+            new FenetreInscription(frame);
         }
     }
 }

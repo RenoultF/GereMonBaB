@@ -70,7 +70,7 @@ public class FenetreAutre extends JFrame {
         // ***** Fenêtre *****
         this.setLayout(null);
         this.setSize(350, 200);
-        //this.setDefaultCloseOperation(this.dispose());
+        //this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
 

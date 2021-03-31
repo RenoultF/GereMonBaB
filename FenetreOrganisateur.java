@@ -11,10 +11,16 @@ public class FenetreOrganisateur {
     private JPanel global_panel;
 
 	private JTabbedPane onglets;
-	
+
 	// ***** Panels correspondant aux onglets *****
 	private JPanel panCreerBaB;
 	private JPanel panMesBaBs;
+	private JPanel panAccueil;
+
+	// ***** Variables pour onglet Accueil *****
+	private JButton btnDeconnecter;
+	private JLabel jcomp3;
+	private JLabel lab_logo;
 
 	// ***** Variables pour onglet MesBaB *****
 	private JScrollPane 		scrollMesBabs;
@@ -31,9 +37,32 @@ public class FenetreOrganisateur {
 	public FenetreOrganisateur(Profil profil) {
 		this.profil = profil;
 
+		btnDeconnecter = new JButton("Deconnecter");
+
 		frame = new JFrame("GereMonBaB - Organisateur");
 		global_panel = new JPanel(new GridLayout(1, 1));
 		onglets = new JTabbedPane();
+		
+		// ===========================================================================
+		// ********** Onglet : Accueil **********
+        panAccueil = new JPanel(null);
+        onglets.add("Accueil", panAccueil);
+
+        // Construction des composants
+        btnDeconnecter = new JButton(new ActionBtn_Deconnexion("Deconnexion"));
+        jcomp3 = new JLabel("GereMonBaB");
+        lab_logo = new JLabel(new ImageIcon("LogoBaB.png"), JLabel.CENTER);
+
+        // Ajout des composants
+        panAccueil.add(btnDeconnecter);
+        panAccueil.add(jcomp3);
+        panAccueil.add(lab_logo);
+
+        // Positionnement
+        btnDeconnecter.setBounds(585, 10, 135, 20);
+        jcomp3.setBounds(10, 10, 100, 25);
+        lab_logo.setBounds(130, 50, 500, 500);
+
 
 		// ===========================================================================
 		// ********** Onglet : Mes BaB **********
@@ -70,6 +99,20 @@ public class FenetreOrganisateur {
 		frame.getContentPane().add(global_panel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setSize(1000, 700);
+		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+        //frame.setUndecorated(true);
 	}
+
+	// ***** Classes internes *****
+    class ActionBtn_Deconnexion extends AbstractAction {
+        public ActionBtn_Deconnexion(String nomBtn) {
+            super(nomBtn);
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+		    frame.dispose();
+			new FenetreAccueil();
+        }
+    }
 }

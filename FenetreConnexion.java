@@ -12,7 +12,9 @@ public class FenetreConnexion extends JFrame {
     private JPasswordField motDePasse;
     private JButton jcomp5;
 
-    public FenetreConnexion() {
+    private JFrame frameAccueil;
+
+    public FenetreConnexion(JFrame frameAcceuil) {
         // ***** Construction des composants *****
         msgErreur = new JLabel("");
         jcomp1 = new JLabel("Identifiant");
@@ -20,7 +22,7 @@ public class FenetreConnexion extends JFrame {
         identifiant = new JTextField(5);
         motDePasse = new JPasswordField(5);
         jcomp5 = new JButton(new ActionBtnOk("Valider"));
-
+        this.frameAccueil = frameAcceuil;
         // ***** Ajout des composants *****
         add(msgErreur);
         add(jcomp1);
@@ -41,7 +43,7 @@ public class FenetreConnexion extends JFrame {
         this.setLayout(null);
         this.setTitle("Gere mon BaB - Connexion");
         this.setSize(370, 140);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.setResizable(false);
@@ -64,6 +66,7 @@ public class FenetreConnexion extends JFrame {
 
             if(baseDeDonnees.connexion(identifiant.getText(), motDePasse.getText())) {
                 // ***** Ouverture de l'UI correspondante *****
+                frameAccueil.dispose();
                 if(baseDeDonnees.estOrganisateur(identifiant.getText()))
 		            new FenetreOrganisateur(null);
                 else

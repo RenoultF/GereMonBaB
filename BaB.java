@@ -35,7 +35,7 @@ public class BaB {
 
 	private String utilisateur;
 
-
+	private Profil profil;
 
 	//type de l'emplacement selectionné
 	private String type;
@@ -283,6 +283,24 @@ public class BaB {
 		this.nomBaB = nvNomBaB;
 	}
 
+	
+	/**
+	 ** méthode permettant de modifier le profil sur le bab
+	 ** @param nvProfil le nouveau profil
+	 **/
+	public void setProfil(Profil nvProfil) {
+		this.profil = nvProfil;
+	}
+
+	/**
+	 ** méthode permettant de récupérer le profil sur le bab
+	 ** @return le nouveau profil
+	 **/
+	public Profil getProfil() {
+		return this.profil;
+	}
+
+
 	/**
 	 ** méthode permettant de modifier le Nom du BaB
 	 ** @param nvDateBaB la nouvelle date du bab
@@ -301,7 +319,7 @@ public class BaB {
 
 	/**
 	 ** méthode permettant de récupérer l'utilisateur courant
-	 ** @param nvUtilisateur le nouvelle utilisateur
+	 ** @return le nouvelle utilisateur
 	 **/
 	public String getUtilisateur() {
 		return this.utilisateur;
