@@ -157,7 +157,7 @@ public class FenetreUI extends AbstractAction{
  
 		for(int i = 0; i < dimX; i++)
 			for(int j = 0; j < dimY; j++) {
-				JButton but = new JButton(new ActionBtn(ind, i, j));
+				JButton but = new JButton(new ActionBtn(ind, i, j,system));
 				but.setBackground(Color.WHITE);
 				but.setText("");
 				ind += 1;

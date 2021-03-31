@@ -16,18 +16,25 @@ class ActionBtn extends AbstractAction  {
 	
 	private Emplacement emplacementAjoute;
 
-	
+	private BaB system;
 
-	public ActionBtn(int i, int x, int y) {
+	public ActionBtn(int i, int x, int y, BaB system) {
 		ind = i;
 		coord_x = x;
 		coord_y = y;
 		dejaClic = false;
+		this.system = system;
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		boutonCourant = FenetreUI.listBut.get(ind);
+		if(system.getUtilisateur().equals("Organisateur")){
+			boutonCourant = FenetreUI.listBut.get(ind);
+		}
+		else{
+			boutonCourant = FenetreUIExposant.listBut.get(ind);
+		}
+		
 		if(boutonCourant.getText().equals("")){
 			if(FenetreUI.getSystem().ajouterEmplacement(coord_x, coord_y)) {
 				if(FenetreUI.getSystem().getType().equals("Stand")){
