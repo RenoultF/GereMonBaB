@@ -92,7 +92,7 @@ public class FenetreUIExposant extends AbstractAction{
 
 		ongletBab = new JTabbedPane();
 		panInfoBaB = new JPanel(new GridLayout(8,2));
-		panListeReservation = new JPanel();
+		panListeReservation = new JPanel(new GridLayout(2,2));
 
 		/*variable onglet info BaB*/
 		labNomBaB = new JLabel("Nom du BaB :");
@@ -173,7 +173,6 @@ public class FenetreUIExposant extends AbstractAction{
 
 		
 		panListeReservation.add(scrollReservation);
-
         panListeReservation.add(btnVal);
 		
 		// ***** Fenêtre *****
