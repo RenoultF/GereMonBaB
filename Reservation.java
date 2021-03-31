@@ -58,7 +58,7 @@ public class Reservation {
 	 ** @return id_reservation 
 	 **/
     public int getIdReservation(){
-        return this.idReservant;
+        return this.id_reservation;
     }
 
       /**
@@ -98,7 +98,7 @@ public class Reservation {
 	 ** @param nvId le nouveau emplacement
 	 **/
     public void setIdReservation(int nvId){
-        this.idReservant = nvId;
+        this.id_reservation = nvId;
     }
 
     /**

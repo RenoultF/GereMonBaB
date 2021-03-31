@@ -26,11 +26,12 @@ public class BaB {
 	private LinkedList<Emplacement> autres;
 
 	//liste des emplacements supprimé durant la session
-	private LinkedList<Stand> standsSuppr;
-	private LinkedList<Autre> autresSuppr;
+	private LinkedList<Emplacement> standsSuppr;
+	private LinkedList<Emplacement> autresSuppr;
 	
 	//liste des reservations sur les stands dans le bab
 	private LinkedList<Reservation> reservations;
+	private LinkedList<Reservation> reservationsSuppr;
 
 	private String utilisateur;
 
@@ -57,8 +58,8 @@ public class BaB {
 		carte = new Quadrillage(this.dimX, this.dimY);
 		stands = new LinkedList<Emplacement>();
 		autres = new LinkedList<Emplacement>();
-		standsSuppr = new LinkedList<Stand>();
-		autresSuppr = new LinkedList<Autre>();
+		standsSuppr = new LinkedList<Emplacement>();
+		autresSuppr = new LinkedList<Emplacement>();
 		reservations = new LinkedList<Reservation>();
 
 		type = new String("Stand");
@@ -424,7 +425,7 @@ public class BaB {
 	 ** méthode permettant de récupérer la liste des stands supprimés
 	 ** @return standsSuppr la liste des stands
 	 **/
-	public LinkedList<Stand> getListeStandSuppr() {
+	public LinkedList<Emplacement> getListeStandSuppr() {
 		return this.standsSuppr;
 	}
 	
@@ -432,7 +433,7 @@ public class BaB {
 	 ** méthode permettant de récupérer la liste des autres supprimés
 	 ** @return autresSuppr la liste des autres
 	 **/
-	public LinkedList<Autre> getListeAutreSuppr() {
+	public LinkedList<Emplacement> getListeAutreSuppr() {
 		return this.autresSuppr;
 	}
 	
@@ -442,6 +443,14 @@ public class BaB {
 	 **/
 	public LinkedList<Reservation> getListeReservation() {
 		return this.reservations;
+	}
+	
+	/**
+	 ** méthode permettant de récupérer la liste des reservations supprimés
+	 ** @return reservationsSuppr la liste des reservation
+	 **/
+	public LinkedList<Reservation> getListeReservationSuppr() {
+		return this.reservationsSuppr;
 	}
 	/************************************** DEBOGGAGE **************************************/
 	

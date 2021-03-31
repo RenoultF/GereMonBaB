@@ -195,8 +195,9 @@ public class FenetreUIExposant extends AbstractAction{
 			for(Reservation resa : reservationsTmp){
                 tabReservation.removeRow(0);
                 system.ajouterReservation(resa);
+                JDBC_BDD.sauvegarderReservation(resa);
             }
-            //TO-DO tristan Mettre a jour la liste des reservation dans le system
+            
             reservationsTmp.clear();
 		}
 	}
