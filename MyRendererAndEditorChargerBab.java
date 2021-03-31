@@ -26,6 +26,9 @@ class MyRendererAndEditorChargerBab extends AbstractAction implements TableCellR
     	case "Publier"	:
     		btn = new JButton("Publier");
     		break;
+      case "Visiter" :
+        btn = new JButton("Visiter");
+        break;
     	default:
     		btn = new JButton("Error");
     }
@@ -76,6 +79,16 @@ class MyRendererAndEditorChargerBab extends AbstractAction implements TableCellR
 				BaB nvBaB = baseDeDonnees.chargerBab(index);
 	    		new FenetreUI(nvBaB);
 				
+			}
+
+      if(nom.equals("Visiter")) {
+				//On recupere l'idType qui est dans le tableau
+				index = (int)FenetreOrganisateur.tabMesBabs.getValueAt(row, 0);
+				JDBC_BDD baseDeDonnees = new JDBC_BDD();
+				baseDeDonnees.startJDBC();
+				System.out.println("INDEX : " + index);
+				BaB nvBaB = baseDeDonnees.chargerBab(index);
+	    	new FenetreUIExposant(nvBaB);
 			}
 		}
 	}
