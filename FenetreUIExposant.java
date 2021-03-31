@@ -193,7 +193,7 @@ public class FenetreUIExposant extends AbstractAction{
 	public void actionPerformed(ActionEvent e) {
 		if(e.getSource() == btnVal){
 			for(Reservation resa : reservationsTmp){
-                tabReservation.removeRow(resa.getIdReservation());
+                tabReservation.removeRow(0);
                 system.ajouterReservation(resa);
             }
             //TO-DO tristan Mettre a jour la liste des reservation dans le system
