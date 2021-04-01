@@ -506,7 +506,7 @@ public class JDBC_BDD {
 				}
 				
 				//Paramètrage de l'emplacement avec les données sauvegardées
-				emp = new Emplacement(idEmplacement, nomEmplacement, coordonneeX, coordonneeY);
+				emp = new Emplacement(idEmplacement, nomEmplacement, coordonneeX, coordonneeY,largeurType,longueurType);
 				emp.setIdSauvegarde(idSauvegarde);
 				emp.setReservation(statutReservation);
 				emp.setPaiement(statutPaiement);

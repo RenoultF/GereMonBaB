@@ -4,8 +4,8 @@ import java.awt.event.ActionEvent;
 
 public class FenetreAutre extends JFrame {
     // Dimension d'un stand en metres
-    private Double largeur;
-    private Double longueur;
+    private int largeur;
+    private int longueur;
     private String type;
 
     // Composants graphiques
@@ -22,7 +22,7 @@ public class FenetreAutre extends JFrame {
 
     private Semaphore sem; // Mutex
 
-    public FenetreAutre(Double largDefaut, Double longDefaut, String typeDefault, BaB system) {
+    public FenetreAutre(int largDefaut, int longDefaut, String typeDefault, BaB system) {
         // ***** Valeurs par défaut *****
         largeur = largDefaut;
         longueur = longDefaut;
@@ -54,10 +54,10 @@ public class FenetreAutre extends JFrame {
         butOk.setBounds(265, 35, 65, 55);
 
         // ***** Valeurs par défaut *****
-        txtLarg.setText(Double.toString(largeur));
-        txtLong.setText(Double.toString(longueur));
+        txtLarg.setText(Integer.toString(largeur));
+        txtLong.setText(Integer.toString(longueur));
         txtType.setText(type);
-
+        
         add(labTitre);
         add(labLarg);
         add(labLong);
@@ -78,12 +78,12 @@ public class FenetreAutre extends JFrame {
 
     // ********** Getters **********
     // Synchronisation (attendre fin de la saisie) par mutex
-    public Double getLargeur() {
+    public int getLargeur() {
         sem.V(); sem.P();
         return largeur;
     }
 
-    public Double getLongueur() {
+    public int getLongueur() {
         sem.V(); sem.P();
         return longueur;
     }
@@ -106,8 +106,8 @@ public class FenetreAutre extends JFrame {
 
         @Override
         public void actionPerformed(ActionEvent e) {
-            largeur = Double.valueOf(txtLarg.getText());
-            longueur = Double.valueOf(txtLong.getText());
+            largeur = Integer.valueOf(txtLarg.getText());
+            longueur = Integer.valueOf(txtLong.getText());
             type = txtType.getText();
 			system.setTailleAutreLargeur(largeur);
 			system.setTailleAutreLongueur(longueur);

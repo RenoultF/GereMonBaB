@@ -27,13 +27,18 @@ public class Emplacement {
 	private String reservation; //"libre","semi_reserve","reserve"
 	private String paiement;
 	private String proprietaire;
+
+	private int largeur;
+	private int longueur;
 	 
-	public Emplacement(int idType, String type, int coordX, int coordY) {
+	public Emplacement(int idType, String type, int coordX, int coordY,int largeur, int longueur) {
 		this.idSauvegarde = 0;
 		this.idType = idType;
 		this.type = type;
 		this.coordonneeX = coordX;
 		this.coordonneeY = coordY;
+		this.largeur = largeur;
+		this.longueur = longueur;
 		
 		this.nom = type + idType;
 		
@@ -157,16 +162,16 @@ public class Emplacement {
 	 ** méthode retournant la largeur de l'emplacement
 	 ** @return 1
 	 **/
-	public Double getLargeur() {
-		return 1.0;
+	public int getLargeur() {
+		return this.largeur;
 	}
 
 	/**
 	 ** méthode retournant la longueur de l'emplacement
 	 ** @return 1
 	 **/
-	public Double getLongueur() {
-		return 1.0;
+	public int getLongueur() {
+		return this.longueur;
 	}
 	
 	/**

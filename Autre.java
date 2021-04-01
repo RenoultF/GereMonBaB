@@ -5,11 +5,11 @@ import java.util.*;
 
 public class Autre extends Emplacement {
 
-	private Double largeur;
-	private Double longueur;
+	private int largeur;
+	private int longueur;
 
-	public Autre(int idType, String type, int coordX, int coordY,Double larg, Double longueur) {
-		super(idType, type, coordX, coordY);
+	public Autre(int idType, String type, int coordX, int coordY,int larg, int longueur) {
+		super(idType, type, coordX, coordY, larg,longueur);
 		this.largeur = larg;
 		this.longueur = longueur;
 	}
@@ -18,7 +18,7 @@ public class Autre extends Emplacement {
 	 ** méthode permettant de récupérer la largeur
 	 ** @return largeur
 	 **/
-	public Double getLargeur(){
+	public int getLargeur(){
 		return this.largeur;
 	}
 
@@ -26,7 +26,7 @@ public class Autre extends Emplacement {
 	 ** méthode permettant de récupérer la longueur
 	 ** @return longueur
 	 **/
-	public Double getLongueur(){
+	public int getLongueur(){
 		return this.longueur;
 	}
 
@@ -35,7 +35,7 @@ public class Autre extends Emplacement {
 	 ** méthode permettant de modifier la largeur
 	 ** @param larg la nouvelle largeur
 	 **/
-	public void setLargeur(Double larg){
+	public void setLargeur(int larg){
 		this.largeur = larg;
 	}
 
@@ -43,7 +43,7 @@ public class Autre extends Emplacement {
 	 ** méthode permettant de modifier la longueur
 	 ** @param lg la nouvelle longueur
 	 **/
-	public void setLongueur(Double lg){
+	public void setLongueur(int lg){
 		this.longueur = lg;
 	}
 }

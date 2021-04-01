@@ -222,7 +222,7 @@ public class FenetreUI extends AbstractAction{
 		
 		}
 		else if(e.getSource() == btnTypeAutre){
-			FenetreAutre fenAutre = new FenetreAutre(1.0,1.0,"Autre",system);
+			FenetreAutre fenAutre = new FenetreAutre(1,1,"Autre",system);
 			fenAutre.saisir();
 		}
 		else if(e.getSource() == btnSaveBaB){

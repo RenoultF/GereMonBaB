@@ -15,8 +15,8 @@ public class BaB {
 	private int dimY;
 	
 	//nombre de cases d'un Stand
-	private Double tailleAutreLongueur;
-	private Double tailleAutreLargeur;
+	private int tailleAutreLongueur;
+	private int tailleAutreLargeur;
 	
 	//Quadrillage de la carte
 	private Quadrillage carte; 
@@ -88,7 +88,7 @@ public class BaB {
 			else
 				idType = stands.getLast().getIdType() + 1;
 				
-			Emplacement nouveauStand = new Stand(idType, coordX, coordY);
+			Emplacement nouveauStand = new Stand(idType, coordX, coordY,1,1);
 			stands.addLast(nouveauStand);
 			caseCourante.occuper();
 			
@@ -248,7 +248,7 @@ public class BaB {
 	 ** méthode permettant de récupérer la taille X des stands
 	 ** @return tailleAutreLongueur la taille X d'un Stand
 	 **/
-	public Double getTailleAutreLongueur() {
+	public int getTailleAutreLongueur() {
 		return this.tailleAutreLongueur;
 	}
 	
@@ -256,7 +256,7 @@ public class BaB {
 	 ** méthode permettant de récupérer la taille Y des stands
 	 ** @return tailleAutreLongueur la taille Y d'un Stand
 	 **/
-	public Double getTailleAutreLargeur() {
+	public int getTailleAutreLargeur() {
 		return this.tailleAutreLargeur;
 	}
 	
@@ -264,7 +264,7 @@ public class BaB {
 	 ** méthode permettant de modifier la taille X des stands
 	 ** @param nouveauX la nouvelle taille X d'un Stand
 	 **/
-	public void setTailleAutreLongueur(Double nouveauX) {
+	public void setTailleAutreLongueur(int nouveauX) {
 		this.tailleAutreLongueur = nouveauX;
 	}
 	
@@ -272,7 +272,7 @@ public class BaB {
 	 ** méthode permettant de modifier la taille Y des stands
 	 ** @param nouveauY la nouvelle taille Y d'un Stand
 	 **/
-	public void setTailleAutreLargeur(Double nouveauY) {
+	public void setTailleAutreLargeur(int nouveauY) {
 		this.tailleAutreLargeur = nouveauY;
 	}
 

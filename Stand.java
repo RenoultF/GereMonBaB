@@ -5,8 +5,8 @@ import java.util.*;
 
 public class Stand extends Emplacement {
 
-	public Stand(int idType, int coordX, int coordY) {
-		super(idType, "Stand", coordX, coordY);
+	public Stand(int idType, int coordX, int coordY, int tailleAutreLargeur,int tailleAutreLongueur) {
+		super(idType, "Stand", coordX, coordY, tailleAutreLargeur,tailleAutreLongueur);
 	}
 
 	/**
