@@ -288,6 +288,8 @@ public class FenetreUI extends AbstractAction{
 			int indexTmp;
 			
 				if(resaTmp.getEmplacement().getIdType()==idEmplacement){
+					//ajoute la suppression dans le tableau des suppressions
+					FenetreUI.getSystem().getListeReservationSuppr().addLast(resaTmp);
 					indexTmp = resaTmp.getIdReservation();
 					actualiserTabSupprResa(indexTmp);
 					itResa.remove();
