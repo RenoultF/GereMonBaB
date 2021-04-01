@@ -204,8 +204,8 @@ public class FenetreUI extends AbstractAction{
 		panFenetre.add(scrollAutres);
 		actualiseFenetre();
 		frame.getContentPane().add(panFenetre);
-		frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
-		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		frame.setSize(1000,500); 
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//frame.setUndecorated(true);
 		frame.setVisible(true);
 	

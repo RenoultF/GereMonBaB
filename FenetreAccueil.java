@@ -54,8 +54,7 @@ public class FenetreAccueil {
 		frame.getContentPane().add(global_panel);
 		frame.setVisible(true);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//frame.setSize(780, 600);
-        frame.setExtendedState(JFrame.MAXIMIZED_BOTH); 
+		frame.setSize(780, 600);
         //frame.setUndecorated(true);
         frame.setResizable(false);
     }
