@@ -61,6 +61,8 @@ class MyRendererAndEditorResaVal extends AbstractAction implements TableCellRend
       //FenetreUI.tabReservation.removeRow(row);
       //supprimer de la liste des reservé
       Reservation resa = FenetreUI.getSystem().getListeReservation().get(index);
+      //ajoute la suppression dans le tableau des suppressions
+      FenetreUI.getSystem().getListeReservationSuppr().addLast(resa);
       //on actualise le bouton
       Emplacement empTmp = resa.getEmplacement();
       JButton btnTmp = FenetreUI.listBut.get(empTmp.getCoordonneeX()*FenetreUI.getSystem().getDimX() + empTmp.getCoordonneeY());
@@ -69,6 +71,7 @@ class MyRendererAndEditorResaVal extends AbstractAction implements TableCellRend
       empTmp.setReservation("reserve");
       empTmp.setPaiement(resa.getMoyenPaiement());
       //mise a jour status de reservation et paiement
+      System.out.println("IdType : "+ empTmp.getIdType());
       FenetreUI.tabStands.setValueAt(empTmp.getReservation(), empTmp.getIdType(), 2);
       FenetreUI.tabStands.setValueAt(resa.getMoyenPaiement(), empTmp.getIdType(), 3);
       String nvProprietaire = ""+resa.getNom()+" "+resa.getPrenom();

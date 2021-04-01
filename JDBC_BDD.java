@@ -115,10 +115,9 @@ public class JDBC_BDD {
 	/**
 	 ** Méthode sauvegardant toutes les données d'un Emplacement en créant une nouvelle sauvegarde si l'emplacement n'est pas dans la bdd, sinon il modifie les informations déjà présentes
 	 **/
-	static private void sauvegarderEmplacement(Emplacement emp, BaB bab) {
+	static private void sauvegarderEmplacement(Emplacement emp, int idBab) {
 	
 		int idEmp = emp.getIdSauvegarde();
-		int idBab = bab.getIdBaB();
 		int idType = 0, size;
 		boolean contient = false;
 		
@@ -161,6 +160,8 @@ public class JDBC_BDD {
 			
 			// Creation des données dans la table d'association
 			contient = true;
+			System.out.println("IdBaB : "+idBab);
+			System.out.println("IdEmp : "+idEmp);
 			sqlContient = "INSERT INTO CONTIENT VALUES(" +
 			   idBab + ", " +
 			   idEmp + ") " ;
@@ -171,6 +172,7 @@ public class JDBC_BDD {
 			//System.out.println("\tEmplacement : "+emp.getType());
 			//System.out.println("\tReservation : "+emp.getReservation());
 			sqlEmplacement = "UPDATE EMPLACEMENT SET " +
+			   "idEmplacement = "		+ emp.getIdType()		+ ", "  +
 			   "nom = '"				+ emp.getType()			+ "', " +
 			   "statutReservation = '"	+ emp.getReservation() 	+ "', " +
 			   "statutPaiment = '"		+ emp.getPaiement() 	+ "' " 	+
@@ -244,10 +246,10 @@ public class JDBC_BDD {
 	/**
 	 ** Méthode privée supprimant les données des emplacements supprimés du bab pendant la session
 	 **/
-	static private void supprimerEmplacement(Emplacement emp, BaB bab) {
+	static private void supprimerEmplacement(Emplacement emp, int idBab) {
 		String sqlDeleteEmp, sqlDeleteCon;
 		
-		sqlDeleteCon   = "DELETE FROM CONTIENT WHERE idSauvegarde = " + emp.getIdSauvegarde()+" AND idBab = "+ bab.getIdBaB() +"";
+		sqlDeleteCon   = "DELETE FROM CONTIENT WHERE idSauvegarde = " + emp.getIdSauvegarde()+" AND idBab = "+ idBab +"";
 		sqlDeleteEmp   = "DELETE FROM EMPLACEMENT WHERE idSauvegarde = " + emp.getIdSauvegarde()+"";
 		try{
 			stmt.executeUpdate(sqlDeleteCon);
@@ -389,13 +391,13 @@ public class JDBC_BDD {
 		size = listeStandsSuppr.size();
 		for(int i = 0; i < size; i++) {
 			emplacementCourant = listeStandsSuppr.get(i);
-			supprimerEmplacement(emplacementCourant, bab);
+			supprimerEmplacement(emplacementCourant, idBab);
 		}
 		// Suppression des données des emplacements autres supprimés
 		size = listeAutresSuppr.size();
 		for(int i = 0; i < size; i++) {
 			emplacementCourant = listeAutresSuppr.get(i);
-			supprimerEmplacement(emplacementCourant, bab);
+			supprimerEmplacement(emplacementCourant, idBab);
 		}
 		// Suppression des données des réservations supprimées
 		size = listeReservationSuppr.size();
@@ -411,13 +413,13 @@ public class JDBC_BDD {
 		size = listeStands.size();
 		for(int i = 0; i < size; i++) {
 			emplacementCourant = listeStands.get(i);
-			sauvegarderEmplacement(emplacementCourant, bab);
+			sauvegarderEmplacement(emplacementCourant, idBab);
 		}
 		// Sauvegarder les données des emplacements autres
 		size = listeAutres.size();
 		for(int i = 0; i < size; i++) {
 			emplacementCourant = listeAutres.get(i);
-			sauvegarderEmplacement(emplacementCourant, bab);
+			sauvegarderEmplacement(emplacementCourant, idBab);
 		}
 		// Sauvegarder les données des réservations
 		size = listeReservation.size();
